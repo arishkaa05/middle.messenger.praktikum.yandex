@@ -15,9 +15,9 @@ body {
   justify-content: center;
 }
 form {
-  border: 0.5px solid #d9d9d9;
+  border: 0.5px solid $gray-color;
   border-radius: 6px;
-  width: 280px;   
+  width: 450px;   
   > :first-child {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -31,6 +31,10 @@ form {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
   }
+  @media (max-width: 576px) {
+    width: auto;
+    min-width: 270px;
+  };
 }
 input[type="file"] { 
   width: 100%; 
@@ -53,6 +57,12 @@ a {
   align-items: center;
   height: 100%;
   width: 100%;
+}
+
+.d-sm-none {
+  @media (max-width: 576px) {
+    display: none;
+  }
 }
 .avatar {
   &__size {
@@ -82,10 +92,10 @@ a {
   }
 }
 .text-red {
-  color: #ff0000;
+  color: $text-red;
 }
 .text-blue {
-  color: #3369F3;
+  color: $text-blue;
 }
 .error-message {
   position: absolute;
