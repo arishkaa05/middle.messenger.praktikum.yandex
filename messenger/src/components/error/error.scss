@@ -1,0 +1,8 @@
+@import '../../../static/variables.scss';
+
+.error {
+  font: $font-large;
+  text-align: center;
+  margin: 20px 0;
+  color: $title-color;
+}

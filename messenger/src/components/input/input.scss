@@ -1,8 +1,9 @@
-input {
+.input {
   height: 26px;
   width: 100%;
   border: 0;
   padding: 0;
+  position: relative;
   &__element { 
     border: none;
     padding: 0;
@@ -15,8 +16,11 @@ input {
       text-align: right;
     }
   }
-    &:hover, &:active, &:focus-visible {
-      border: 0;
-      outline: none;
-    }
+   
+}
+input { 
+  &:hover, &:active, &:focus-visible {
+    border: 0; 
+    outline: 0 !important;
+  }
 }
