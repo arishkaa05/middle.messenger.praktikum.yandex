@@ -24,4 +24,4 @@
 - `npm run dev` — запуск версии для разработчика.
   
 ## Макет
-- «[Cсылка на макет в Figma]([https://github.com/facebook/react](https://www.figma.com/design/kuwerWMZV5aHJGvW9WCiQP/Chat_external_link-(Copy)?node-id=0-1&t=37nRVz7GwxVH4U9x-1))»
+- «[Cсылка на макет в Figma](https://www.figma.com/design/kuwerWMZV5aHJGvW9WCiQP/Chat_external_link-(Copy)?node-id=0-1&t=CHQUKRaqRwRpG9Xg-1)»
