@@ -8,13 +8,13 @@
 - Handlebars
 
 ## Страницы
-- [Авторизация](),
-- [Регистрация](),
-- [Список чатов](),
-- [Смена пароля](),
-- [Настройки пользователя](),
-- [Страница 404](),
-- [Страница 5**]().
+- [Авторизация](https://astonishing-gumdrop-be61c3.netlify.app/login),
+- [Регистрация](https://astonishing-gumdrop-be61c3.netlify.app/signin),
+- [Список чатов](https://astonishing-gumdrop-be61c3.netlify.app/chat),
+- [Смена пароля](https://astonishing-gumdrop-be61c3.netlify.app/password),
+- [Настройки пользователя](https://astonishing-gumdrop-be61c3.netlify.app/profile),
+- [Страница 404](https://astonishing-gumdrop-be61c3.netlify.app/notFound),
+- [Страница 5**](https://astonishing-gumdrop-be61c3.netlify.app/fix).
 
 ## Деплой [![Netlify Status](https://api.netlify.com/api/v1/badges/b11cd96c-4432-4e30-9a17-4acc3c73c05a/deploy-status)](https://app.netlify.com/sites/astonishing-gumdrop-be61c3/deploys)
 - [Cсылка на проект на Netlify](https://astonishing-gumdrop-be61c3.netlify.app/) 
