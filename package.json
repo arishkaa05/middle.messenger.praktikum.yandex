@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "node server.js"
+    "start": "vite build && node server.js"
   },
   "devDependencies": {
     "handlebars": "^4.7.8",
