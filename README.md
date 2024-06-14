@@ -16,7 +16,7 @@
 - «[Страница 404]()»,
 - «[Страница 5**]()».
 
-## Деплой
+## Деплой [![Netlify Status](https://api.netlify.com/api/v1/badges/ae2ce035-dcaf-44bf-a2ec-3c5c9837e790/deploy-status)](https://app.netlify.com/sites/glistening-seahorse-b8a9d2/deploys)
 - «[Cсылка на проект на Netlify](#)»,
   
 ## Установка
