@@ -1,0 +1,27 @@
+@import '../../../static/variables.scss';
+
+.profile-page { 
+  margin: 10px;
+  padding-top: 20px;
+  &__name {
+    font-size: 16px;
+  } 
+  &__avatar-hover { 
+    cursor: pointer;
+    opacity: 0; 
+    margin-bottom: 15px; 
+    border-radius: 50%; 
+    position: absolute; 
+    top: 0; 
+    background: $chat-message-inverse-bgcolor; 
+    color: $chat-message-inverse-color;   
+    transition: 0.3s;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+    span {
+      position: absolute;
+    }
+  }  
+}

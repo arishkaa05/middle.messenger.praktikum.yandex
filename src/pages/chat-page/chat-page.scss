@@ -1,0 +1,86 @@
+@import '../../../static/variables.scss';
+ 
+.chat-page {
+  width: 320px; 
+  height: 100%; 
+  background: $chat-message-bgcolor; 
+  &__main {
+    padding: 0 12px;
+  }
+  &__user-block {
+    display: flex;
+    margin: 15px 0;
+  }
+  &__user-img {
+    width: 36px; 
+    height:36px; 
+    min-width: 36px; 
+    border-radius: 50%;
+    margin-right: 8px;
+    background: $text-color;
+  }
+  &__user-name {
+    margin: 3px 0 6px; 
+    font-size:14px;
+    color: $chat-message-color;
+  }
+  &__user-email {
+    color: $gray-color;
+  }
+  &__list-item { 
+    border-top: 0.5px solid $gray-light-color; 
+    padding: 15px 12px;
+    cursor: pointer;
+    display: flex;   
+    &:hover, &:active, &:focus {
+      background-color: $dialog-bgcolor;
+    }
+  }
+  &__user-sent {
+    font-size:14px; 
+    margin-bottom: 10px; 
+    display: flex; 
+    justify-content: space-between; 
+    width:100%;
+    a {
+      font-weight: 500; 
+      color: $chat-message-color;
+    } 
+  }
+  &__user-time {
+    margin: 0; 
+    font-size: 10px; 
+    color: $gray-color;
+  }
+  &__user-msg {
+    display: flex; 
+    justify-content: 
+    space-between; width:100%
+  }
+  &__message {
+    color: $chat-list-bgcolor; 
+    max-width: 230px;  
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;  
+    margin-right: 2px;
+    span {
+      color: $link-color; 
+      margin-right: 2px;
+    }
+  }
+  &__count {
+    background: $text-blue;
+    border-radius: 50%; 
+    min-width: 15px;  
+    height: 15px; 
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    color: $text-bgcolor;
+    align-items: center;
+  }
+  &__messages {
+    color: $chat-list-bgcolor;
+  }
+}

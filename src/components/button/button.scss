@@ -1,0 +1,17 @@
+@import '../../../static/variables.scss';
+
+.button {
+  height: 40px;
+  width: 100%;
+  text-align: center;
+  border-radius: 8px;
+  background-color: $button-bgcolor;
+  color: $title-color;
+  font-size: 16px;
+  border: 0;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    background: $hover-color;
+  }
+}
