@@ -1,3 +1,8 @@
+interface ErrorItem {
+  input: HTMLInputElement;
+  message: string;
+}
+
 const formValidation = () => { 
   setTimeout(() => {
     const form = document.querySelector("form");
@@ -7,7 +12,7 @@ const formValidation = () => {
 
         const inputFields = form.querySelectorAll("input");
         let allFieldsFilled = true;
-        const errors = []; 
+        const errors: ErrorItem[] = [];
 
         inputFields.forEach((input) => {
           if (input.type !== 'file' && input.value.trim() === "") {
@@ -18,9 +23,10 @@ const formValidation = () => {
 
         const newPasswordInputs = form.querySelectorAll('input[name="newPassword"]');
         if (newPasswordInputs.length === 2) {
-          if (newPasswordInputs[0].value !== newPasswordInputs[1].value) {
+          const [input1, input2] = newPasswordInputs as unknown as HTMLInputElement[];
+          if (input1.value !== input2.value) {
             allFieldsFilled = false;
-            errors.push({ input: newPasswordInputs[1], message: "Пароли должны совпадать" });
+            errors.push({ input: input2, message: "Пароли должны совпадать" });
           }
         }
 
@@ -30,7 +36,7 @@ const formValidation = () => {
             errorMessage.classList.add('error-message');
             errorMessage.classList.add('text-red');
             errorMessage.textContent = error.message;
-            error.input.parentNode.insertBefore(errorMessage, error.input.nextSibling);
+            if (error && error.input && error.input.parentNode) error.input.parentNode.insertBefore(errorMessage, error.input.nextSibling);
           });
         } else {
           

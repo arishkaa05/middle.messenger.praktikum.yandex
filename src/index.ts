@@ -1,7 +1,6 @@
-
 import Handlebars from 'handlebars';
-import * as Components from './components';
-import * as Pages from './pages';
+import * as Components from './components/index.js';
+import * as Pages from './pages/index.js'
 
 const pages = {
   'signin': [ Pages.SigninPage ],
@@ -38,11 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('click', e => {
-  const page = e.target.getAttribute('page');
-  if (page) {
-    navigate(page);
+  if (e && e.target && e.target instanceof HTMLElement) {
+    const page = e.target.getAttribute('page');
+    if (page) {
+      navigate(page);
 
-    e.preventDefault();
-    e.stopImmediatePropagation();
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
   }
 });
