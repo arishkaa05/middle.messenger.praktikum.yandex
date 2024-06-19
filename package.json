@@ -3,18 +3,20 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-
   "engines": {
     "node": ">=12"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "vite", 
+    "prebuild": "tsc --noEmit",
+    "build": "npm run prebuild && vite build",
     "start": "vite build && node server.js"
   },
   "devDependencies": {
     "handlebars": "^4.7.8",
     "sass": "^1.77.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
     "vite": "^5.2.0"
   },
   "dependencies": {

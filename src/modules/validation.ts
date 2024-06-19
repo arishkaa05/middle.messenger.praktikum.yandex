@@ -18,7 +18,7 @@ const formValidation = () => {
 
         const newPasswordInputs = form.querySelectorAll('input[name="newPassword"]');
         if (newPasswordInputs.length === 2) {
-          if (newPasswordInputs[0].value !== newPasswordInputs[1].value) {
+          if ((newPasswordInputs[0] as HTMLInputElement).value !== (newPasswordInputs[1] as HTMLInputElement).value) { 
             allFieldsFilled = false;
             errors.push({ input: newPasswordInputs[1], message: "Пароли должны совпадать" });
           }

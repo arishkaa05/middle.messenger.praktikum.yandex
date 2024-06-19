@@ -1,7 +1,7 @@
 
 import Handlebars from 'handlebars';
-import * as Components from './components';
-import * as Pages from './pages';
+import * as Components from './components/index';
+import * as Pages from './pages/index';
 
 const pages = {
   'signin': [ Pages.SigninPage ],
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('click', e => {
-  const page = e.target.getAttribute('page');
+  const page = (e.target as HTMLElement).getAttribute('page');
   if (page) {
     navigate(page);
 
