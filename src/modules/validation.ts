@@ -30,7 +30,7 @@ const formValidation = () => {
             errorMessage.classList.add('error-message');
             errorMessage.classList.add('text-red');
             errorMessage.textContent = error.message;
-            error.input.parentNode.insertBefore(errorMessage, error.input.nextSibling);
+            if (error && error.input  && error.input.parentNode) error.input.parentNode.insertBefore(errorMessage, error.input.nextSibling);
           });
         } else {
           
