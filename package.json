@@ -25,6 +25,6 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "vite-plugin-handlebars": "^2.0.0"
+    "vituum": "^1.1.0"
   }
 }

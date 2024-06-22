@@ -42,10 +42,11 @@ document.addEventListener('click', e => {
   if (page) {
     navigate(page);
 
-    e.preventDefault();
-    e.stopImmediatePropagation();
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    }
   }
-});
+);
 
 
 

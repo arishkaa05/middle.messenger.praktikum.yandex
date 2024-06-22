@@ -1,3 +1,8 @@
+interface ErrorItem {
+  input: HTMLInputElement;
+  message: string;
+}
+
 const formValidation = () => { 
   setTimeout(() => {
     const form = document.querySelector("form");
@@ -7,7 +12,7 @@ const formValidation = () => {
 
         const inputFields = form.querySelectorAll("input");
         let allFieldsFilled = true;
-        const errors = []; 
+        const errors: ErrorItem[] = [];
 
         inputFields.forEach((input) => {
           if (input.type !== 'file' && input.value.trim() === "") {
@@ -20,7 +25,7 @@ const formValidation = () => {
         if (newPasswordInputs.length === 2) {
           if ((newPasswordInputs[0] as HTMLInputElement).value !== (newPasswordInputs[1] as HTMLInputElement).value) { 
             allFieldsFilled = false;
-            errors.push({ input: newPasswordInputs[1], message: "Пароли должны совпадать" });
+            errors.push({ input: input2, message: "Пароли должны совпадать" });
           }
         }
 
