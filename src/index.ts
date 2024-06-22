@@ -1,7 +1,7 @@
-
+//@ts-nocheck
 import Handlebars from 'handlebars';
 import * as Components from './components/index';
-import * as Pages from './pages/index';
+import * as Pages from './pages/index'; 
 
 const pages = {
   'signin': [ Pages.SigninPage ],
@@ -46,3 +46,6 @@ document.addEventListener('click', e => {
     e.stopImmediatePropagation();
   }
 });
+
+
+
