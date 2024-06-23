@@ -1,15 +1,14 @@
 <main>
   {{#> Dialog }}
     {{> PageTitle title="Регистрация" }}
-    <form>  
-      {{> InputField title="Почта" name="email" type="email" required=true }}
-      {{> InputField title="Логин" name="login" required=true }}
-      {{> InputField title="Имя" name="first_name" required=true }}
-      {{> InputField title="Фамилия" name="second_name" required=true }}
-      {{> InputField title="Телефон" name="phone" required=true }}
-      {{> InputField title="Пароль" name="password" type="password" required=true }}
-      {{> InputField title="Пароль" name="password" type="password" required=true }}
-      {{> Button text="Зарегистрироваться" type="submit" }}   
+    <form class="form">  
+      {{> InputField title="Почта" name="email"}}
+      {{> InputField title="Логин" name="login"}}
+      {{> InputField title="Имя" name="first_name"}}
+      {{> InputField title="Фамилия" name="second_name"}}
+      {{> InputField title="Телефон" name="phone"}}
+      {{> InputField title="Пароль" name="password" type="password"}} 
+      {{> Button text="Зарегистрироваться" type="submit"}}   
     </form>
     {{> Link page="login" text="Войти" }}
   {{/ Dialog }}

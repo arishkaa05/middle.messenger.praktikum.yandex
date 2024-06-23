@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "npm run lint && vite",
-    "lint": "node_modules/.bin/eslint . && npx stylelint '**/*.scss' --fix",
+    "lint": "node_modules/.bin/eslint . --fix && npx stylelint '**/*.scss' --fix",
     "prebuild": "tsc --noEmit",
     "build": "npm run prebuild && vite build",
     "start": "npm run lint && vite build && node server.js"
