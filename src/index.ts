@@ -1,9 +1,10 @@
-//@ts-nocheck
+
 import Handlebars from 'handlebars';
 import * as Components from './components/index';
 import * as Pages from './pages/index'; 
+import ChatItem from './tools/classes/ChatItem';
 
-const pages = {
+const pages: { [key: string]: { source: any; }[] } = {
   'signin': [ Pages.SigninPage ],
   'login': [ Pages.LoginPage ],
   'chat': [ Pages.ChatPage ],
@@ -17,12 +18,14 @@ Object.entries(Components).forEach(([ name, component ]) => {
   Handlebars.registerPartial(name, component);
 });
 
-function navigate(page) { 
+function navigate(page: string) { 
   if (pages.hasOwnProperty(page)) {
     const [ source, args ] = pages[page];
     const handlebarsFunct = Handlebars.compile(source);
-    document.body.innerHTML = handlebarsFunct(args);
-
+    const app = document.getElementById('app')
+    if (app) {
+      app.innerHTML = handlebarsFunct(args);
+    }
     const url = new URL(window.location.href);
     url.pathname = `/${page}`;
     window.history.pushState({}, '', url.toString());
@@ -33,7 +36,7 @@ function navigate(page) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const url = new URL(window.location.href);
-  const path = url.pathname.slice(1) || 'login'; // Получаем путь из URL-адреса
+  const path = url.pathname.slice(1) || 'login'; 
   navigate(path);
 });
 
@@ -47,6 +50,3 @@ document.addEventListener('click', e => {
     }
   }
 );
-
-
-

@@ -1,9 +1,10 @@
-@import '../../../static/variables.scss';
+@import '../../../static/variables';
 
 .input-field {
   background-color: $text-bgcolor;
   padding: 5px 2px 0;
   border-bottom: 0.5px solid $gray-color;
+
   &__title {
     font: $font-nano;
     color: $text-color;
