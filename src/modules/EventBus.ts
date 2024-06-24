@@ -1,5 +1,7 @@
-export default class EventBus {
-  private listeners: { [event: string]: Array<(...args: any[]) => void> } = {};
+import { IEventBus } from "./types";
+
+export default class EventBus implements IEventBus {
+  public listeners: { [event: string]: Array<(...args: any[]) => void> } = {};
   constructor() {
     this.listeners = {};
   }
@@ -20,7 +22,7 @@ export default class EventBus {
     this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
   }
 
-  emit(event: string, ...args: undefined[]) {
+  emit(event: string, ...args: { name: string; age: number }[]) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }

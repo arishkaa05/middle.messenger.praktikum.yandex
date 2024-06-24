@@ -103,8 +103,4 @@ class PageWithList extends Block {
 }
 
 // const block = new PageWithButton({buttonText: 'Button'});
-const block = new PageWithList();
-const container = document.getElementById('app')!;
-container.append(block.getContent()!);
-
 

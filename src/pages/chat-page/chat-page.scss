@@ -1,8 +1,10 @@
 @import '../../../static/variables';
  
 .chat-page {
-  width: 320px; 
+  min-width: 320px; 
+  max-width: 320px; 
   height: 100%; 
+  overflow-y: hidden;
   background: $chat-message-bgcolor; 
 
   &__main {
@@ -31,6 +33,12 @@
 
   &__user-email {
     color: $gray-color;
+  }
+
+  &__list {
+    overflow: scroll;
+    height: 100%;
+    margin-bottom: 40px;
   }
 
   &__list-item { 

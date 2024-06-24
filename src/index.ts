@@ -7,7 +7,7 @@ Object.entries(Components).forEach(([name, component]) => {
   Handlebars.registerPartial(name, component);
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const url = new URL(window.location.href);
   const path = url.pathname.slice(1) || "login";
   navigate(path);
