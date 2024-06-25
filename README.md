@@ -1,11 +1,13 @@
 ### Bеб-приложения «Чат»
 
 ## Технологии
-- JavaScript
+- TypeScript
 - SCSS
 - Netlify
 - Vite 
 - Handlebars
+- ESLint 
+- Stylelint
 
 ## Страницы
 - [Авторизация](https://astonishing-gumdrop-be61c3.netlify.app/login),
