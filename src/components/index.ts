@@ -4,5 +4,5 @@ export { Link } from './link';
 export { PageTitle } from './page-title';
 export { Dialog } from './dialog';
 export { InputField } from './input-field';
-export { Search } from './search';
 export { Error } from './error'; 
+export { Message } from './message'; 

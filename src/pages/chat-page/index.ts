@@ -1,6 +1,6 @@
 import "./chat-page.scss";
-import PageWithList from "../../modules/classes/PageWithList";
 export { default as ChatPage } from "./chat-page.hbs?raw";
+import PageWithList from "../../modules/classes/PageWithList";
 
 const observer = new MutationObserver(() => {
   const container = document.querySelector(".chat-page__list");

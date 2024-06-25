@@ -1,4 +1,4 @@
-import { IEventBus } from "./types";
+import { IEventBus, IProps } from "./types";
 
 export default class EventBus implements IEventBus {
   public listeners: { [event: string]: Array<(...args: any[]) => void> } = {};
@@ -22,7 +22,7 @@ export default class EventBus implements IEventBus {
     this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
   }
 
-  emit(event: string, ...args: { name: string; age: number }[]) {
+  emit(event: string, ...args: IProps[]) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }

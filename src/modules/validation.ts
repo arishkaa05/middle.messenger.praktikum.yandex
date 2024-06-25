@@ -31,12 +31,12 @@ const onCheckValidation = (input: HTMLInputElement) => {
 };
 
 const formValidation = (form: HTMLElement) => {
-  const inputs = form.querySelectorAll("input");
+  const inputs = form.querySelectorAll("input, textarea");
   inputs.forEach((input) => {
     input.addEventListener("blur", (event) => {
       event.preventDefault();
       inputs.forEach((input) => {
-        if (input.value.length > 0) onCheckValidation(input);
+        if ((input as HTMLInputElement).value.length > 0) onCheckValidation(input as HTMLInputElement);
       });
     });
   });
@@ -46,12 +46,12 @@ const formValidation = (form: HTMLElement) => {
     event.preventDefault();
 
     inputs.forEach((input) => {
-      allFieldsFilled = !onCheckValidation(input) ? false : true;
+      allFieldsFilled = !onCheckValidation((input as HTMLInputElement)) ? false : true;
     });
 
     if (allFieldsFilled) {
       const formData: Record<string, string> = Array.from(inputs).reduce((acc, input) => {
-        acc[input.name] = input.value;
+        acc[(input as HTMLInputElement).name] = (input as HTMLInputElement).value;
         return acc;
       }, {} as Record<string, string>);
 

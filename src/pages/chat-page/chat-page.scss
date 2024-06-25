@@ -1,5 +1,19 @@
 @import '../../../static/variables';
- 
+
+.page {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  @media (width <= 678px) {
+    overflow: auto;
+    display: block;
+  };
+ }
+
 .chat-page {
   min-width: 320px; 
   max-width: 320px; 
@@ -14,27 +28,8 @@
   &__user-block {
     display: flex;
     margin: 15px 0;
-  }
-
-  &__user-img {
-    width: 36px; 
-    height:36px; 
-    min-width: 36px; 
-    border-radius: 50%;
-    margin-right: 8px;
-    background: $text-color;
-  }
-
-  &__user-name {
-    margin: 3px 0 6px; 
-    font-size:14px;
-    color: $chat-message-color;
-  }
-
-  &__user-email {
-    color: $gray-color;
-  }
-
+  } 
+  
   &__list {
     overflow: scroll;
     height: 100%;
@@ -92,7 +87,7 @@
   }
 
   &__count {
-    background: $text-blue;
+    background: $blue;
     border-radius: 50%; 
     min-width: 15px;  
     height: 15px; 
@@ -105,5 +100,68 @@
 
   &__messages {
     color: $chat-list-bgcolor;
+  }
+
+  &__sender {
+    border-bottom: 0.5px solid #EAEAEA;
+  }
+
+  &__message-block {
+    max-width: 900px; 
+    max-height: 100%; 
+    overflow: scroll;
+  }
+}
+
+.message-page {
+  max-width: 900px;
+  padding: 15px 0;  
+  border-top: 0.5px solid #EAEAEA;
+
+  &__block {
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    @media (width <= 678px) {
+      padding: 15px 0;
+    };
+  }
+
+  &__sender {
+    border-bottom: 0.5px solid #EAEAEA;
+  }
+
+  &__messages {
+    max-width: 900px; 
+    max-height: 100%; 
+    padding-right: 15px;
+    overflow: scroll;
+  }
+
+  &__btn-circle {
+    background-color: $blue;
+    color: #fff;
+    border: 0;
+    max-width: 28px;
+    width: 28px; 
+    cursor: pointer;
+    height: 28px;
+    border-radius: 50%;
+
+    &:hover {
+      background: $hover-color;
+    }
+  }
+
+  &__field {
+    background: $chat-message-bgcolor;
+    border: 0;
+    border-radius: 17px;
+    width: 100%; padding:6px 12px; margin: 0 7px;
+    outline: 0;
   }
 }
