@@ -1,6 +1,6 @@
 import Block from "../Block";
 import Handlebars from "handlebars";
-import { Chat } from "../../blocks/chat";
+import { Message } from "../../blocks/message";
 
 class ChatItem extends Block {
   props: {
@@ -18,7 +18,7 @@ class ChatItem extends Block {
   }
 
   render() {
-    const template = Handlebars.compile(Chat);
+    const template = Handlebars.compile(Message);
     const html = template(this.props);
     return html;
   }

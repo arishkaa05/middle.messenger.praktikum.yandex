@@ -1,12 +1,12 @@
 import { IEventBus, IProps } from "./types";
 
 export default class EventBus implements IEventBus {
-  public listeners: { [event: string]: Array<(...args: any[]) => void> } = {};
+  public listeners: { [event: string]: Array<(...args: IProps[]) => void> } = {};
   constructor() {
     this.listeners = {};
   }
 
-  on(event: string | number, callback: (...args: any[]) => void) {
+  on(event: string | number, callback: (...args: IProps[]) => void) {
     if (!this.listeners[event]) {
       this.listeners[event] = [];
     }
@@ -14,7 +14,7 @@ export default class EventBus implements IEventBus {
     this.listeners[event].push(callback);
   }
 
-  off(event: string | number, callback: (...args: any[]) => void) {
+  off(event: string | number, callback: (...args: IProps[]) => void) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }

@@ -2,9 +2,8 @@ import Block from "../Block";
 import ChatItem from "./ChatItem";
 
 class PageWithList extends Block {
-  constructor(props: {} | undefined) {
-    super({
-      ...props,
+  constructor() {
+    super({ 
       lists: [
         new ChatItem({
           name: "Андрей",
