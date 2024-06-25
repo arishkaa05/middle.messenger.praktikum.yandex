@@ -3,22 +3,30 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-
   "engines": {
     "node": ">=12"
   },
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "start": "node server.js"
+    "dev": "npm run lint && vite",
+    "lint": "node_modules/.bin/eslint . --fix && npx stylelint '**/*.scss' --fix",
+    "prebuild": "tsc --noEmit",
+    "build": "npm run prebuild && vite build",
+    "start": "npm run lint && vite build && node server.js"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
+    "eslint-config-airbnb": "^19.0.4",
     "handlebars": "^4.7.8",
     "sass": "^1.77.4",
+    "stylelint": "^16.6.1",
+    "stylelint-config-standard-scss": "^13.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
     "vite": "^5.2.0"
   },
   "dependencies": {
     "express": "^4.19.2",
-    "vite-plugin-handlebars": "^2.0.0"
+    "vituum": "^1.1.0"
   }
 }

@@ -1,4 +1,4 @@
-@import '../../../static/variables.scss';
+@import '../../../static/variables';
 
 .button {
   height: 40px;
@@ -11,6 +11,7 @@
   border: 0;
   transition: 0.3s;
   cursor: pointer;
+
   &:hover {
     background: $hover-color;
   }

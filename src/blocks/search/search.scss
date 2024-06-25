@@ -1,14 +1,15 @@
-@import '../../../static/variables.scss';
+@import '../../../static/variables';
 
 .search { 
   position: relative; 
-  &__logo {
-    color: $link-color;    
+
+  &__logo {    
     position: absolute;
     color: $link-color; 
     top: 7px; 
     left: 15px;
   }
+
   &__element {
     width: 260px;
     background: $gray-light-color;
