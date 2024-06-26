@@ -20,7 +20,7 @@ class MessageList extends Block {
   }
 
   override render() { 
-    return "<div>{{{ messages }}}</div>";
+    return "<div class='message-page__list'>{{{ messages }}}</div>";
   }
 }
 export default MessageList;

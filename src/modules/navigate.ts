@@ -1,7 +1,7 @@
 import * as Pages from "../pages/index";
 import Handlebars from "handlebars";
 
-const pages: { [key: string]: { source: any }[] } = {
+const pages: { [key: string]: string[] } = {
   signin: [Pages.SigninPage],
   login: [Pages.LoginPage],
   chat: [Pages.ChatPage],

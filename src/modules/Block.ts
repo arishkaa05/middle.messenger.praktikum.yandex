@@ -124,14 +124,13 @@ export default class Block {
       propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
     });
 
-    Object.entries(this.lists).forEach(([key, child]) => {
+    Object.entries(this.lists).forEach(([key]) => {
       propsAndStubs[key] = `<div data-id="__l_${_tmpId}"></div>`;
     });
 
     const fragment: HTMLTemplateElement = this._createDocumentElement("template") as HTMLTemplateElement;
     fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
-
-    //comment if you want to see
+ 
     Object.values(this.children).forEach((child) => {
       const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
       if (stub) stub.replaceWith(child.getContent());
@@ -142,8 +141,10 @@ export default class Block {
       child.forEach((item: { getContent: () => string | Node }) => {
         if (item instanceof Block) {
           listCont.content.append(item.getContent());
-        } else {
-          listCont.content.append(`${item}`);
+        } else { 
+          const element = document.createElement('div');  
+          element.textContent = `${key} - ${item}`;  
+          listCont.content.append(element);
         }
       });
       const stub = fragment.content.querySelector(`[data-id="__l_${_tmpId}"]`);
@@ -171,7 +172,7 @@ export default class Block {
     return new Proxy(props, {
       get(target, prop) {
         const value = target[prop as string];
-        return typeof value === "function" ? value.bind(target) : value;
+        return typeof value === "function" ? (value as Function).bind(target) : value;
       },
       set(target, prop, value) {
         const oldTarget: IProps = { ...target } as IProps;
