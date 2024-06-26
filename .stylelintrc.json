@@ -3,4 +3,4 @@
   "ignoreFiles": [
     "/build", "**/*.min.js", "/node_modules","dist"
   ]
-} 
+}
