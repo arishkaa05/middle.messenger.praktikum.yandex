@@ -1,18 +1,12 @@
 import Block from "../Block";
 import Handlebars from "handlebars";
 import { Message } from "../../blocks/message";
+import { IProps } from "../types";
 
 class ChatItem extends Block {
-  props: {
-    name: string;
-    message: string;
-    isMe: boolean;
-    time: string;
-    count: number;
-    [key: string]: number | string | boolean;
-  };
+  props: IProps;
 
-  constructor(props: { name: string; message: string; isMe: boolean; time: string; count: number; [key: string]: number | string | boolean }) {
+  constructor(props: IProps) {
     super(props);
     this.props = props;
   }
