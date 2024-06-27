@@ -8,7 +8,7 @@ export interface IEventBus {
 export interface IProps {
   [key: string]: string | boolean | number | any;
 }
- 
+
 export interface IList {
   lists: HTMLElement[];
-} 
+}
