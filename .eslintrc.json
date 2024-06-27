@@ -65,7 +65,7 @@
       }
     },
     { 
-      "files": ["src/server.js"],
+      "files": ["server.js"],
       "rules": { 
         "@typescript-eslint/no-unused-vars": "off"
       }
