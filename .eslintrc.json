@@ -36,12 +36,12 @@
           4
       ],
       "no-use-before-define": "off",
-      "class-methods-use-this": "warn",
       "import/no-unresolved": "off",
       "import/prefer-default-export": "off", 
       "no-restricted-syntax": "off",
       "no-shadow": "off",
       "import/extensions": "off",
+      "class-methods-use-this": "off",
       "import/no-extraneous-dependencies": "off",
       "no-underscore-dangle": "off",
       "max-len": [
@@ -60,7 +60,20 @@
       "rules": { 
         "@typescript-eslint/no-unused-vars": "off",
         "no-unused-vars": "off",
-        "no-shadow": "off"
+        "no-shadow": "off",
+        "no-undef": "off"
+      }
+    },
+    { 
+      "files": ["src/server.js"],
+      "rules": { 
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    },
+    { 
+      "files": ["src/modules/validation.ts"],
+      "rules": { 
+        "no-console": "off"
       }
     },
     { 

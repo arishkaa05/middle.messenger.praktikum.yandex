@@ -45,9 +45,11 @@ class HTTPTransport {
                 xhr.setRequestHeader(key, value);
             }
 
-            xhr.onload = function () {
+            function handleXhrLoad(xhr: unknown) {
                 resolve(xhr);
-            };
+            }
+
+            xhr.onload = handleXhrLoad;
 
             xhr.onabort = reject;
             xhr.onerror = reject;

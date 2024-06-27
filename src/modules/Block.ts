@@ -181,9 +181,9 @@ export default class Block {
                 return typeof value === 'function' ? (value as Function).bind(target) : value;
             },
             set(target, prop, value) {
-                const oldTarget: IProps = { ...target } as IProps;
-                target[prop as string] = value;
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+                const newTarget = { ...target };
+                newTarget[prop as string] = value;
+                self.eventBus().emit(Block.EVENTS.FLOW_CDU, target, newTarget);
                 return true;
             },
             deleteProperty() {
