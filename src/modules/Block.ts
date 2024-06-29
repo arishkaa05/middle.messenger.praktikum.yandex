@@ -1,4 +1,5 @@
 import Handlebars from 'handlebars';
+import { v4 as makeUUID } from 'uuid';
 import EventBus from './EventBus';
 import { IEventBus, IProps } from './types';
 
@@ -14,20 +15,22 @@ export default class Block {
 
     children: IProps;
 
+    firstRender = false;
+
     lists: IProps;
 
     eventBus: () => EventBus;
 
-    _element: HTMLElement | null = null;
+    _element: HTMLElement = document.createElement('div');
 
-    _id = Math.floor(100000 + Math.random() * 900000);
+    _id = makeUUID();
 
     constructor(propsWithChildren = {}) {
         const eventBus = new EventBus();
         const { props, children, lists } = this._getChildrenPropsAndProps(propsWithChildren);
-        this.props = this._makePropsProxy({ ...props });
         this.children = children;
-        this.lists = lists;
+        this.lists = this._makePropsProxy({ ...lists }) as typeof this.lists;
+        this.props = this._makePropsProxy({ ...props, __id: this._id });
         this.eventBus = () => eventBus;
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
@@ -37,11 +40,7 @@ export default class Block {
         const { events = {} } = this.props;
 
         Object.keys(events).forEach((eventName) => {
-            let element: HTMLElement;
-            if (this._element) {
-                element = this._element;
-                if (element) element.addEventListener(eventName, events[eventName]);
-            }
+            this._element.addEventListener(eventName, events[eventName]);
         });
     }
 
@@ -56,35 +55,57 @@ export default class Block {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
-    _componentDidMount() {
-        this.componentDidMount();
+    _componentDidMount(props: IProps) {
+        this.componentDidMount(props);
         Object.values(this.children).forEach((child) => {
             child.dispatchComponentDidMount();
         });
+        if (!this.firstRender) {
+            this.firstRender = true;
+        }
     }
 
-    componentDidMount() {}
+    componentDidMount(props: IProps) {
+        if (!props) {
+            return false;
+        }
+        return true;
+    }
 
     dispatchComponentDidMount() {
-        this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDM, this.props);
     }
 
-    _componentDidUpdate() {
-        const response = this.componentDidUpdate();
+    dispatchComponentDidUpdate() {
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+    }
+
+    _componentDidUpdate(oldProps: IProps, newProps: IProps) {
+        if (oldProps?.events) {
+            const { events } = oldProps;
+            Object.keys(events).forEach((eventName) => {
+                this._element.removeEventListener(eventName, events[eventName]);
+            });
+        }
+
+        const response = this.componentDidUpdate(oldProps, newProps);
         if (!response) {
             return;
         }
         this._render();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
+        if (!oldProps || !newProps) {
+            return false;
+        }
         return true;
     }
 
     _getChildrenPropsAndProps(propsAndChildren: IProps) {
-        const children: IProps = {};
+        const children: { [key: string]: Block } = {};
         const props: IProps = {};
-        const lists: IProps = {};
+        const lists: { [key: string]: Block[] } = {};
 
         Object.entries(propsAndChildren).forEach(([key, value]) => {
             if (value instanceof Block) {
@@ -103,11 +124,7 @@ export default class Block {
         const { attr = {} } = this.props;
 
         Object.entries(attr).forEach(([key, value]) => {
-            let element: HTMLElement;
-            if (this._element) {
-                element = this._element;
-                if (element) element.setAttribute(key, value as string);
-            }
+            this._element.setAttribute(key, value);
         });
     }
 
@@ -115,8 +132,9 @@ export default class Block {
         if (!nextProps) {
             return;
         }
-
-        Object.assign(this.props, nextProps);
+        const { props, lists } = this._getChildrenPropsAndProps(nextProps);
+        Object.assign(this.props, props);
+        Object.assign(this.lists, lists);
     };
 
     get element() {
@@ -124,10 +142,20 @@ export default class Block {
     }
 
     _render() {
-        const propsAndStubs: IProps = { ...this.props };
-        const _tmpId = Math.floor(100000 + Math.random() * 900000);
+        const block = this.render();
+        if (this._element) {
+            this._element.replaceWith(block);
+        }
+        this._element = block;
+        this._addEvents();
+        this.addAttributes();
+    }
+
+    makeFragment(template: string, props: IProps) {
+        const propsAndStubs: IProps = { ...props };
+        const _tmpId = makeUUID();
         Object.entries(this.children).forEach(([key, child]) => {
-            propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+            propsAndStubs[key] = `<div data-id="${child.props.__id}"></div>`;
         });
 
         Object.entries(this.lists).forEach(([key]) => {
@@ -135,15 +163,17 @@ export default class Block {
         });
 
         const fragment: HTMLTemplateElement = this._createDocumentElement('template') as HTMLTemplateElement;
-        fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
+        fragment.setAttribute('data-id', this._id);
+        fragment.innerHTML = Handlebars.compile(template)(propsAndStubs).trim();
 
         Object.values(this.children).forEach((child) => {
-            const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+            const stub = fragment.content.querySelector(`[data-id="${child.props.__id}"]`);
             if (stub) stub.replaceWith(child.getContent());
         });
 
-        Object.entries(this.lists).forEach(([key, child]) => {
-            const listCont: HTMLTemplateElement = this._createDocumentElement('template') as HTMLTemplateElement;
+        Object.entries(this.lists).forEach(([key]) => {
+            const child = this.lists[key];
+            const listCont = document.createElement('template') as HTMLTemplateElement;
             child.forEach((item: { getContent: () => string | Node }) => {
                 if (item instanceof Block) {
                     listCont.content.append(item.getContent());
@@ -156,34 +186,29 @@ export default class Block {
             const stub = fragment.content.querySelector(`[data-id="__l_${_tmpId}"]`);
             if (stub) stub.replaceWith(listCont.content);
         });
-
-        const newElement = fragment.content.firstElementChild;
-        if (this._element && newElement) {
-            this._element.replaceWith(newElement);
-        }
-        if (newElement) this._element = newElement as HTMLElement;
-        this._addEvents();
-        this.addAttributes();
+        return fragment.content.firstElementChild as HTMLElement;
     }
 
-    render() {}
+    render(): HTMLElement {
+        return this.getContent();
+    }
 
     getContent() {
-        return this.element;
+        return this._element;
     }
 
     _makePropsProxy(props: IProps) {
-        const self = this;
-
         return new Proxy(props, {
             get(target, prop) {
                 const value = target[prop as string];
                 return typeof value === 'function' ? (value as Function).bind(target) : value;
             },
-            set(target, prop, value) {
-                const newTarget = { ...target };
-                newTarget[prop as string] = value;
-                self.eventBus().emit(Block.EVENTS.FLOW_CDU, target, newTarget);
+            set: (target, prop: string | symbol, value: unknown) => {
+                const oldProps = { ...target };
+
+                target[prop as string] = value;
+
+                this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...oldProps }, { ...target });
                 return true;
             },
             deleteProperty() {

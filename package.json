@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "lint": "npx eslint . --fix && npx stylelint '**/*.scss' --fix",
+    "lint": "npx eslint . --ext .ts --fix && npx stylelint '**/*.scss' --fix",
     "prebuild": "tsc --noEmit",
     "build": "npm run prebuild && vite build",
     "start": "npm run lint && vite build && node server.js"
@@ -16,6 +16,7 @@
   "devDependencies": {
     "@eslint/js": "^9.5.0",
     "@types/eslint__js": "^8.42.3",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
     "eslint": "^8.57.0",
@@ -30,6 +31,7 @@
   },
   "dependencies": {
     "express": "^4.19.2",
+    "uuid": "^10.0.0",
     "vituum": "^1.1.0"
   }
 }

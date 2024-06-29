@@ -1,3 +1,9 @@
+type HTTPMethod = (
+  url: string,
+  options?: { method?: string; data?: {}; headers?: { [key: string]: string }; timeout?: number },
+  timeout?: number
+) => Promise<unknown>;
+
 const METHODS = {
     GET: 'GET',
     POST: 'POST',
@@ -5,7 +11,7 @@ const METHODS = {
     DELETE: 'DELETE',
 };
 
-function queryStringify(data: { [x: string]: string | number | boolean; }) {
+function queryStringify(data: { [x: string]: string | number | boolean }) {
     if (typeof data !== 'object') {
         throw new Error('Data must be object');
     }
@@ -15,15 +21,15 @@ function queryStringify(data: { [x: string]: string | number | boolean; }) {
 }
 
 class HTTPTransport {
-    get = (url: string, options: {timeout?: number} = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+    get: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
 
-    delete = (url: string, options: {timeout?: number} = {}) => this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+    delete: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
 
-    post = (url: string, options: {timeout?: number} = {}) => this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+    post: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.POST }, options.timeout);
 
-    put = (url: string, options: {timeout?: number} = {}) => this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+    put: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
 
-    request = (url: string, options: {method: string, data?: {}, headers?: {[key: string]: string;}, timeout?: number}, timeout = 5000) => {
+    request: HTTPMethod = (url, options = {}, timeout = 5000) => {
         const { method, data, headers = {} } = options;
 
         return new Promise((resolve, reject) => {
@@ -34,12 +40,7 @@ class HTTPTransport {
 
             const xhr = new XMLHttpRequest();
 
-            xhr.open(
-                method,
-                (method === METHODS.GET) && !!data
-                    ? `${url}${queryStringify(data)}`
-                    : url,
-            );
+            xhr.open(method, method === METHODS.GET && !!data ? `${url}${queryStringify(data)}` : url);
 
             for (const [key, value] of Object.entries(headers)) {
                 xhr.setRequestHeader(key, value);
@@ -57,7 +58,7 @@ class HTTPTransport {
             xhr.timeout = timeout;
             xhr.ontimeout = reject;
 
-            if ((method === METHODS.GET) || !data) {
+            if (method === METHODS.GET || !data) {
                 xhr.send();
             } else {
                 xhr.send(data as XMLHttpRequestBodyInit);

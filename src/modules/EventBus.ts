@@ -1,6 +1,6 @@
-import { IEventBus, IProps } from './types';
+import { IProps } from './types';
 
-export default class EventBus implements IEventBus {
+export default class EventBus {
     public listeners: { [event: string]: Array<(...args: IProps[]) => void> } = {};
 
     constructor() {
