@@ -19,6 +19,8 @@ import Block from './Block';
 const pages: {[key in string]: Block} = {
     login: Pages.createLoginPage,
     signin: Pages.createSigninPage,
+    fix: Pages.createFixPage,
+    notFound: Pages.createNotFoundPage
 };
 
 const render = (root: HTMLElement, block: Block) => {
@@ -39,5 +41,17 @@ const navigate = (page: string) => {
         navigate('notFound');
     }
 };
+
+
+document.addEventListener('click', (e) => {
+    console.log(12)
+    const page = (e.target as HTMLElement).getAttribute('page');
+    if (page) {
+        navigate(page);
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+    }
+});
 
 export default navigate;

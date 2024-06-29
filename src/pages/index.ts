@@ -6,3 +6,5 @@ export { ProfilePage } from './profile-page';
 export { PasswordPage } from './password-page';
 export { createLoginPage } from './login-page';
 export { createSigninPage } from './signin-page';
+export { createFixPage } from './fix-page';
+export { createNotFoundPage } from './not-found-page';

@@ -67,7 +67,3 @@ export interface ILink extends IProps {
   page: string;
   text: string
 }
-
-export interface IPageTitle extends IProps{
-  title: string
-}

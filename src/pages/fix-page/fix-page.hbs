@@ -1,9 +1,7 @@
-<main>
-  {{#> Container }}
-    <div class="fix-page">
-      {{> Error title="500" }}
-      {{> PageTitle title="Мы уже фиксим" }} 
-      {{> Link page="chat" text="Назад к чатам"}}
-    </div>
-  {{/ Container }}
+<main> 
+  <div class="fix-page">
+    {{{title}}}
+    {{{errorMessage}}}
+    {{{linkChat}}}
+  </div> 
 </main>
