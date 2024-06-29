@@ -1,4 +1,3 @@
-export { Container } from './container';
-export { Search } from './search';
+export { Search } from '../components/search';
 export { UserSmall } from './user-small';
-export { Message } from './message';
+export { Message } from '../components/message';

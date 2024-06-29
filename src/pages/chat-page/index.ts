@@ -1,8 +1,6 @@
 import './chat-page.scss';
-import PageWithList from '../../modules/classes/PageWithList';
-import UserChat from '../../modules/classes/UserChat';
-import MessageList from '../../modules/classes/MessageList';
 
+export { createChatList } from './module';
 export { default as ChatPage } from './chat-page.hbs?raw';
 
 // const observer = new MutationObserver(() => {

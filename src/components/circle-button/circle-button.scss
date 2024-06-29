@@ -1,0 +1,16 @@
+@import '../../../static/variables';
+
+.circle-button { 
+    background-color: $blue;
+    color: #fff;
+    border: 0;
+    max-width: 28px;
+    width: 28px; 
+    cursor: pointer;
+    height: 28px;
+    border-radius: 50%;
+
+    &:hover {
+      background: $hover-color;
+    }
+  } 

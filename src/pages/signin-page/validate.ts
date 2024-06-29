@@ -49,12 +49,14 @@ export const validatePassword = (e: Event) => {
     const res = setErrors(passwordInput, input.title, checking);
     return res;
 };
+
 export const submitForm = (e: Event) => {
     e.preventDefault();
-    const passwordIsValid = validatePassword(e);
-    const loginIsValid = validateLogin(e);
+    const validations = [validateEmail, validateLogin, validateName, validateLasname, validatePhone, validatePassword];
 
-    if (passwordIsValid && loginIsValid) {
+    const allValid: boolean = validations.every((validate) => validate(e));
+
+    if (allValid) {
         const inputs = Object.values(singinPageContent.children);
         const inputValues = inputs.reduce((result, input) => {
             if (input.children.input) {

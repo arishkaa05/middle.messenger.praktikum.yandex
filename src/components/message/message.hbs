@@ -5,7 +5,7 @@
       <p class="user__name">{{name}}</p>
       <p class="chat-page__user-time">{{time}}</p>
     </div>
-    {{#if isMe}}
+    {{#if isOwn}}
       <div class="chat-page__user-msg">
         <div class="chat-page__message">
           <span>Вы:</span>
@@ -13,7 +13,7 @@
         </div>
       </div>
     {{/if}}
-    {{#unless isMe}}
+    {{#unless isOwn}}
       <div class="chat-page__user-msg">
         <div class="chat-page__message">{{message}}</div>
         <div class="chat-page__count">{{count}}</div>

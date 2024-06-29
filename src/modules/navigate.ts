@@ -1,26 +1,14 @@
 import * as Pages from '../pages/index';
 import Block from './Block';
-// import { createLoginPage } from '../pages/login-page';
-
-// const pages: any = {
-//     signin: [Pages.SigninPage],
-//     login: [Pages.LoginPage],
-//     chat: [Pages.ChatPage],
-//     notFound: [Pages.NotFoundPage],
-//     fix: [Pages.FixPage],
-//     profile: [Pages.ProfilePage],
-//     password: [Pages.PasswordPage],
-// };
-
-// const pages: {[key in PagesNames]: Block} = {
-//     [PagesNames.LOGIN]: Pages.createLoginPage,
-// }
 
 const pages: {[key in string]: Block} = {
     login: Pages.createLoginPage,
     signin: Pages.createSigninPage,
     fix: Pages.createFixPage,
-    notFound: Pages.createNotFoundPage
+    notFound: Pages.createNotFoundPage,
+    profile: Pages.createProfilePage,
+    password: Pages.createPasswordPage,
+    chat: Pages.createChatList,
 };
 
 const render = (root: HTMLElement, block: Block) => {
@@ -42,9 +30,7 @@ const navigate = (page: string) => {
     }
 };
 
-
 document.addEventListener('click', (e) => {
-    console.log(12)
     const page = (e.target as HTMLElement).getAttribute('page');
     if (page) {
         navigate(page);

@@ -102,6 +102,14 @@ export default class Block {
         return true;
     }
 
+    _removeEvents() {
+        const { events = {} } = this.props;
+
+        Object.keys(events).forEach((eventName) => {
+            this._element.removeEventListener(eventName, events[eventName]);
+        });
+    }
+
     _getChildrenPropsAndProps(propsAndChildren: IProps) {
         const children: { [key: string]: Block } = {};
         const props: IProps = {};
@@ -143,6 +151,8 @@ export default class Block {
 
     _render() {
         const block = this.render();
+        this._removeEvents();
+        this._element.innerHTML = '';
         if (this._element) {
             this._element.replaceWith(block);
         }

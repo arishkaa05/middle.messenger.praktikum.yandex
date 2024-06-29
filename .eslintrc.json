@@ -35,6 +35,8 @@
           "error",
           4
       ],
+      "no-param-reassign": "off",
+      "no-console": "off",
       "no-use-before-define": "off",
       "import/no-unresolved": "off",
       "import/prefer-default-export": "off", 
@@ -49,8 +51,7 @@
           { 
               "code": 200
           }
-      ],
-      "no-param-reassign": "warn",
+      ], 
       "no-undef": "warn",
       "no-useless-constructor": "off"
   },
@@ -63,19 +64,13 @@
         "no-shadow": "off",
         "no-undef": "off"
       }
-    },
+    }, 
     { 
       "files": ["server.js"],
       "rules": { 
         "@typescript-eslint/no-unused-vars": "off"
       }
-    },
-    { 
-      "files": ["src/modules/validation.ts"],
-      "rules": { 
-        "no-console": "off"
-      }
-    },
+    }, 
     { 
       "files": ["src/modules/validationRules.ts"],
       "rules": { 
