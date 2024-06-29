@@ -1,3 +1,5 @@
+import { ButtonModule } from '../components/button/module';
+import { InputFieldModule } from '../components/input-field/module';
 import Block from './Block';
 
 export interface IEventBus {
@@ -34,7 +36,21 @@ export interface IInputField extends IProps {
   error?: string;
 }
 
-export interface ILoginPageContent {}
+export interface ILoginPageContent extends IProps {
+  loginInput: InputFieldModule;
+  passwordInput: InputFieldModule;
+  submitBtn: ButtonModule;
+}
+
+export interface ISigninPageContent extends IProps {
+  emailInput: InputFieldModule;
+  loginInput: InputFieldModule;
+  nameInput: InputFieldModule;
+  lastNameInput: InputFieldModule;
+  phoneInput: InputFieldModule;
+  passwordInput: InputFieldModule;
+  submitBtn: ButtonModule;
+}
 
 export interface IForm extends IProps {
   className?: string;
@@ -52,6 +68,6 @@ export interface ILink extends IProps {
   text: string
 }
 
-export interface IPageTitle {
+export interface IPageTitle extends IProps{
   title: string
 }

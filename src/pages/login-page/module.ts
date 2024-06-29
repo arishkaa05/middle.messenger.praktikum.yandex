@@ -23,7 +23,6 @@ export const title = new PageTitleModule({
 });
 
 export const loginInput = new InputFieldModule({
-    className: 'input-field__element',
     title: 'Логин',
     input: new InputModule({
         type: 'text',

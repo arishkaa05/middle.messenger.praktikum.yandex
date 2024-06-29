@@ -18,6 +18,7 @@ import Block from './Block';
 
 const pages: {[key in string]: Block} = {
     login: Pages.createLoginPage,
+    signin: Pages.createSigninPage,
 };
 
 const render = (root: HTMLElement, block: Block) => {
