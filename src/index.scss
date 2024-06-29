@@ -113,18 +113,11 @@ a {
 }
 
 .text-red {
-  color: $red;
+  color: $red !important;
 }
 
 .text-blue {
-  color: $blue;
-}
-
-.error-message {
-  position: absolute;
-  font-size: 10px;
-  top: -12px;
-  right: 5px;
+  color: $blue !important;
 }
 
 .relative-block {

@@ -1,16 +1,8 @@
-<main>
-  {{#> Dialog }}
-    {{> PageTitle title="Регистрация" }}
-    <form class="form">  
-      {{> InputField title="Почта" name="email"}}
-      {{> InputField title="Логин" name="login"}}
-      {{> InputField title="Имя" name="first_name"}}
-      {{> InputField title="Фамилия" name="second_name"}}
-      {{> InputField title="Телефон" name="phone"}}
-      {{> InputField title="Пароль" name="password" type="password"}} 
-      {{> Button text="Зарегистрироваться" type="submit"}}   
-    </form>
-    {{> Link page="login" text="Войти" }}
-    {{> Link page="chat" text="На страницу чатов" }}
-  {{/ Dialog }}
-</main>
+<main>  
+  <div class="dialog">
+    {{{title}}}
+    {{{singinPageContent}}}  
+    {{{linkSignUp}}}
+    {{{linkChat}}}
+  </div> 
+</main> 

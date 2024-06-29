@@ -1,8 +1,11 @@
-
-export { LoginPage } from './login-page';
-export { SigninPage } from './signin-page'; 
-export { ChatPage } from './chat-page'; 
-export { NotFoundPage } from './not-found-page'; 
-export { FixPage } from './fix-page'; 
-export { ProfilePage } from './profile-page'; 
-export { PasswordPage } from './password-page'; 
+export { SigninPage } from './signin-page';
+export { createChatList } from './chat-page';
+export { NotFoundPage } from './not-found-page';
+export { FixPage } from './fix-page';
+export { ProfilePage } from './profile-page';
+export { createPasswordPage } from './password-page';
+export { createLoginPage } from './login-page';
+export { createSigninPage } from './signin-page';
+export { createFixPage } from './fix-page';
+export { createNotFoundPage } from './not-found-page';
+export { createProfilePage } from './profile-page';
