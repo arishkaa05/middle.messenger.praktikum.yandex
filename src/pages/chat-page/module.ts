@@ -158,8 +158,6 @@ export const createMessagesContainer = new MessageContainerModule({
     newMessage,
 });
 
-// const createNewMessage = new NewMessageModule
-
 export const createChatList = new ChatPageModule({
     chatList,
     searchInput,
