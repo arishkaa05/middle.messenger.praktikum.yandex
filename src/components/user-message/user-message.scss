@@ -1,0 +1,38 @@
+@import '../../../static/variables';
+
+.message {
+  max-width: 400px; 
+  margin-bottom: 13px;
+  border-radius: 6px; 
+  padding: 10px;
+
+  &__block {
+    display: flex;
+  }
+
+  &__block-own {
+    justify-content: end;
+  }
+
+  &__block-other {
+    justify-content: start;
+  }
+
+  &__own {
+    background: #E4EDFD;
+  }
+
+  &__other {
+    background: #F8F8F8
+  }
+
+  &__text {
+    line-height: normal; 
+    margin: 0;
+  }
+
+  &__time {
+    margin: 0; 
+    text-align: end
+  }
+}

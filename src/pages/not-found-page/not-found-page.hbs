@@ -1,9 +1,5 @@
-<main>
-  {{#> Container }}
-    <div class="notFound-page">
-      {{> Error title="404" }}
-      {{> PageTitle title="Не туда попали" }} 
-      {{> Link page="chat" text="Назад к чатам"}}
-    </div>
-  {{/ Container }}
+<main>  
+  {{{title}}}
+  {{{errorMessage}}}
+  {{{linkChat}}} 
 </main>

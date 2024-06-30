@@ -1,45 +1,10 @@
-<main class="element-center">
+<main class="page">
   <div class="chat-page"> 
-    <div class="chat-page__main">
-      <div class="chat-page__user-block"> 
-        <div class="chat-page__user-img"></div>
-        <div> 
-          <div class="chat-page__user-name">
-            <a href="profile" class="profile__link" page="profile">User name</a>
-          </div>
-          <div>userMail@test.ru</div>
-        </div>
-      </div>
-      <p>{{> Search title="Поиск" name="search" }}</p>
+    <div class="chat-page__main"> 
+      {{{userMain}}} 
+      <p>{{{searchInput}}}</p>
     </div>
-    <div class="chat-page__list-item" >
-      <div class="chat-page__user-img"></div>
-      <div style="width: 100%"> 
-        <div class="chat-page__user-sent">
-          <p class="chat-page__user-name">Андрей</p>
-          <p class="chat-page__user-time">10:54</p>
-        </div>
-        <div class="chat-page__user-msg">
-          <div class="chat-page__message">Изображение ИзображениеИзображениеИзображение Изображение</div>
-          <div class="chat-page__count">3</div>
-        </div>
-      </div>
-    </div>
-    <div class="chat-page__list-item" >
-      <div class="chat-page__user-img"></div>
-      <div style="width: 100%"> 
-        <div class="chat-page__user-sent">
-          <p class="chat-page__user-name">Андрей</p>
-          <p class="chat-page__user-time">10:54</p>
-        </div>
-        <div class="chat-page__user-msg">
-          <div class="chat-page__message">
-            <span>Вы:</span>
-            Изображение 
-          </div> 
-        </div>
-      </div>
-    </div> 
+     <div class="chat-page__list">{{{chatList}}}</div>
   </div>
-  <div class="d-sm-none element-center"> Выберите чат чтобы отправить сообщение</div>
+  {{{createMessagesContainer}}} 
 </main>

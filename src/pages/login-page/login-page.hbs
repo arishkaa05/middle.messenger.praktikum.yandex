@@ -1,11 +1,8 @@
-<main>
-  {{#> Dialog }}
-    {{> PageTitle title="Вход" }}
-    <form> 
-      {{> InputField title="Логин" name="login" required=true }}
-      {{> InputField title="Пароль" name="password" type="password" required=true }}
-      {{> Button text="Авторизоваться" type="submit" }}   
-    </form>
-    {{> Link page="signin" text="Нет аккаунта?" }}
-  {{/ Dialog }}
-</main>
+<main>  
+  <div class="dialog">
+    {{{title}}}
+    {{{loginPageContent}}}  
+    {{{linkSignUp}}}
+    {{{linkChat}}}
+  </div> 
+</main> 

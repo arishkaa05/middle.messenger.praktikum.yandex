@@ -1,4 +1,4 @@
-@import '../../../static/variables.scss';
+@import '../../../static/variables';
 
 .link {
   font: $font-small;
@@ -12,9 +12,9 @@
   color: inherit;
   text-decoration: none;
   cursor: pointer;
-
+  
   &:hover {
     color: $text-color;
     text-decoration: none;
   }
-}
+} 

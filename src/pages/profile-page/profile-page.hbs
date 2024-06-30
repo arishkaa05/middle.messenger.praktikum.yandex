@@ -1,45 +1,6 @@
-<main>
-  <form class="profile-page">
-    <div class="relative-block element-center">
-      <div class="avatar__size avatar__img"></div>
-      <div class="profile-page__avatar-hover avatar__size element-center">
-        <input name="avatar" type="file">  
-        <span>Поменять аватар </span>
-      </div> 
-      <div class="password-page__name">Иван</div>
-    </div>
-    <div class="data">
-      <div class="data__line">
-        <span>Почта</span>
-        {{> Input className="input__element--align-right" name="email" title="Почта" value="pochta@yandex.ru"  type="email" required=true }}
-      </div>
-      <div class="data__line">
-        <span>Логин</span>
-        {{> Input className="input__element--align-right" name="login" title="Логин" value="ivanivanov" required=true }}
-      </div>
-      <div class="data__line">
-        <span>Имя</span>
-        {{> Input className="input__element--align-right" name="first_name" title="Имя" value="Иван" required=true }}
-      </div>
-      <div class="data__line">
-        <span>Фамилия</span>
-        {{> Input className="input__element--align-right" name="second_name" title="Фамилия" value="Иванов" required=true }}
-      </div>
-      <div class="data__line">
-        <span>Имя в чате</span>
-        {{> Input className="input__element--align-right" name="display_name" title="Имя в чате" value="Иван" required=true }}
-      </div>
-      <div  class="data__line data__line-last">
-        <span>Телефон</span>
-        {{> Input className="input__element--align-right" name="phone" title="Телефон" value="+7 (909) 967 30 30" type="tel" required=true }}
-      </div>
-      <div class="data__line">
-        <div class="text-blue"> {{> Link page="password" text="Изменить пароль" }}</div>
-      </div>
-      <div class="data__line data__line-last">
-        <div class="text-red"> {{> Link page="login" text="Выйти" }}</div>
-      </div>
-    </div>
-    {{> Button text="Сохранить данные" type="submit" }}
-  </from>
+<main> 
+  {{{profilePageContent}}}
+  {{{linkPassword}}}  
+  {{{linkLogout}}}
+  {{{linkChat}}}
 </main>
