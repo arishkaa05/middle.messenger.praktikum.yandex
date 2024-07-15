@@ -1,14 +1,21 @@
-// @ts-nocheck
-import store from './Store';
+import Block from "./Block"
+import store from "./Store";
+import isEqual  from '../helpers/isEqual'; 
 
-export function connect(Component) {
+export function connect(Component: typeof Block, mapStateToProps: (state: any) => any) {
     return class extends Component {
-        constructor(...args) {
-            super(...args);
+        constructor(props: any) {
+            let state = mapStateToProps(store.getState());
+            super({ ...props, ...state })
+
             store.subscribe(() => {
-                console.log('We are in store subscription');
-                this.setProps({ ...store.getState() });
-            });
+                const newState = mapStateToProps(store.getState())
+                
+                if (!isEqual(state, newState)) {
+                    this.setProps({ ...newState });
+                }
+                state = newState;
+            })
         }
-    };
-}
+    }
+} 

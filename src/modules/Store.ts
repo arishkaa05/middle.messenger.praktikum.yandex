@@ -1,4 +1,5 @@
 // @ts-nocheck
+import cloneDeep from "../helpers/cloneDeep";
 const createStore = (reducer, initialState) => {
     const subscribers = [];
     let currentState = initialState;
@@ -10,26 +11,26 @@ const createStore = (reducer, initialState) => {
             fn(currentState);
         },
         dispatch: (action) => {
-            currentState = reducer(currentState, action);
+            currentState = reducer(currentState, action); 
             subscribers.forEach((fn) => fn(currentState));
         },
     };
 };
 
-const deepCopy = (object) => JSON.parse(JSON.stringify(object));
-
 const reducer = (state, action) => {
-    const newState = deepCopy(state);
+    const newState = cloneDeep(state);
     if (action.type === 'SET_TEXT') {
         console.log('SET_TEXT');
         newState.buttonText = action.buttonText;
         return newState;
     }
+    console.log(newState)
+    state = newState
     return state;
 };
 
 const state = {
-    buttonText: 'Initial text',
+    buttonText: 'Авторизоваться',
 };
 
 const setTextAction = {
@@ -38,5 +39,4 @@ const setTextAction = {
 };
 
 const store = Object.freeze(createStore(reducer, state));
-
 export default store;

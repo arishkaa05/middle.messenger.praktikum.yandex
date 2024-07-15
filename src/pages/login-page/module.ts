@@ -5,6 +5,8 @@ import { InputModule } from '../../components/input/module';
 import { LinkModule } from '../../components/link/module';
 import { PageTitleModule } from '../../components/page-title/module';
 import Block from '../../modules/Block';
+import { connect } from '../../modules/Hoc';
+import store from '../../modules/Store';
 import LoginPage from './login-page.hbs?raw';
 import { submitForm, validateLogin, validatePassword } from './validate';
 
@@ -15,6 +17,13 @@ export class LoginPageModule extends Block {
 
     render() {
         return this.makeFragment(LoginPage, this.props);
+    }
+
+    componentDidUpdate(oldProps: any, newProps: any): boolean {
+        if (oldProps.buttonText !== newProps.buttonText) {
+            submitBtn.setProps({ text: newProps.buttonText })
+        }
+        return true
     }
 }
 
@@ -31,6 +40,9 @@ export const loginInput = new InputFieldModule({
         value: '',
         events: {
             blur: (e: Event) => validateLogin(e),
+            change: (e: any) => { 
+                store.dispatch({ type: 'SET_TEXT', buttonText: e.target.value })
+            }
         },
     }),
 });
@@ -49,10 +61,10 @@ export const passwordInput = new InputFieldModule({
 });
 
 export const submitBtn = new ButtonModule({
-    text: 'Авторизоваться',
+    text: store.getState().buttonText,
     type: 'submit',
 });
-
+ 
 export const linkSignUp = new LinkModule({
     page: 'signin',
     text: 'Нет аккаунта?',
@@ -69,9 +81,10 @@ export const loginPageContent = new LoginPageContentModule({
     events: {
         submit: (e: Event) => submitForm(e),
     },
-});
+}); 
+const connectedSigninPage = connect(LoginPageModule, (state) => ({ buttonText: state.buttonText }))
 
-export const createLoginPage = new LoginPageModule({
+export const createLoginPage = new connectedSigninPage({
     title,
     loginPageContent,
     linkSignUp,
