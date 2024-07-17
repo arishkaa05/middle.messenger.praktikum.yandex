@@ -1,10 +1,10 @@
-import { UserMessageListModule } from '../blocks/user-message-list/module';
-import { UserSmallModule } from '../blocks/user-small/module';
-import { ButtonModule } from '../components/button/module';
-import { InputFieldModule } from '../components/input-field/module';
-import { MessageModule } from '../components/message/module';
-import { NewMessageModule } from '../components/new-message/module';
-import Block from './Block';
+import { UserMessageListModule } from "../blocks/user-message-list/module";
+import { UserSmallModule } from "../blocks/user-small/module";
+import { ButtonModule } from "../components/button/module";
+import { InputFieldModule } from "../components/input-field/module";
+import { MessageModule } from "../components/message/module";
+import { NewMessageModule } from "../components/new-message/module";
+import Block from "./Block";
 
 export interface IEventBus {
   listeners: { [event: string | number]: Array<(...args: IProps[]) => void> };
@@ -16,6 +16,12 @@ export interface IEventBus {
 export type PlainObject<T = any> = {
   [k in string]: T;
 };
+
+export type HTTPMethod = (
+  url: string,
+  options?: { method?: string; data?: {}; headers?: { [key: string]: string }; timeout?: number },
+  timeout?: number
+) => Promise<unknown>;
 
 export interface IList {
   lists: HTMLElement[];

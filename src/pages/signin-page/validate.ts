@@ -2,6 +2,7 @@ import {
     emailInput, lastNameInput, loginInput, nameInput, passwordInput, phoneInput, singinPageContent,
 } from './module';
 import { checkInput, setErrors } from '../../modules/validation';
+import SigninAPI from './signin-page.api';
 
 export const validateEmail = (e: Event) => {
     e.preventDefault();
@@ -51,7 +52,7 @@ export const validatePassword = (e: Event) => {
 };
 
 export const submitForm = (e: Event) => {
-    e.preventDefault();
+    e.preventDefault(); 
     const validations = [validateEmail, validateLogin, validateName, validateLasname, validatePhone, validatePassword];
 
     const allValid: boolean = validations.every((validate) => validate(e));
@@ -66,5 +67,15 @@ export const submitForm = (e: Event) => {
             return result;
         }, {});
         console.log(inputValues);
+        const signinApi = new SigninAPI();
+        signinApi.signUpRequest(inputValues)
+        .then((response: any) => {
+            // Handle the response from the GET request
+            console.log("Response from server:", response); 
+        })
+        .catch((error: any) => {
+            // Handle any errors that occurred during the request
+            console.error("Error fetching data:", error);
+        });
     }
 };
