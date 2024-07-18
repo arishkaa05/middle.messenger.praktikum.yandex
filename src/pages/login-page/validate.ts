@@ -1,6 +1,6 @@
 import { loginInput, passwordInput, loginPageContent } from "./module";
 import { checkInput, setErrors } from "../../modules/validation";
-import LoginAPI from "./login-page.api";
+import { handleSignIn } from "./login.services";
 
 export const validatePassword = (e: Event) => {
   e.preventDefault();
@@ -33,16 +33,6 @@ export const submitForm = (e: Event) => {
       return result;
     }, {});
     console.log(inputValues);
-    const signinApi = new LoginAPI();
-    signinApi
-      .signInRequest(inputValues)
-      .then((response: any) => {
-        // Handle the response from the GET request
-        console.log("Response from server:", response);
-      })
-      .catch((error: any) => {
-        // Handle any errors that occurred during the request
-        console.error("Error fetching data:", error);
-      });
+    handleSignIn(inputValues);
   }
 };
