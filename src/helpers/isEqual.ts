@@ -1,39 +1,50 @@
-import { PlainObject } from '../modules/types';
+import { PlainObject } from "../modules/types";
+type StringIndexed = Record<string, any>;
+
+const obj: StringIndexed = {
+  key: 1,
+  key2: "test",
+  key3: false,
+  key4: true,
+  key5: [1, 2, 3],
+  key6: { a: 1 },
+  key7: { b: { d: 2 } },
+};
 
 function isArrayOrObject(value: unknown): value is [] | PlainObject {
-    return isPlainObject(value) || isArray(value);
+  return isPlainObject(value) || isArray(value);
 }
 
 function isPlainObject(value: unknown): value is PlainObject {
-    return typeof value === 'object'
-    && value !== null
-    && value.constructor === Object
-    && Object.prototype.toString.call(value) === '[object Object]';
+  return typeof value === "object" && value !== null && value.constructor === Object && Object.prototype.toString.call(value) === "[object Object]";
 }
 
 function isArray(value: unknown): value is [] {
-    return Array.isArray(value);
+  return Array.isArray(value);
 }
 
 function isEqual(lhs: PlainObject, rhs: PlainObject) {
-    if (Object.keys(lhs).length !== Object.keys(rhs).length) {
-        return false;
+  if (lhs === null || rhs === null) {
+    return lhs === rhs;
+  }
+  if (Object.keys(lhs).length !== Object.keys(rhs).length) {
+    return false;
+  }
+
+  for (const [key, value] of Object.entries(lhs)) {
+    const rightValue = rhs[key];
+    if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
+      if (isEqual(value, rightValue)) {
+        continue;
+      }
+      return false;
     }
 
-    for (const [key, value] of Object.entries(lhs)) {
-        const rightValue = rhs[key];
-        if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-            if (isEqual(value, rightValue)) {
-                continue;
-            }
-            return false;
-        }
-
-        if (value !== rightValue) {
-            return false;
-        }
+    if (value !== rightValue) {
+      return false;
     }
+  }
 
-    return true;
+  return true;
 }
 export default isEqual;
