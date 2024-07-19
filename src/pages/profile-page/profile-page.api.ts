@@ -1,22 +1,14 @@
-import HTTPTransport from "../../servises/HTTPTransort";
+import HTTPTransport from '../../servises/HTTPTransort';
 
 export default class ProfileAPI {
-  httpTransport: HTTPTransport = new HTTPTransport();
+    httpTransport: HTTPTransport = new HTTPTransport();
 
-  constructor() {}
+    // logout
+    logoutRequest = () => this.httpTransport.post('/auth/logout', {});
 
-  // logout
-  logoutRequest = () => {
-    return this.httpTransport.post(`/auth/logout`, {});
-  };
+    // change user profile
+    changeUserProfile = (userData: any) => this.httpTransport.put('/user/profile', userData);
 
-  //change user profile
-  changeUserProfile = (userData: any) => {
-    return this.httpTransport.put(`/user/profile`, userData);
-  };
-
-  //change user password
-  changeUserPassword = (userData: any) => {
-    return this.httpTransport.put(`/user/password`, userData);
-  };
+    // change user password
+    changeUserPassword = (userData: any) => this.httpTransport.put('/user/password', userData);
 }

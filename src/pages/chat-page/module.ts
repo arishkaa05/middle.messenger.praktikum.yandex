@@ -12,6 +12,8 @@ import { IProps } from '../../modules/types';
 import { validateMessage, submitForm } from './validate';
 import { TextareaModule } from '../../components/textarea/module';
 import { CircleButtonModule } from '../../components/circle-button/module';
+import store from '../../modules/Store';
+import { connect } from '../../modules/Hoc';
 
 export class ChatPageModule extends Block {
     constructor(props: IProps) {
@@ -20,6 +22,13 @@ export class ChatPageModule extends Block {
 
     render() {
         return this.makeFragment(ChatPage, this.props);
+    }
+
+    componentDidUpdate(oldProps: any, newProps: any): boolean {
+        if (oldProps.userData !== newProps.userData) {
+            userMain.setProps({ name: newProps.userData.first_name, info: newProps.userData.login });
+        }
+        return true;
     }
 }
 
@@ -81,8 +90,8 @@ export const searchInput = new SearchModule({
 });
 
 export const userMain = new UserSmallModule({
-    name: 'User',
-    info: 'info@info.ru',
+    name: store.getState().userData.first_name,
+    info: store.getState().userData.login,
 });
 
 export const sender = new UserSmallModule({
@@ -158,7 +167,9 @@ export const createMessagesContainer = new MessageContainerModule({
     newMessage,
 });
 
-export const createChatList = new ChatPageModule({
+const ConnectedChatPage = connect(ChatPageModule, (state) => ({ userData: state.userData }));
+
+export const createChatList = new ConnectedChatPage({
     chatList,
     searchInput,
     userMain,

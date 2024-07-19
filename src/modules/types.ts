@@ -1,10 +1,10 @@
-import { UserMessageListModule } from "../blocks/user-message-list/module";
-import { UserSmallModule } from "../blocks/user-small/module";
-import { ButtonModule } from "../components/button/module";
-import { InputFieldModule } from "../components/input-field/module";
-import { MessageModule } from "../components/message/module";
-import { NewMessageModule } from "../components/new-message/module";
-import Block from "./Block";
+import { UserMessageListModule } from '../blocks/user-message-list/module';
+import { UserSmallModule } from '../blocks/user-small/module';
+import { ButtonModule } from '../components/button/module';
+import { InputFieldModule } from '../components/input-field/module';
+import { MessageModule } from '../components/message/module';
+import { NewMessageModule } from '../components/new-message/module';
+import Block from './Block';
 
 export interface IEventBus {
   listeners: { [event: string | number]: Array<(...args: IProps[]) => void> };
@@ -99,7 +99,6 @@ export interface IButton extends IProps {
 export interface ILink extends IProps {
   url?: string;
   className?: string;
-  page: string;
   text: string;
 }
 

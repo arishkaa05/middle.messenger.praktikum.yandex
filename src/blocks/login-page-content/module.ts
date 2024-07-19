@@ -2,9 +2,9 @@ import Block from '../../modules/Block';
 import { ILoginPageContent } from '../../modules/types';
 import { LoginPageContent } from './login-page-content';
 
-export class LoginPageContentModule extends Block { 
+export class LoginPageContentModule extends Block {
     constructor(props: ILoginPageContent) {
-        super(props); 
+        super(props);
     }
 
     render() {

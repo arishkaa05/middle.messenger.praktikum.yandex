@@ -1,8 +1,6 @@
 import isEqual from '../helpers/isEqual';
 import { IProps, PlainObject } from './types';
 
-
-
 class Route {
     private _pathname: string;
 
@@ -10,7 +8,7 @@ class Route {
 
     private _block: any;
 
-    private _props: { rootQuery: string; };
+    private _props: { rootQuery: string };
 
     private _root: HTMLElement | null;
 
