@@ -12,7 +12,7 @@ const METHODS = {
 export default class HTTPTransport {
   get: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
 
-  delete: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  delete: HTTPMethod = (url, body: any, options: any = {}) => this.request(url, { ...options, method: METHODS.DELETE, data: body }, options.timeout);
 
   post: HTTPMethod = (url, body: any, options: any = {}) => this.request(url, { ...options, method: METHODS.POST, data: body }, options.timeout);
 

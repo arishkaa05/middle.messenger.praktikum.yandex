@@ -24,8 +24,8 @@ function isArray(value: unknown): value is [] {
 }
 
 function isEqual(lhs: PlainObject, rhs: PlainObject) {
-  if (lhs === null || rhs === null) {
-    return lhs === rhs;
+  if (lhs === null || rhs === null || lhs === undefined) {
+    return true;
   }
   if (Object.keys(lhs).length !== Object.keys(rhs).length) {
     return false;

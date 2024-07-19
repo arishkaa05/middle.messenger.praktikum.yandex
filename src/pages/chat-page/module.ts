@@ -1,20 +1,21 @@
 import { UserSmallModule } from "../../blocks/user-small/module";
 import { MessageListModule } from "../../blocks/message-list/module";
-import { MessageModule } from "../../components/message/module";
 import { NewMessageModule } from "../../components/new-message/module";
-import { SearchModule } from "../../components/search/module";
 import Block from "../../modules/Block";
 import ChatPage from "./chat-page.hbs?raw";
 import { UserMessageListModule } from "../../blocks/user-message-list/module";
-import { UserMessageModule } from "../../components/user-message/module";
 import { MessageContainerModule } from "../../blocks/message-container/module";
-import { IProps } from "../../modules/types";
-import { validateMessage, submitForm } from "./validate";
+import { IMessage, IProps } from "../../modules/types";
+import { validateMessage, submitForm, validateChatTitle, onDeleteUser } from "./validate";
 import { TextareaModule } from "../../components/textarea/module";
 import { CircleButtonModule } from "../../components/circle-button/module";
-import store from "../../modules/Store";
+import store, { openChat } from "../../modules/Store";
 import { connect } from "../../modules/Hoc";
 import Router from "../../modules/Router";
+import { InputFieldModule } from "../../components/input-field/module";
+import { InputModule } from "../../components/input/module";
+import { MessageModule } from "../../components/message/module";
+import { DeleteButtonModule } from "../../components/delete-button/module";
 const router = new Router("#app");
 
 export class ChatPageModule extends Block {
@@ -30,65 +31,35 @@ export class ChatPageModule extends Block {
     if (oldProps.userData !== newProps.userData) {
       userMain.setProps({ name: newProps.userData.first_name, info: newProps.userData.login });
     }
+    if (oldProps.activeChat !== newProps.activeChat) {
+      sender.setProps({ name: newProps.activeChat.title });
+    }
+    if (oldProps.chatList !== newProps.chatList) {
+      const wrappedChatList = newProps.chatList.map((chat: IMessage) => {
+        const temp: any = new MessageModule({
+          ...chat,
+          events: {
+            click: () => openChat(temp.props),
+          },
+        });
+        return temp;
+      });
+      chatList.setProps(wrappedChatList);
+    }
     return true;
   }
 }
 
 export const chatList = new MessageListModule({
-  messages: [
-    new MessageModule({
-      isOwn: false,
-      message: "Привет! Как дела?",
-      time: "10.43",
-      name: "Андрей",
-      count: 2,
-    }),
-    new MessageModule({
-      isOwn: true,
-      message: "Хорошо, я на связи",
-      time: "10.48",
-      name: "Елена",
-    }),
-    new MessageModule({
-      isOwn: true,
-      message: "Загружаю файл...",
-      time: "11.03",
-      name: "Максим",
-    }),
-    new MessageModule({
-      isOwn: false,
-      message: "Может, в кино сходим? Новый фильм про супергероев вышел.",
-      time: "11.23",
-      name: "Ольга",
-      count: 1,
-    }),
-    new MessageModule({
-      isOwn: true,
-      message: "Это важно. Давай обсудим",
-      time: "11.27",
-      name: "Иван",
-    }),
-    new MessageModule({
-      isOwn: false,
-      message: "Тогда в 19:00 у кинотеатра?",
-      time: "11.32",
-      name: "Дмитрий",
-      count: 5,
-    }),
-    new MessageModule({
-      isOwn: true,
-      message: "Как дела?",
-      time: "11.34",
-      name: "Екатерина",
-    }),
-  ],
+  messages: store.getState().chatList,
 });
 
-export const searchInput = new SearchModule({
-  title: "Поиск",
-  type: "text",
-  name: "search",
-  value: "",
+export const deleteUserButton = new DeleteButtonModule({
+  type: "submit",
+  text: "",
+  events: {
+    click: () => onDeleteUser(store.getState().activeChat.id),
+  },
 });
 
 export const userMain = new UserSmallModule({
@@ -100,46 +71,47 @@ export const userMain = new UserSmallModule({
 });
 
 export const sender = new UserSmallModule({
-  name: "Андрей",
+  name: store.getState().activeChat.title,
   info: "online",
+  deleteUserButton,
 });
 
 export const userMessagesList = new UserMessageListModule({
   messages: [
-    new UserMessageModule({
-      isOwn: false,
-      message: "Привет! Как дела?",
-      time: "10:43",
-      count: 2,
-    }),
-    new UserMessageModule({ isOwn: true, message: "Привет, Андрей! У меня все хорошо, спасибо.", time: "10:45" }),
-    new UserMessageModule({ isOwn: true, message: "А как у тебя дела?", time: "10:46" }),
-    new UserMessageModule({
-      isOwn: false,
-      message: "Все отлично! Слушай, я тут подумал, может, в кино сходим? Вышел новый фильм про супергероев.",
-      time: "10:50",
-      name: "Андрей",
-    }),
-    new UserMessageModule({ isOwn: true, message: "Звучит интересно! Когда ты предлагаешь сходить?", time: "10:52" }),
-    new UserMessageModule({
-      isOwn: false,
-      message: "Как насчет сегодня в 19:00 у кинотеатра?",
-      time: "10:54",
-    }),
-    new UserMessageModule({ isOwn: true, message: "Отлично, договорились! Я приду.", time: "10:56" }),
-    new UserMessageModule({ isOwn: true, message: "Кстати, как у тебя дела на работе?", time: "10:58" }),
-    new UserMessageModule({
-      isOwn: false,
-      message: "Да все нормально, разбираюсь понемногу. А у тебя как?",
-      time: "11:00",
-    }),
-    new UserMessageModule({ isOwn: true, message: "У меня тоже все хорошо, работы много, но я справляюсь.", time: "11:02" }),
-    new UserMessageModule({ isOwn: true, message: "Ладно, увидимся позже в кино, пока!", time: "11:04" }),
-    new UserMessageModule({
-      isOwn: false,
-      message: "Отлично, до встречи!",
-      time: "11:05",
-    }),
+    // new UserMessageModule({
+    //   isOwn: false,
+    //   message: "Привет! Как дела?",
+    //   time: "10:43",
+    //   count: 2,
+    // }),
+    // new UserMessageModule({ isOwn: true, message: "Привет, Андрей! У меня все хорошо, спасибо.", time: "10:45" }),
+    // new UserMessageModule({ isOwn: true, message: "А как у тебя дела?", time: "10:46" }),
+    // new UserMessageModule({
+    //   isOwn: false,
+    //   message: "Все отлично! Слушай, я тут подумал, может, в кино сходим? Вышел новый фильм про супергероев.",
+    //   time: "10:50",
+    //   name: "Андрей",
+    // }),
+    // new UserMessageModule({ isOwn: true, message: "Звучит интересно! Когда ты предлагаешь сходить?", time: "10:52" }),
+    // new UserMessageModule({
+    //   isOwn: false,
+    //   message: "Как насчет сегодня в 19:00 у кинотеатра?",
+    //   time: "10:54",
+    // }),
+    // new UserMessageModule({ isOwn: true, message: "Отлично, договорились! Я приду.", time: "10:56" }),
+    // new UserMessageModule({ isOwn: true, message: "Кстати, как у тебя дела на работе?", time: "10:58" }),
+    // new UserMessageModule({
+    //   isOwn: false,
+    //   message: "Да все нормально, разбираюсь понемногу. А у тебя как?",
+    //   time: "11:00",
+    // }),
+    // new UserMessageModule({ isOwn: true, message: "У меня тоже все хорошо, работы много, но я справляюсь.", time: "11:02" }),
+    // new UserMessageModule({ isOwn: true, message: "Ладно, увидимся позже в кино, пока!", time: "11:04" }),
+    // new UserMessageModule({
+    //   isOwn: false,
+    //   message: "Отлично, до встречи!",
+    //   time: "11:05",
+    // }),
   ],
 });
 
@@ -166,17 +138,37 @@ export const newMessage = new NewMessageModule({
   circleButton,
 });
 
+export const createChatBtn = new CircleButtonModule({
+  type: "submit",
+  text: "",
+  events: {
+    click: (e: Event) => validateChatTitle(e),
+  },
+});
+
+export const chatTitleInput = new InputFieldModule({
+  title: "Новый чат",
+  input: new InputModule({
+    type: "text",
+    name: "message",
+    title: "Новый чат",
+    value: "",
+  }),
+});
+
 export const createMessagesContainer = new MessageContainerModule({
   sender,
   userMessagesList,
   newMessage,
 });
 
-const ConnectedChatPage = connect(ChatPageModule, (state) => ({ userData: state.userData }));
+const ConnectedChatPage = connect(ChatPageModule, (state) => ({ userData: state.userData, chatList: state.chatList, activeChat: state.activeChat }));
 
 export const createChatList = new ConnectedChatPage({
   chatList,
-  searchInput,
+  newMessage,
+  chatTitleInput,
+  createChatBtn,
   userMain,
   createMessagesContainer,
 });

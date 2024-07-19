@@ -2,10 +2,10 @@
   <div class="user__img"></div>
   <div style="width: 100%">
     <div class="chat-page__user-sent">
-      <p class="user__name">{{name}}</p>
+      <p class="user__name">{{title}}</p>
       <p class="chat-page__user-time">{{time}}</p>
     </div>
-    {{#if isOwn}}
+    {{#if unread_count}}
       <div class="chat-page__user-msg">
         <div class="chat-page__message">
           <span>Вы:</span>
@@ -13,7 +13,7 @@
         </div>
       </div>
     {{/if}}
-    {{#unless isOwn}}
+    {{#unless unread_count}}
       <div class="chat-page__user-msg">
         <div class="chat-page__message">{{message}}</div>
         <div class="chat-page__count">{{count}}</div>

@@ -6,10 +6,11 @@ import { LinkModule } from "../../components/link/module";
 import { PageTitleModule } from "../../components/page-title/module";
 import Block from "../../modules/Block";
 import { connect } from "../../modules/Hoc";
-import store from "../../modules/Store";
+import Router from "../../modules/Router";
 import LoginPage from "./login-page.hbs?raw";
 import { submitForm, validateLogin, validatePassword } from "./validate";
 
+const router = new Router("#app");
 export class LoginPageModule extends Block {
   constructor(props: any) {
     super(props);
@@ -37,12 +38,9 @@ export const loginInput = new InputFieldModule({
     type: "text",
     name: "login",
     title: "Логин",
-    value: "",
+    value: "testlogin",
     events: {
       blur: (e: Event) => validateLogin(e),
-      change: (e: any) => {
-        store.dispatch({ type: "SET_TEXT", buttonText: e.target.value });
-      },
     },
   }),
 });
@@ -54,6 +52,7 @@ export const passwordInput = new InputFieldModule({
     type: "password",
     title: "Пароль",
     name: "password",
+    value: "123asdASD!",
     events: {
       blur: (e: Event) => validatePassword(e),
     },
@@ -61,13 +60,15 @@ export const passwordInput = new InputFieldModule({
 });
 
 export const submitBtn = new ButtonModule({
-  text: store.getState().buttonText,
+  text: "Авторизоваться",
   type: "submit",
 });
 
 export const linkSignUp = new LinkModule({
-  page: "sign-up",
   text: "Нет аккаунта?",
+  events: {
+    click: () => router.go("/sign-up"),
+  },
 });
 
 export const loginPageContent = new LoginPageContentModule({
@@ -78,9 +79,9 @@ export const loginPageContent = new LoginPageContentModule({
     submit: (e: Event) => submitForm(e),
   },
 });
-const connectedSigninPage = connect(LoginPageModule, (state) => ({ buttonText: state.buttonText }));
+const ConnectedSigninPage = connect(LoginPageModule, (state) => ({ buttonText: state.buttonText }));
 
-export const createLoginPage = new connectedSigninPage({
+export const createLoginPage = new ConnectedSigninPage({
   title,
   loginPageContent,
   linkSignUp,

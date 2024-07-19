@@ -3,9 +3,13 @@
 .user { 
   &__block {
     display: flex;
+    justify-content: space-between;
     margin: 15px 0;
   }
 
+  &__flex {
+    display: flex;
+  }
   &__img {
     width: 36px; 
     height:36px; 
