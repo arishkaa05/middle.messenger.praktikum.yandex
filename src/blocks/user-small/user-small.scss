@@ -10,6 +10,7 @@
   &__flex {
     display: flex;
   }
+
   &__img {
     width: 36px; 
     height:36px; 
@@ -24,6 +25,7 @@
     font-size:14px;
     color: $chat-message-color;
     cursor: pointer;
+
     &:hover { 
       color: $text-color;
       text-decoration: none;

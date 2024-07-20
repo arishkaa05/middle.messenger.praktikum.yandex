@@ -5,7 +5,7 @@ import { InputFieldModule } from '../../components/input-field/module';
 import { InputModule } from '../../components/input/module';
 import { LinkModule } from '../../components/link/module';
 import { userAuthCheck } from '../../helpers/userAuthCheck';
-import Block from '../../modules/Block'; 
+import Block from '../../modules/Block';
 import { connect } from '../../modules/Hoc';
 import { router } from '../../modules/Router';
 import PasswordPage from './password-page.hbs?raw';
@@ -15,19 +15,20 @@ import {
 
 export class PasswordPageModule extends Block {
     constructor(props: any) {
-        userAuthCheck()
+        userAuthCheck();
         super(props);
     }
 
     render() {
         return this.makeFragment(PasswordPage, this.props);
     }
+
     componentDidUpdate(oldProps: any, newProps: any): boolean {
-      if (oldProps.error !== newProps.error) {
-        console.log(newProps.error)
-        errorRequest.setProps({ error: newProps.error });
-      } 
-      return true;
+        if (oldProps.error !== newProps.error) {
+            console.log(newProps.error);
+            errorRequest.setProps({ error: newProps.error });
+        }
+        return true;
     }
 }
 
@@ -79,11 +80,10 @@ const ConnectedPasswordPage = connect(PasswordPageContentModule, (state) => ({
     error: state.error,
 }));
 
-
 export const passwordPageContent = new ConnectedPasswordPage({
     oldPasswordInput,
     newPasswordInput,
-    passwordRepeateInput, 
+    passwordRepeateInput,
     submitBtn,
     events: {
         submit: (e: Event) => submitForm(e),
@@ -91,14 +91,14 @@ export const passwordPageContent = new ConnectedPasswordPage({
 });
 
 export const linkChat = new LinkModule({
-    text: "На страницу чатов",
+    text: 'На страницу чатов',
     events: {
-      click: () => router.go("/messenger"),
+        click: () => router.go('/messenger'),
     },
-  });
+});
 
 export const createPasswordPage = new PasswordPageModule({
     passwordPageContent,
     errorRequest,
-    linkChat
+    linkChat,
 });

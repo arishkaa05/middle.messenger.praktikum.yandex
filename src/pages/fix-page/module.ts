@@ -1,11 +1,11 @@
 import { ErrorModule } from '../../components/error/module';
 import { LinkModule } from '../../components/link/module';
 import { PageTitleModule } from '../../components/page-title/module';
-import Block from '../../modules/Block'; 
+import Block from '../../modules/Block';
 import FixPage from './fix-page.hbs?raw';
 
 export class FixPageModule extends Block {
-    constructor(props: any) { 
+    constructor(props: any) {
         super(props);
     }
 

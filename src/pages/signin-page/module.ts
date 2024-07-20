@@ -21,12 +21,13 @@ export class SigninPageModule extends Block {
     render() {
         return this.makeFragment(SigninPage, this.props);
     }
+
     componentDidUpdate(oldProps: any, newProps: any): boolean {
-      if (oldProps.error !== newProps.error) {
-        console.log(newProps.error)
-        errorRequest.setProps({ error: newProps.error });
-      } 
-      return true;
+        if (oldProps.error !== newProps.error) {
+            console.log(newProps.error);
+            errorRequest.setProps({ error: newProps.error });
+        }
+        return true;
     }
 }
 
@@ -145,7 +146,6 @@ export const singinPageContent = new SigninPageContentModule({
 const ConnectedSigninPage = connect(SigninPageModule, (state) => ({
     error: state.error,
 }));
-
 
 export const createSigninPage = new ConnectedSigninPage({
     title,

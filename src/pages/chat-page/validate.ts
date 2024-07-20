@@ -30,30 +30,29 @@ export const submitForm = (e: Event) => {
     e.preventDefault();
     const isValid = validateMessage(e);
     if (isValid) {
-        const inputValue = (teatarea.getContent() as HTMLInputElement).value; 
+        const inputValue = (teatarea.getContent() as HTMLInputElement).value;
         const socket = new WebSocket(`${hostWS}/${store.getState().userData.id}/${store.getState().activeChat.id}/${store.getState().token}`);
-        socket.addEventListener("open", () => {
-            console.log("Соединение установлено");
-        
+        socket.addEventListener('open', () => {
+            console.log('Соединение установлено');
+
             socket.send(
-              JSON.stringify({
-                content: inputValue,
-                type: "message",
-              })
+                JSON.stringify({
+                    content: inputValue,
+                    type: 'message',
+                }),
             );
-            const newMessage = { 
+            const newMessage = {
                 isOwn: true,
                 message: inputValue,
                 time: formatDate(),
-              };
-              let currentMessages = store.getState().userMessagesList;
-              currentMessages.push(newMessage);
-              store.dispatch({
-                type: "SET_NEW_MSG",
+            };
+            const currentMessages = store.getState().userMessagesList;
+            currentMessages.push(newMessage);
+            store.dispatch({
+                type: 'SET_NEW_MSG',
                 userMessagesList: currentMessages,
-              });
-          });
- 
+            });
+        });
     }
 };
 
