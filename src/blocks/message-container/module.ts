@@ -1,7 +1,9 @@
+import { formatDate } from "../../helpers/formatDate";
 import Block from "../../modules/Block";
 import store from "../../modules/Store";
 import { IMessageContainer } from "../../modules/types";
 import { getChatToken } from "../../pages/chat-page/chat.services";
+import { hostWS } from "../../servises/BaseAPI";
 import { MessageContainer } from "./index";
 
 export class MessageContainerModule extends Block {
@@ -12,14 +14,15 @@ export class MessageContainerModule extends Block {
 
   render() {
     return this.makeFragment(MessageContainer, this.props);
-  }
+  } 
 }
 
 export const openMessageContainer = async () => {
   const chatId = store.getState().activeChat.id;
-  const userId = store.getState().userData.id; 
+  const userId = store.getState().userData.id;
   const token = await getChatToken(chatId);
-  const socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token.token}`);
+
+  const socket = new WebSocket(`${hostWS}/${userId}/${chatId}/${token.token}`);
   socket.addEventListener("open", () => {
     console.log("Соединение установлено");
 
@@ -49,7 +52,7 @@ export const openMessageContainer = async () => {
         id: messageData.id,
         isOwn: false,
         message: messageData.content,
-        time: messageData.time,
+        time: formatDate(messageData.time),
       };
       let currentMessages = store.getState().userMessagesList;
       currentMessages.push(newMessage);
@@ -65,6 +68,4 @@ export const openMessageContainer = async () => {
   socket.addEventListener("error", (event: any) => {
     console.log("Ошибка", event.message);
   });
-
-  console.log(chatId, userId, token);
 };

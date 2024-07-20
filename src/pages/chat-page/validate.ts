@@ -1,6 +1,9 @@
 import { chatTitleInput, teatarea } from './module';
 import { checkInput, setErrors } from '../../modules/validation';
 import { createChat, deleteChatRequest } from './chat.services';
+import { hostWS } from '../../servises/BaseAPI';
+import store from '../../modules/Store';
+import { formatDate } from '../../helpers/formatDate';
 
 export const validateMessage = (e: Event) => {
     e.preventDefault();
@@ -27,8 +30,30 @@ export const submitForm = (e: Event) => {
     e.preventDefault();
     const isValid = validateMessage(e);
     if (isValid) {
-        const inputValue = (teatarea.getContent() as HTMLInputElement).value;
-        console.log({ message: inputValue });
+        const inputValue = (teatarea.getContent() as HTMLInputElement).value; 
+        const socket = new WebSocket(`${hostWS}/${store.getState().userData.id}/${store.getState().activeChat.id}/${store.getState().token}`);
+        socket.addEventListener("open", () => {
+            console.log("Соединение установлено");
+        
+            socket.send(
+              JSON.stringify({
+                content: inputValue,
+                type: "message",
+              })
+            );
+            const newMessage = { 
+                isOwn: true,
+                message: inputValue,
+                time: formatDate(),
+              };
+              let currentMessages = store.getState().userMessagesList;
+              currentMessages.push(newMessage);
+              store.dispatch({
+                type: "SET_NEW_MSG",
+                userMessagesList: currentMessages,
+              });
+          });
+ 
     }
 };
 

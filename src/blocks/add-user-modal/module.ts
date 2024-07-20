@@ -22,7 +22,7 @@ export const loginInput = new InputFieldModule({
         type: 'text',
         name: 'login',
         title: 'Логин',
-        value: 'testlogin',
+        value: '',
         events: {
             blur: (e: Event) => validateLogin(e),
         },

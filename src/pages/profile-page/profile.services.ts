@@ -8,6 +8,7 @@ export async function handleLogout() {
     try {
         const response = await profileApi.logoutRequest();
         console.log('Response from server:', response);
+        sessionStorage.removeItem("userData");
         router.go('/');
     } catch (error) {
         console.error('Error fetching data:', error);

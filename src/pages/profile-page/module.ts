@@ -152,6 +152,13 @@ export const linkLogout = new LinkModule({
     },
 });
 
+export const linkChat = new LinkModule({
+    text: 'На страницу чатов',
+    events: {
+        click: () => router.go('/messenger'),
+    },
+});
+
 export const linkPassword = new LinkModule({
     className: 'text-blue',
     page: 'password',
@@ -183,4 +190,5 @@ export const createProfilePage = new ConnectedProfilePage({
     profilePageContent,
     linkLogout,
     linkPassword,
+    linkChat
 });

@@ -22,8 +22,7 @@ import { userAuthCheck } from "../../helpers/userAuthCheck";
 
 export class ChatPageModule extends Block {
   constructor(props: IProps) { 
-    userAuthCheck()
-    getChatList(); 
+    if (userAuthCheck()) getChatList(); 
     super(props);
   }
 

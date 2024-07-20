@@ -1,8 +1,6 @@
 import { openMessageContainer } from "../blocks/message-container/module";
 import cloneDeep from "../helpers/cloneDeep";
-import { userAuthCheck } from "../helpers/userAuthCheck";
-import { router } from "./Router";
-// import { getChatList } from '../pages/chat-page/chat.services';
+import { userAuthCheck } from "../helpers/userAuthCheck"; 
 import { IMessage } from "./types";
 
 const SET_USER = "SET_USER";
@@ -19,11 +17,10 @@ type State = {
 const initialState: State = {
   userData: {},
   chatList: [],
-  activeChat: {
-    title: "Заголовок",
+  activeChat: { 
     id: 0,
   },
-  userMessagesList: [],
+  userMessagesList: []
 };
 
 const reducer: Reducer = (state, action) => {
