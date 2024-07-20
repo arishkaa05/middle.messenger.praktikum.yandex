@@ -17,10 +17,13 @@ import { DeleteButtonModule } from "../../components/delete-button/module";
 import { addUserContent } from "../../blocks/add-user-modal/module";
 import { router } from "../../modules/Router";
 import { UserMessageModule } from "../../components/user-message/module";
+import { getChatList } from "./chat.services";
+import { userAuthCheck } from "../../helpers/userAuthCheck";
 
 export class ChatPageModule extends Block {
-  constructor(props: IProps) {
-    if (!store.getState().userData.id) router.go("/");
+  constructor(props: IProps) { 
+    userAuthCheck()
+    getChatList(); 
     super(props);
   }
 
@@ -50,7 +53,7 @@ export class ChatPageModule extends Block {
           };
           return chatModule;
         }),
-      }); 
+      });
     }
     return true;
   }
@@ -67,8 +70,8 @@ export const chatList = new MessageListModule({
 });
 
 export const userMessagesList = new MessageListModule({
-  messages: store.getState().userMessagesList.map((message: any) => new UserMessageModule(message))
-})
+  messages: store.getState().userMessagesList.map((message: any) => new UserMessageModule(message)),
+});
 
 export const deleteUserButton = new DeleteButtonModule({
   type: "submit",
@@ -93,7 +96,6 @@ export const sender = new UserSmallModule({
   deleteUserButton,
   addUserContent,
 });
-
 
 export const teatarea = new TextareaModule({
   name: "message",
@@ -136,7 +138,6 @@ export const chatTitleInput = new InputFieldModule({
   }),
 });
 
-
 const ConnectedChatPage = connect(ChatPageModule, (state) => ({
   userData: state.userData,
   chatList: state.chatList.map((chat: any) => {
@@ -163,7 +164,6 @@ const ConnectedCreateMessagesContainer = connect(MessageContainerModule, (state)
   userMessagesList: state.userMessagesList.map((message: any) => new UserMessageModule(message)),
 }));
 
-
 export const createMessagesContainer = new ConnectedCreateMessagesContainer({
   sender,
   userMessagesList,
@@ -172,7 +172,7 @@ export const createMessagesContainer = new ConnectedCreateMessagesContainer({
 });
 
 export const createChatList = new ConnectedChatPage({
-  chatList, 
+  chatList,
   newMessage,
   chatTitleInput,
   createChatBtn,

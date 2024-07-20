@@ -4,6 +4,7 @@ import { ButtonModule } from '../../components/button/module';
 import { InputFieldModule } from '../../components/input-field/module';
 import { InputModule } from '../../components/input/module';
 import { LinkModule } from '../../components/link/module';
+import { userAuthCheck } from '../../helpers/userAuthCheck';
 import Block from '../../modules/Block';
 import { connect } from '../../modules/Hoc';
 import { router } from '../../modules/Router';
@@ -16,7 +17,7 @@ import {
 
 export class ProfilePageModule extends Block {
     constructor(props: any) {
-        if (!store.getState().userData.id) router.go('/');
+        userAuthCheck()
         super(props);
     }
 

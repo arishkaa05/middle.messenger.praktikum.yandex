@@ -1,5 +1,6 @@
 import { openMessageContainer } from "../blocks/message-container/module";
 import cloneDeep from "../helpers/cloneDeep";
+import { userAuthCheck } from "../helpers/userAuthCheck";
 import { router } from "./Router";
 // import { getChatList } from '../pages/chat-page/chat.services';
 import { IMessage } from "./types";
@@ -73,7 +74,7 @@ const createStore = (reducer: Reducer, initialState: State) => {
 const store = Object.freeze(createStore(reducer, initialState));
 
 export const openChat = async (chat: IMessage) => {
-  if (!store.getState().userData.id) router.go("/");
+  userAuthCheck()
   store.dispatch({ type: "SET_ACTIVE_CHAT", activeChat: chat });
   openMessageContainer();
 };
