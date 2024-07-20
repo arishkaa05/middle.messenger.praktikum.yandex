@@ -1,10 +1,10 @@
-import { UserMessageListModule } from "../blocks/user-message-list/module";
-import { UserSmallModule } from "../blocks/user-small/module";
-import { ButtonModule } from "../components/button/module";
-import { InputFieldModule } from "../components/input-field/module";
-import { MessageModule } from "../components/message/module";
-import { NewMessageModule } from "../components/new-message/module";
-import Block from "./Block";
+import { UserMessageListModule } from '../blocks/user-message-list/module';
+import { UserSmallModule } from '../blocks/user-small/module';
+import { ButtonModule } from '../components/button/module';
+import { InputFieldModule } from '../components/input-field/module';
+import { MessageModule } from '../components/message/module';
+import { NewMessageModule } from '../components/new-message/module';
+import Block from './Block';
 
 export interface IEventBus {
   listeners: { [event: string | number]: Array<(...args: IProps[]) => void> };
@@ -54,7 +54,7 @@ export interface IInputField extends IProps {
 
 export interface ILoginPageContent extends IProps {
   loginInput: InputFieldModule;
-  passwordInput: InputFieldModule;
+  passwordInput?: InputFieldModule;
   submitBtn: ButtonModule;
 }
 
@@ -80,7 +80,7 @@ export interface ISigninPageContent extends IProps {
 
 export interface IMessageContainer extends IProps {
   sender: UserSmallModule;
-  userMessagesList: UserMessageListModule;
+  userMessagesList?: UserMessageListModule;
   newMessage: NewMessageModule;
 }
 
@@ -113,7 +113,7 @@ export interface IMessage extends IProps {
 }
 
 export interface IMessageList {
-  messages?: MessageModule[];
+  messages: MessageModule[];
 }
 
 export interface ISearch extends IProps {

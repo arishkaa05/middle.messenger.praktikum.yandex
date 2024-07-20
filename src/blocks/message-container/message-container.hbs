@@ -1,9 +1,10 @@
-<div id="selectedChat" style="display: none;" class="message-container__block">
-  <div class="message-container__container">
+<div  class="message-container__block" >  
+  <div class="message-container__container" style="{{#if active}}display: block;{{else}}display: none;{{/if}}">
     <div class="message-container__sender">{{{sender}}} </div>
     {{{userMessagesList}}}
   </div>
-  <div class="message-container-page">
+  <div class="message-container-page" style="{{#if active}}display: flex;{{else}}display: none;{{/if}}">
     {{{newMessage}}} 
   </div>
-</div> 
+ <div style="{{#if active}}display: none;{{else}}display: flex;{{/if}}" class="element-center"> Выберите чат чтобы отправить сообщение</div>
+</div>  

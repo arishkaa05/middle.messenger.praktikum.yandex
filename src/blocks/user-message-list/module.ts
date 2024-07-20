@@ -1,5 +1,6 @@
+import { UserMessageModule } from '../../components/user-message/module';
 import Block from '../../modules/Block';
-import { IMessageList } from '../../modules/types';
+import { IMessage, IMessageList } from '../../modules/types';
 
 export class UserMessageListModule extends Block {
     constructor(props: IMessageList) {
