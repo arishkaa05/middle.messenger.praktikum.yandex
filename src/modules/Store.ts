@@ -101,7 +101,7 @@ const store = Object.freeze(createStore(reducer, initialState));
 
 export const openChat = async (chat: IMessage) => {
     store.dispatch({ type: 'SET_ACTIVE_CHAT', activeChat: chat });
-    getChatList();
+    // getChatList();
     // const chatUsers = await getChatUsers(chat.id)
     // console.log(chatUsers)
     openMessageContainer();

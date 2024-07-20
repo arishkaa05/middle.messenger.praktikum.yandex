@@ -53,7 +53,8 @@ export class ChatPageModule extends Block {
                 });
                 return temp;
             });
-            chatList.setProps(wrappedChatList);
+            console.log(wrappedChatList)
+            chatList.setProps({ messages: wrappedChatList });
         }
         return true;
     }
