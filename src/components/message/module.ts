@@ -7,7 +7,7 @@ export class MessageModule extends Block {
         super(props);
     }
 
-    render() {
+    render() { 
         return this.makeFragment(Message, this.props);
     }
 }
