@@ -1,7 +1,7 @@
 import { openMessageContainer } from '../blocks/message-container/module'; 
 import { MessageModule } from '../components/message/module'; 
 import cloneDeep from '../helpers/cloneDeep';
-import { getChatList } from '../pages/chat-page/chat.services';
+// import { getChatList } from '../pages/chat-page/chat.services';
 import { IMessage } from './types';
 
 const SET_USER = 'SET_USER';
