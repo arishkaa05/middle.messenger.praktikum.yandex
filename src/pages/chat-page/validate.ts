@@ -1,8 +1,6 @@
 import { chatTitleInput, teatarea } from './module';
 import { checkInput, setErrors } from '../../modules/validation';
 import { createChat, deleteChatRequest } from './chat.services';
-import { IMessage } from '../../modules/types';
-import store from '../../modules/Store';
 
 export const validateMessage = (e: Event) => {
     e.preventDefault();

@@ -11,6 +11,7 @@ const obj: StringIndexed = {
     key6: { a: 1 },
     key7: { b: { d: 2 } },
 };
+console.log(obj)
 
 function isArrayOrObject(value: unknown): value is [] | PlainObject {
     return isPlainObject(value) || isArray(value);

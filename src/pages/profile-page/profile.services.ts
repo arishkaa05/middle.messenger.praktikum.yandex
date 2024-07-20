@@ -26,15 +26,14 @@ export async function changeUserProfile(userData: any) {
 
 export async function changeUserProfileAvatar(formData: FormData) {
     try {
-      const response = await profileApi.changeUserProfileAvatar(formData);
+        const response = await profileApi.changeUserProfileAvatar(formData);
 
-      store.dispatch({ type: 'SET_USER', userData: response });
-      console.log('Response from server:', response);
+        store.dispatch({ type: 'SET_USER', userData: response });
+        console.log('Response from server:', response);
     } catch (error) {
-      console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error);
     }
-  }
-  
+}
 
 export async function changeUserPassword(userData: any) {
     try {

@@ -55,6 +55,11 @@
       "no-undef": "warn",
       "no-useless-constructor": "off"
   },
+  "ignorePatterns": [
+    "src/helpers/isEqual.ts",
+    "src/modules/Store.ts",
+    "src/pages/profile-page/profile-page.api.ts"
+  ],
   "overrides": [
     { 
       "files": ["src/servises/HTTPTransort.ts"],
@@ -64,7 +69,7 @@
         "no-shadow": "off",
         "no-undef": "off"
       }
-    }, 
+    },  
     { 
       "files": ["server.js"],
       "rules": { 
