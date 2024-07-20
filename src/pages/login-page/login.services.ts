@@ -1,10 +1,9 @@
-import Router from '../../modules/Router';
+import { router } from '../../modules/Router';
 import store from '../../modules/Store';
 import { getChatList } from '../chat-page/chat.services';
 import LoginAPI from './login-page.api';
 
 const signinApi = new LoginAPI();
-const router = new Router('#app');
 
 export async function handleSignIn(inputValues: any) {
     try {

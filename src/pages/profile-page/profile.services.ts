@@ -1,9 +1,8 @@
-import Router from '../../modules/Router';
+import { router } from '../../modules/Router';
 import store from '../../modules/Store';
 import ProfileAPI from './profile-page.api';
 
 const profileApi = new ProfileAPI();
-const router = new Router('#app');
 
 export async function handleLogout() {
     try {

@@ -12,17 +12,16 @@ import { TextareaModule } from '../../components/textarea/module';
 import { CircleButtonModule } from '../../components/circle-button/module';
 import store, { openChat } from '../../modules/Store';
 import { connect } from '../../modules/Hoc';
-import Router from '../../modules/Router';
 import { InputFieldModule } from '../../components/input-field/module';
 import { InputModule } from '../../components/input/module';
 import { MessageModule } from '../../components/message/module';
 import { DeleteButtonModule } from '../../components/delete-button/module';
 import { addUserContent } from '../../blocks/add-user-modal/module';
-
-const router = new Router('#app');
+import { router } from '../../modules/Router';
 
 export class ChatPageModule extends Block {
     constructor(props: IProps) {
+        if (!store.getState().userData.id) router.go('/');
         super(props);
     }
 
@@ -53,9 +52,10 @@ export class ChatPageModule extends Block {
                 });
                 return temp;
             });
-            console.log(wrappedChatList)
+            console.log(wrappedChatList);
             chatList.setProps({ messages: wrappedChatList });
         }
+        console.log(store.getState().userData);
         return true;
     }
 }

@@ -1,22 +1,23 @@
-import isEqual from '../helpers/isEqual';
-import { IProps, PlainObject } from './types';
+import Block from './Block';
+import { IRouteProps } from './types';
 
-class Route {
+export class Route {
     private _pathname: string;
 
-    private _blockClass: any;
+    private _blockClass: Block;
 
-    private _block: any;
+    private _block: null | Block;
 
-    private _props: { rootQuery: string };
+    private _props: IRouteProps;
 
     private _root: HTMLElement | null;
 
-    constructor(pathname: string, view: IProps, props: { rootQuery: string }) {
+    constructor(pathname: string, view: Block, props: IRouteProps) {
         this._pathname = pathname;
         this._blockClass = view;
         this._block = null;
         this._props = props;
+
         this._root = document.querySelector(this._props.rootQuery);
     }
 
@@ -30,13 +31,14 @@ class Route {
     leave() {
         if (this._root) {
             this._root.innerHTML = '';
+            this._block?.dispatchComponentDidUnmount();
         } else {
             throw new Error('Root not found');
         }
     }
 
     match(pathname: string) {
-        return isEqual(pathname as unknown as PlainObject, this._pathname as unknown as PlainObject);
+        return pathname === this._pathname;
     }
 
     render() {
@@ -48,8 +50,8 @@ class Route {
         }
 
         this._root.insertAdjacentElement('beforeend', this._block.getContent());
+        this._block.dispatchComponentDidMount();
 
         this._block.show();
     }
 }
-export default Route;

@@ -28,28 +28,13 @@ const messageModuleTest: any = new MessageModule({
 });
 
 const initialState: State = {
-    userData: {
-        first_name: 'User',
-        login: 'login',
-        phone: '234',
-    },
+    userData: {},
     chatList: [],
     activeChat: {
         title: 'Заголовок',
         id: 0,
     },
     userMessagesList: undefined,
-    //   userMessagesList: new UserMessageListModule({
-    //     messages: [
-    //       new UserMessageModule({
-    //         id: 3,
-    //         isOwn: false,
-    //         message: "Привет! Как де43334ла?",
-    //         time: "10:43",
-    //         count: 2,
-    //       }),
-    //     ],
-    //   }),
 };
 
 const reducer: Reducer = (state, action) => {

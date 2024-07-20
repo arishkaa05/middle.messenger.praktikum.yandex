@@ -5,11 +5,10 @@ import { InputModule } from '../../components/input/module';
 import { LinkModule } from '../../components/link/module';
 import { PageTitleModule } from '../../components/page-title/module';
 import Block from '../../modules/Block';
-import Router from '../../modules/Router';
+import { router } from '../../modules/Router';
 import LoginPage from './login-page.hbs?raw';
 import { submitForm, validateLogin, validatePassword } from './validate';
 
-const router = new Router('#app');
 export class LoginPageModule extends Block {
     constructor(props: any) {
         super(props);

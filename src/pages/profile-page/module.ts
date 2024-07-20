@@ -6,7 +6,7 @@ import { InputModule } from '../../components/input/module';
 import { LinkModule } from '../../components/link/module';
 import Block from '../../modules/Block';
 import { connect } from '../../modules/Hoc';
-import Router from '../../modules/Router';
+import { router } from '../../modules/Router';
 import store from '../../modules/Store';
 import ProfilePage from './profile-page.hbs?raw';
 import { handleLogout } from './profile.services';
@@ -14,10 +14,9 @@ import {
     submitForm, validateAvatar, validateEmail, validateLasname, validateLogin, validateName, validatePhone, validateUserName,
 } from './validate';
 
-const router = new Router('#app');
-
 export class ProfilePageModule extends Block {
     constructor(props: any) {
+        if (!store.getState().userData.id) router.go('/');
         super(props);
     }
 

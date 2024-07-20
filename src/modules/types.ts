@@ -26,6 +26,9 @@ export type HTTPMethod = (
 export interface IList {
   lists: HTMLElement[];
 }
+export interface IRouteProps {
+  rootQuery: string;
+}
 
 export interface IProps {
   __id?: string;

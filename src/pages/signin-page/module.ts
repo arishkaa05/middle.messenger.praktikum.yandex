@@ -5,13 +5,12 @@ import { InputModule } from '../../components/input/module';
 import { LinkModule } from '../../components/link/module';
 import { PageTitleModule } from '../../components/page-title/module';
 import Block from '../../modules/Block';
-import Router from '../../modules/Router';
+import { router } from '../../modules/Router';
 import SigninPage from './signin-page.hbs?raw';
 import {
     submitForm, validateEmail, validateLasname, validateLogin, validateName, validatePassword, validatePhone,
 } from './validate';
 
-const router = new Router('#app');
 export class SigninPageModule extends Block {
     constructor(props: any) {
         super(props);

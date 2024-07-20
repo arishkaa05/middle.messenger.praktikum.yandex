@@ -3,6 +3,8 @@ import { ButtonModule } from '../../components/button/module';
 import { InputFieldModule } from '../../components/input-field/module';
 import { InputModule } from '../../components/input/module';
 import Block from '../../modules/Block';
+import { router } from '../../modules/Router';
+import store from '../../modules/Store';
 import PasswordPage from './password-page.hbs?raw';
 import {
     submitForm, validateNewPassword, validateOldPassword, validateRepeatePassword,
@@ -10,6 +12,7 @@ import {
 
 export class PasswordPageModule extends Block {
     constructor(props: any) {
+        if (!store.getState().userData.id) router.go('/');
         super(props);
     }
 
