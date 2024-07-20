@@ -1,6 +1,11 @@
 <div class="user__block"> 
   <div class="user__flex">
-    <div class="user__img"></div>
+    {{#if avatar}}
+    <img class="avatar__img user__img" src="{{avatar}}">
+    {{else}}
+       <div class="user__img"></div>
+    {{/if}}
+    
     <div> 
       <div class="user__name"> {{ name }}</div>
       <div>{{ info }}</div>

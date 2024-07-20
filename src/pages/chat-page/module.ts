@@ -32,6 +32,8 @@ export class ChatPageModule extends Block {
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
     if (oldProps.userData !== newProps.userData) {
+      userMain.setProps({ avatar: `https://ya-praktikum.tech/api/v2/resources/${newProps.userData.avatar}` });
+
       userMain.setProps({ name: newProps.userData.first_name, info: newProps.userData.login });
     }
     if (oldProps.userMessagesList !== newProps.userMessagesList) {
@@ -71,6 +73,7 @@ export const deleteUserButton = new DeleteButtonModule({
 
 export const userMain = new UserSmallModule({
   name: store.getState().userData.first_name,
+  avatar: store.getState().userData.avatar,
   info: store.getState().userData.login,
   events: {
     click: () => router.go("/settings"),

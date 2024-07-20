@@ -34,6 +34,7 @@ const initialState: State = {
   userData: {
     first_name: "User",
     login: "login",
+    phone: '234'
   },
   chatList: [],
   activeChat: {
