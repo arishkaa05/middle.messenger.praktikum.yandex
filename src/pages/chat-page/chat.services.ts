@@ -9,7 +9,7 @@ export async function getChatList() {
 
     store.dispatch({ type: "SET_CHAT_LIST", chatList: response });
   } catch (error) {
-    console.error("Error fetching data:", error);
+    store.dispatch({ type: "SET_ERROR", error: error })
   }
 }
 
@@ -18,11 +18,10 @@ export async function createChat(title: string) {
     const body = {
       title,
     };
-    const response = await chatApi.createChatRequest(body);
+    await chatApi.createChatRequest(body);
     await getChatList();
-    console.log(response);
   } catch (error) {
-    console.error("Error fetching data:", error);
+    store.dispatch({ type: "SET_ERROR", error: error })
   }
 }
 
@@ -31,7 +30,7 @@ export async function deleteChatRequest(chatId: number) {
     const body = {
       chatId,
     };
-    const response = await chatApi.deleteChatRequest(body);
+    await chatApi.deleteChatRequest(body);
     store.dispatch({
       type: "SET_ACTIVE_CHAT",
       activeChat: {
@@ -45,10 +44,9 @@ export async function deleteChatRequest(chatId: number) {
     if (noChat) {
       noChat.style.display = "flex";
     }
-    await getChatList();
-    console.log(response);
+    await getChatList(); 
   } catch (error) {
-    console.error("Error fetching data:", error);
+    store.dispatch({ type: "SET_ERROR", error: error })
   }
 }
 
@@ -58,10 +56,9 @@ export async function searcUserForChat(login: string) {
       login,
     };
     const response = await chatApi.userSearch(body);
-    console.log(response);
     return response;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    store.dispatch({ type: "SET_ERROR", error: error })
     return error;
   }
 }
@@ -73,10 +70,9 @@ export async function addUserToChat(userId: number, chatid: string) {
       chatId: chatid,
     };
     const response = await chatApi.addUserToChat(body);
-    console.log(response);
     return response;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    store.dispatch({ type: "SET_ERROR", error: error })
     return error;
   }
 }
@@ -86,7 +82,7 @@ export async function getChatUsers(chatId: number) {
     const response: any = await chatApi.getChatUsers(chatId);
     return response;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    store.dispatch({ type: "SET_ERROR", error: error })
   }
 }
 
@@ -95,6 +91,6 @@ export async function getChatToken(chatId: number) {
     const response: any = await chatApi.getChatToken(chatId);
     return response;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    store.dispatch({ type: "SET_ERROR", error: error })
   }
 }

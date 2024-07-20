@@ -1,4 +1,4 @@
-import { UserMessageListModule } from '../blocks/user-message-list/module';
+import { MessageListModule } from '../blocks/message-list/module';
 import { UserSmallModule } from '../blocks/user-small/module';
 import { ButtonModule } from '../components/button/module';
 import { InputFieldModule } from '../components/input-field/module';
@@ -83,7 +83,7 @@ export interface ISigninPageContent extends IProps {
 
 export interface IMessageContainer extends IProps {
   sender: UserSmallModule;
-  userMessagesList?: UserMessageListModule;
+  userMessagesList?: MessageListModule;
   newMessage: NewMessageModule;
 }
 

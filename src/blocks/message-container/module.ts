@@ -14,7 +14,7 @@ export class MessageContainerModule extends Block {
 
   render() {
     return this.makeFragment(MessageContainer, this.props);
-  } 
+  }
 }
 
 export const openMessageContainer = async () => {
@@ -24,8 +24,6 @@ export const openMessageContainer = async () => {
 
   const socket = new WebSocket(`${hostWS}/${userId}/${chatId}/${token.token}`);
   socket.addEventListener("open", () => {
-    console.log("Соединение установлено");
-
     socket.send(
       JSON.stringify({
         content: "Моё первое сообщение миру!",
@@ -36,9 +34,8 @@ export const openMessageContainer = async () => {
 
   socket.addEventListener("close", (event) => {
     if (event.wasClean) {
-      console.log("Соединение закрыто чисто");
     } else {
-      console.log("Обрыв соединения");
+      store.dispatch({ type: "SET_ERROR", error: "Обрыв соединения" });
     }
 
     console.log(`Код: ${event.code} | Причина: ${event.reason}`);
@@ -47,7 +44,6 @@ export const openMessageContainer = async () => {
   socket.addEventListener("message", (event) => {
     try {
       const messageData = JSON.parse(event.data);
-      console.log(messageData);
       const newMessage = {
         id: messageData.id,
         isOwn: false,
@@ -60,12 +56,10 @@ export const openMessageContainer = async () => {
         type: "SET_NEW_MSG",
         userMessagesList: currentMessages,
       });
-    } catch (error) {
-      console.error("Ошибка при парсинге JSON:", error);
-    }
+    } catch (error) {}
   });
 
   socket.addEventListener("error", (event: any) => {
-    console.log("Ошибка", event.message);
+    store.dispatch({ type: "SET_ERROR", error: event.message });
   });
 };

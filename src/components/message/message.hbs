@@ -6,17 +6,18 @@
       <p class="chat-page__user-time">{{time}}</p>
     </div>
     {{#if unread_count}}
+      
       <div class="chat-page__user-msg">
-        <div class="chat-page__message">
-          <span>Вы:</span>
-          {{message}}
-        </div>
+        <div class="chat-page__message"> {{last_message.content}}</div>
+        <div class="chat-page__count">{{unread_count}}</div>
       </div>
     {{/if}}
     {{#unless unread_count}}
       <div class="chat-page__user-msg">
-        <div class="chat-page__message">{{message}}</div>
-        <div class="chat-page__count">{{count}}</div>
+        <div class="chat-page__message">
+          <span>Вы:</span>
+          {{last_message.content}}
+        </div>
       </div>
     {{/unless}}
   </div>

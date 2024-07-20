@@ -19,6 +19,7 @@ import { router } from "../../modules/Router";
 import { UserMessageModule } from "../../components/user-message/module";
 import { getChatList } from "./chat.services";
 import { userAuthCheck } from "../../helpers/userAuthCheck";
+import { errorRequest } from "../../components/error-request/module";
 
 export class ChatPageModule extends Block {
   constructor(props: IProps) { 
@@ -39,6 +40,9 @@ export class ChatPageModule extends Block {
     if (oldProps.userMessagesList !== newProps.userMessagesList) {
       userMessagesList.setProps({ messages: newProps.userMessagesList.map((message: any) => new UserMessageModule(message)) });
     }
+    if (oldProps.error !== newProps.error) { 
+      errorRequest.setProps({ error: newProps.error });
+    } 
     if (oldProps.activeChat !== newProps.activeChat) {
       sender.setProps({ name: newProps.activeChat.title });
       createMessagesContainer.setProps({ active: newProps.activeChat.id });
@@ -139,6 +143,7 @@ export const chatTitleInput = new InputFieldModule({
 
 const ConnectedChatPage = connect(ChatPageModule, (state) => ({
   userData: state.userData,
+  error: state.error,
   chatList: state.chatList.map((chat: any) => {
     const chatModule = new MessageModule(chat);
     chatModule.props.events = {
@@ -173,6 +178,7 @@ export const createMessagesContainer = new ConnectedCreateMessagesContainer({
 export const createChatList = new ConnectedChatPage({
   chatList,
   newMessage,
+  errorRequest,
   chatTitleInput,
   createChatBtn,
   userMain,

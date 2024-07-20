@@ -1,26 +1,28 @@
 import { openMessageContainer } from "../blocks/message-container/module";
 import cloneDeep from "../helpers/cloneDeep";
-import { userAuthCheck } from "../helpers/userAuthCheck"; 
+import { userAuthCheck } from "../helpers/userAuthCheck";
 import { IMessage } from "./types";
 
 const SET_USER = "SET_USER";
 const SET_CHAT_LIST = "SET_CHAT_LIST";
 const SET_ACTIVE_CHAT = "SET_ACTIVE_CHAT";
 const SET_NEW_MSG = "SET_NEW_MSG";
+const SET_ERROR = "SET_ERROR";
 
 type Action = { type: string; [key: string]: any };
 type Reducer = (state: State, action: Action) => State;
 
 type State = {
   [key: string]: any;
-}; 
+};
 const initialState: State = {
   userData: {},
   chatList: [],
-  activeChat: { 
+  activeChat: {
     id: 0,
   },
-  userMessagesList: []
+  error: '',
+  userMessagesList: [],
 };
 
 const reducer: Reducer = (state, action) => {
@@ -45,6 +47,12 @@ const reducer: Reducer = (state, action) => {
       return {
         ...cloneDeep(state),
         userMessagesList: action.userMessagesList,
+      };
+    case SET_ERROR:
+        console.log(action.error)
+      return {
+        ...cloneDeep(state),
+        error: action.error,
       };
     default:
       return state;
@@ -71,8 +79,9 @@ const createStore = (reducer: Reducer, initialState: State) => {
 const store = Object.freeze(createStore(reducer, initialState));
 
 export const openChat = async (chat: IMessage) => {
-  userAuthCheck()
+  userAuthCheck();
   store.dispatch({ type: "SET_ACTIVE_CHAT", activeChat: chat });
+  store.dispatch({ type: "SET_NEW_MSG", userMessagesList: [] });
   openMessageContainer();
 };
 export default store;

@@ -1,9 +1,13 @@
 import { PasswordPageContentModule } from '../../blocks/password-page-content/password-page-content';
 import { ButtonModule } from '../../components/button/module';
+import { errorRequest } from '../../components/error-request/module';
 import { InputFieldModule } from '../../components/input-field/module';
 import { InputModule } from '../../components/input/module';
+import { LinkModule } from '../../components/link/module';
 import { userAuthCheck } from '../../helpers/userAuthCheck';
 import Block from '../../modules/Block'; 
+import { connect } from '../../modules/Hoc';
+import { router } from '../../modules/Router';
 import PasswordPage from './password-page.hbs?raw';
 import {
     submitForm, validateNewPassword, validateOldPassword, validateRepeatePassword,
@@ -17,6 +21,13 @@ export class PasswordPageModule extends Block {
 
     render() {
         return this.makeFragment(PasswordPage, this.props);
+    }
+    componentDidUpdate(oldProps: any, newProps: any): boolean {
+      if (oldProps.error !== newProps.error) {
+        console.log(newProps.error)
+        errorRequest.setProps({ error: newProps.error });
+      } 
+      return true;
     }
 }
 
@@ -64,16 +75,30 @@ export const submitBtn = new ButtonModule({
     type: 'submit',
 });
 
-export const passwordPageContent = new PasswordPageContentModule({
+const ConnectedPasswordPage = connect(PasswordPageContentModule, (state) => ({
+    error: state.error,
+}));
+
+
+export const passwordPageContent = new ConnectedPasswordPage({
     oldPasswordInput,
     newPasswordInput,
-    passwordRepeateInput,
+    passwordRepeateInput, 
     submitBtn,
     events: {
         submit: (e: Event) => submitForm(e),
     },
 });
 
+export const linkChat = new LinkModule({
+    text: "На страницу чатов",
+    events: {
+      click: () => router.go("/messenger"),
+    },
+  });
+
 export const createPasswordPage = new PasswordPageModule({
     passwordPageContent,
+    errorRequest,
+    linkChat
 });

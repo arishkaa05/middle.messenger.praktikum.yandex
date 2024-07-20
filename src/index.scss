@@ -10,7 +10,16 @@ html, body {
   padding: 0;
   margin: 0;
   height: 100%;
-} 
+}  
+.error-request {
+  position: absolute; 
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  z-index: 1001;
+  font-size: 20px;
+  color: $red;
+}
 
 body {
   font: $font-regular;
@@ -22,6 +31,7 @@ body {
 } 
 
 .dialog {
+  position: relative;
   background: $dialog-bgcolor; 
   border-radius: 12px;
   border: 1px solid $gray-color;

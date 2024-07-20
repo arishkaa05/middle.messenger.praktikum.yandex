@@ -6,6 +6,7 @@ router
     .use('/sign-up', Pages.createSigninPage)
     .use('/messenger', Pages.createChatList)
     .use('/settings', Pages.createProfilePage)
+    .use('/password', Pages.createPasswordPage)
     .use('/error', Pages.createNotFoundPage)
     .use('/fix', Pages.createFixPage)
     .start();

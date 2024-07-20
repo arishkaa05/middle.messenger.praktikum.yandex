@@ -8,8 +8,8 @@ export async function handleSignIn(inputValues: any) {
   try {
     await signinApi.signInRequest(inputValues);
     await getAuthUser();
-  } catch (error) {
-    console.error("Error fetching data:", error);
+  } catch (error) { 
+    store.dispatch({ type: "SET_ERROR", error: error })
   }
 }
 
@@ -20,6 +20,6 @@ export async function getAuthUser() {
     store.dispatch({ type: "SET_USER", userData: response });
     router.go("/messenger");
   } catch (error) {
-    console.error("Error fetching data:", error);
+    store.dispatch({ type: "SET_ERROR", error: error })
   }
 }

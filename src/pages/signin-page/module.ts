@@ -1,10 +1,12 @@
 import { SigninPageContentModule } from '../../blocks/signin-page-content/signin-page-content';
 import { ButtonModule } from '../../components/button/module';
+import { errorRequest } from '../../components/error-request/module';
 import { InputFieldModule } from '../../components/input-field/module';
 import { InputModule } from '../../components/input/module';
 import { LinkModule } from '../../components/link/module';
 import { PageTitleModule } from '../../components/page-title/module';
 import Block from '../../modules/Block';
+import { connect } from '../../modules/Hoc';
 import { router } from '../../modules/Router';
 import SigninPage from './signin-page.hbs?raw';
 import {
@@ -18,6 +20,13 @@ export class SigninPageModule extends Block {
 
     render() {
         return this.makeFragment(SigninPage, this.props);
+    }
+    componentDidUpdate(oldProps: any, newProps: any): boolean {
+      if (oldProps.error !== newProps.error) {
+        console.log(newProps.error)
+        errorRequest.setProps({ error: newProps.error });
+      } 
+      return true;
     }
 }
 
@@ -133,8 +142,14 @@ export const singinPageContent = new SigninPageContentModule({
     },
 });
 
-export const createSigninPage = new SigninPageModule({
+const ConnectedSigninPage = connect(SigninPageModule, (state) => ({
+    error: state.error,
+}));
+
+
+export const createSigninPage = new ConnectedSigninPage({
     title,
+    errorRequest,
     singinPageContent,
     linkSignUp,
 });
