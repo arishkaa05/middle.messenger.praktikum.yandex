@@ -9,7 +9,6 @@ export async function handleSignIn(inputValues: any) {
         await signinApi.signInRequest(inputValues);
         await getAuthUser();
     } catch (error) {
-        console.log(error);
         store.dispatch({ type: 'SET_ERROR', error });
     }
 }

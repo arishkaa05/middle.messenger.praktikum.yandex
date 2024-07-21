@@ -26,7 +26,6 @@ export class PasswordPageModule extends Block {
 
     componentDidUpdate(oldProps: any, newProps: any): boolean {
         if (oldProps.error !== newProps.error) {
-            console.log(newProps.error);
             errorPasswordRequest.setProps({ error: newProps.error });
         }
         return true;
