@@ -19,7 +19,7 @@ import { DeleteButtonModule } from '../../components/delete-button/module';
 import { addUserContent } from '../../blocks/add-user-modal/module';
 import { router } from '../../modules/Router';
 import { UserMessageModule } from '../../components/user-message/module';
-import { getChatList } from './chat.services'; 
+import { getChatList } from './chat.services';
 import { ErrorModule } from '../../components/error-request/module';
 
 export class ChatPageModule extends Block {

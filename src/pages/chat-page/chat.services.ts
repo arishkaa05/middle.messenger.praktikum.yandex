@@ -9,7 +9,7 @@ export async function getChatList() {
 
         store.dispatch({ type: 'SET_CHAT_LIST', chatList: response });
     } catch (error) {
-        store.dispatch({ type: 'SET_ERROR', error }); 
+        store.dispatch({ type: 'SET_ERROR', error });
         throw error;
     }
 }
