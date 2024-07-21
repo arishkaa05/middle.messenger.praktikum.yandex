@@ -25,7 +25,6 @@ export class SigninPageModule extends Block {
 
     componentDidUpdate(oldProps: any, newProps: any): boolean {
         if (oldProps.error !== newProps.error) {
-            console.log(newProps.error);
             errorSingninRequest.setProps({ error: newProps.error });
         }
         return true;

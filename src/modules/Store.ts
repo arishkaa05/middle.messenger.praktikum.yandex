@@ -49,7 +49,6 @@ const reducer: Reducer = (state, action) => {
         userMessagesList: action.userMessagesList,
       };
     case SET_ERROR:
-        console.log(action.error)
       return {
         ...cloneDeep(state),
         error: action.error,

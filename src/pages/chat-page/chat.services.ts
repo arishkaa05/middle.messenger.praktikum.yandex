@@ -9,7 +9,8 @@ export async function getChatList() {
 
         store.dispatch({ type: 'SET_CHAT_LIST', chatList: response });
     } catch (error) {
-        store.dispatch({ type: 'SET_ERROR', error });
+        store.dispatch({ type: 'SET_ERROR', error }); 
+        throw error;
     }
 }
 
@@ -22,6 +23,7 @@ export async function createChat(title: string) {
         await getChatList();
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
+        throw error;
     }
 }
 
@@ -47,6 +49,7 @@ export async function deleteChatRequest(chatId: number) {
         await getChatList();
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
+        throw error;
     }
 }
 
@@ -59,7 +62,7 @@ export async function searcUserForChat(login: string) {
         return response;
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
-        return error;
+        throw error;
     }
 }
 
@@ -73,7 +76,7 @@ export async function addUserToChat(userId: number, chatid: string) {
         return response;
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
-        return error;
+        throw error;
     }
 }
 
@@ -83,6 +86,7 @@ export async function getChatUsers(chatId: number) {
         return response;
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
+        throw error;
     }
 }
 
@@ -92,5 +96,6 @@ export async function getChatToken(chatId: number) {
         return response;
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
+        throw error;
     }
 }

@@ -37,7 +37,6 @@ export class ProfilePageModule extends Block {
             avatar.setProps({ avatar: `https://ya-praktikum.tech/api/v2/resources/${newProps.userData.avatar}` });
         }
         if (oldProps.error !== newProps.error) {
-            console.log(newProps.error);
             errorProfileRequest.setProps({ error: newProps.error });
         }
         return true;
