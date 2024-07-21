@@ -81,6 +81,30 @@
       "rules": { 
         "no-useless-escape": "off"
       }
+    },
+    { 
+      "files": ["src/modules/Router.ts"],
+      "rules": { 
+        "no-constructor-return": "off"
+      }
+    },
+    { 
+      "files": ["src/helpers/cloneDeep.ts"],
+      "rules": { 
+        "no-return-assign": "off"
+      }
+    },
+    { 
+      "files": ["src/pages/chat-page/chat.services.ts"],
+      "rules": { 
+        "consistent-return": "off"
+      }
+    },
+    { 
+      "files": ["src/pages/profile-page/validate.ts"],
+      "rules": { 
+        "no-unused-expressions": "off"
+      }
     }
   ]
 }

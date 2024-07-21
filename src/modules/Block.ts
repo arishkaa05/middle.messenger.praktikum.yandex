@@ -108,7 +108,7 @@ export default class Block {
         this.componentDidUnmount(this.props);
         if (this.children) {
             Object.values(this.children).forEach((child) => {
-                if (!child._isListItem) { 
+                if (!child._isListItem) {
                     child.dispatchComponentDidUnmount();
                 }
             });
@@ -116,8 +116,7 @@ export default class Block {
         if (this.lists) {
             Object.values(this.lists).forEach((list) => {
                 list.forEach((child: { dispatchComponentDidUnmount: () => void; }) => {
-                    if (child instanceof Block) { 
-
+                    if (child instanceof Block) {
                         child.dispatchComponentDidUnmount();
                     }
                 });
@@ -227,7 +226,7 @@ export default class Block {
             });
             const stub = fragment.content.querySelector(`[data-id="__l_${_tmpId}"]`);
             if (stub) stub.replaceWith(listCont.content);
-        }); 
+        });
         return fragment.content.firstElementChild as HTMLElement;
     }
 

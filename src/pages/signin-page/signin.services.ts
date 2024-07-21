@@ -9,7 +9,7 @@ async function handleSignUp(inputValues: any) {
         signinApi.signUpRequest(inputValues);
         await getAuthUser();
     } catch (error) {
-        store.dispatch({ type: "SET_ERROR", error: error })
+        store.dispatch({ type: 'SET_ERROR', error });
     }
 }
 

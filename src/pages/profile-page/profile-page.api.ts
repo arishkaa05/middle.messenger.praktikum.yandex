@@ -10,12 +10,10 @@ export default class ProfileAPI {
     changeUserProfile = (userData: any) => this.httpTransport.put('/user/profile', userData);
 
     // change user profile avatar
-
     changeUserProfileAvatar = (formData: any) => this.httpTransport.put('/user/profile/avatar', formData);
 
     // change user password
-    changeUserPassword = (avatar: any) => {
-        const form: any = new FormData(avatar);
-        this.httpTransport.put('/user/password', form);
+    changeUserPassword = (password: any) => {
+        this.httpTransport.put('/user/password', password);
     };
 }

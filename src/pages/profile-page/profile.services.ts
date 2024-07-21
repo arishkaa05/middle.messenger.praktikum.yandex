@@ -6,20 +6,20 @@ const profileApi = new ProfileAPI();
 
 export async function handleLogout() {
     try {
-        await profileApi.logoutRequest(); 
-        sessionStorage.removeItem("userData");
+        await profileApi.logoutRequest();
+        sessionStorage.removeItem('userData');
         router.go('/');
     } catch (error) {
-        store.dispatch({ type: "SET_ERROR", error: error })
+        store.dispatch({ type: 'SET_ERROR', error });
     }
 }
 
 export async function changeUserProfile(userData: any) {
     try {
         await profileApi.changeUserProfile(userData);
-        router.go("/messenger"); 
+        router.go('/messenger');
     } catch (error) {
-        store.dispatch({ type: "SET_ERROR", error: error })
+        store.dispatch({ type: 'SET_ERROR', error });
     }
 }
 
@@ -27,9 +27,9 @@ export async function changeUserProfileAvatar(formData: FormData) {
     try {
         const response = await profileApi.changeUserProfileAvatar(formData);
         store.dispatch({ type: 'SET_USER', userData: response });
-        router.go("/messenger"); 
+        router.go('/messenger');
     } catch (error) {
-        store.dispatch({ type: "SET_ERROR", error: error })
+        store.dispatch({ type: 'SET_ERROR', error });
     }
 }
 
@@ -38,6 +38,6 @@ export async function changeUserPassword(userData: any) {
         profileApi.changeUserPassword(userData);
         router.go('/messenger');
     } catch (error) {
-        store.dispatch({ type: "SET_ERROR", error: error })
+        store.dispatch({ type: 'SET_ERROR', error });
     }
 }
