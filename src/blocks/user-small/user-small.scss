@@ -10,7 +10,9 @@
   &__flex {
     display: flex;
   }
-
+  &__info {
+    margin-bottom: 5px;
+  }
   &__img {
     width: 36px; 
     height:36px; 

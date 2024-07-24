@@ -5,7 +5,7 @@ import Block from "../../modules/Block";
 import ChatPage from "./chat-page.hbs?raw";
 import { MessageContainerModule } from "../../blocks/message-container/module";
 import { IProps } from "../../modules/types";
-import { validateMessage, submitForm, validateChatTitle, onDeleteUser } from "./validate";
+import { validateMessage, submitForm, validateChatTitle, onDeleteChat, onDeleteUser } from "./validate";
 import { TextareaModule } from "../../components/textarea/module";
 import { CircleButtonModule } from "../../components/circle-button/module";
 import store, { openChat } from "../../modules/Store";
@@ -21,7 +21,7 @@ import { getChatList } from "./chat.services";
 import { ErrorModule } from "../../components/error-request/module";
 
 export class ChatPageModule extends Block {
-  constructor(props: IProps) {
+  constructor(props: IProps) { 
     getChatList();
     super(props);
   }
@@ -42,8 +42,9 @@ export class ChatPageModule extends Block {
     if (oldProps.error !== newProps.error) {
       errorChatRequest.setProps({ error: newProps.error });
     }
-    if (oldProps.activeChat !== newProps.activeChat) {
+    if (oldProps.activeChat !== newProps.activeChat) {  
       sender.setProps({ name: newProps.activeChat.title });
+      sender.setProps({ countUser: newProps.activeChat.users ? newProps.activeChat.users.length - 1 : 0 });
       createMessagesContainer.setProps({ active: newProps.activeChat.id });
     }
     if (oldProps.chatList !== newProps.chatList) {
@@ -77,9 +78,17 @@ export const userMessagesList = new MessageListModule({
 
 export const deleteUserButton = new DeleteButtonModule({
   type: "submit",
-  text: "",
+  text: "Удалить пользователя",
   events: {
     click: () => onDeleteUser(store.getState().activeChat.id),
+  },
+});
+
+export const deleteChatButton = new DeleteButtonModule({
+  type: "submit",
+  text: "Удалить чат", 
+  events: {
+    click: () => onDeleteChat(store.getState().activeChat.id),
   },
 });
 
@@ -95,6 +104,8 @@ export const userMain = new UserSmallModule({
 export const sender = new UserSmallModule({
   name: store.getState().activeChat.title,
   info: "online",
+  countUser:  store.getState().activeChat.users ? store.getState().activeChat.users.length - 1 : 0,
+  deleteChatButton,
   deleteUserButton,
   addUserContent,
 });

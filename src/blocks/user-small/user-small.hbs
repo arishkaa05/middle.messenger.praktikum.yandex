@@ -4,15 +4,16 @@
     <img class="avatar__img user__img" src="{{avatar}}">
     {{else}}
        <div class="user__img"></div>
-    {{/if}}
-    
+    {{/if}} 
     <div> 
       <div class="user__name"> {{ name }}</div>
-      <div>{{ info }}</div>
+      <div class="user__info">{{ info }}</div>
+   
+     {{#if countUser}}{{{deleteUserButton}}}{{else}}{{/if}}
     </div>
   </div>
   <div style="display:flex">
-    {{{addUserContent}}}
-    {{{deleteUserButton}}}
+     {{#if countUser}}{{else}}{{{addUserContent}}}{{/if}}
+    {{{deleteChatButton}}}
   </div>
 </div>

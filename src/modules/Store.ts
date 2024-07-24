@@ -1,6 +1,7 @@
 import { openMessageContainer } from "../blocks/message-container/module";
 import cloneDeep from "../helpers/cloneDeep";
 import { userAuthCheck } from "../helpers/userAuthCheck";
+import { getChatUsers } from "../pages/chat-page/chat.services";
 import { IMessage } from "./types";
 
 const SET_USER = "SET_USER";
@@ -21,7 +22,7 @@ const initialState: State = {
   activeChat: {
     id: 0,
   },
-  error: '',
+  error: "",
   userMessagesList: [],
 };
 
@@ -79,8 +80,11 @@ const store = Object.freeze(createStore(reducer, initialState));
 
 export const openChat = async (chat: IMessage) => {
   userAuthCheck();
-  store.dispatch({ type: "SET_ACTIVE_CHAT", activeChat: chat });
   store.dispatch({ type: "SET_NEW_MSG", userMessagesList: [] });
+  let responce = await getChatUsers(chat.id);
+  let newChatData = chat;
+  newChatData.users = responce; 
+  store.dispatch({ type: "SET_ACTIVE_CHAT", activeChat: newChatData });
   openMessageContainer();
 };
 export default store;

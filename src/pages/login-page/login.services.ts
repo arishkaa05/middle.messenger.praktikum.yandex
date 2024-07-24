@@ -1,5 +1,6 @@
 import { router } from '../../modules/Router';
 import store from '../../modules/Store';
+import { getChatList } from '../chat-page/chat.services';
 import LoginAPI from './login-page.api';
 
 const signinApi = new LoginAPI();
@@ -25,6 +26,7 @@ export async function getAuthUser() {
         const response = await signinApi.getAuthUser(); 
         sessionStorage.setItem('userData', JSON.stringify(response));
         store.dispatch({ type: 'SET_USER', userData: response });
+        getChatList();
         router.go('/messenger');
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
