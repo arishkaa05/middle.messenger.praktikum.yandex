@@ -116,6 +116,15 @@ export interface IMessage extends IProps {
   avatar?: string
 }
 
+
+export interface IRequestOptions {
+  headers?: { [key: string]: string },
+  timeout?: number
+  method?: string, 
+  data?: Record<string, unknown> | FormData,
+  withCredentials?: boolean,
+  responseType?: XMLHttpRequestResponseType
+}
 export interface IMessageList {
   messages: MessageModule[];
 }

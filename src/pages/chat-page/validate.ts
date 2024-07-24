@@ -33,8 +33,6 @@ export const submitForm = (e: Event) => {
     const inputValue = (teatarea.getContent() as HTMLInputElement).value;
     const socket = new WebSocket(`${hostWS}/${store.getState().userData.id}/${store.getState().activeChat.id}/${store.getState().token}`);
     socket.addEventListener("open", () => {
-      console.log("Соединение установлено");
-
       socket.send(
         JSON.stringify({
           content: inputValue,
@@ -61,15 +59,14 @@ export const onDeleteChat = (chatId: number) => {
 };
 
 const findNextId = (id: number): number => {
-  let filteredUsers = store.getState().activeChat.users.filter((user: { id: number }) => user.id !== id);
+  const filteredUsers = store.getState().activeChat.users.filter((user: { id: number }) => user.id !== id);
   if (filteredUsers.length > 0) {
     return filteredUsers[0].id;
-  } else {
-    return -1;
   }
+  return -1;
 };
 
-export const onDeleteUser = (chatId: number) => { 
+export const onDeleteUser = (chatId: number) => {
   const userId = findNextId(store.getState().userData.id);
   if (userId !== -1) deleteUserFromChat(chatId, userId);
   else store.dispatch({ type: "SET_ERROR", error: "Пользователь не найден" });

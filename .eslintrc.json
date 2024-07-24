@@ -77,6 +77,12 @@
       }
     }, 
     { 
+      "files": ["src/pages/chat-page/validate.ts"],
+      "rules": { 
+        "no-unused-expressions": "off"
+      }
+    }, 
+    { 
       "files": ["src/modules/validationRules.ts"],
       "rules": { 
         "no-useless-escape": "off"

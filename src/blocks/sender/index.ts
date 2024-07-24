@@ -1,2 +1,3 @@
-import "./sender.scss";
-export { default as Sender } from "./sender.hbs?raw";
+import './sender.scss';
+
+export { default as Sender } from './sender.hbs?raw';
