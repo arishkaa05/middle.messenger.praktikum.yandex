@@ -106,13 +106,14 @@ export interface ILink extends IProps {
 }
 
 export interface IMessage extends IProps {
-  id: number;
+  id?: number;
   name?: string;
   time?: string;
   unread_count?: boolean;
   title?: string;
   count?: number;
   message?: string;
+  avatar?: string
 }
 
 export interface IMessageList {

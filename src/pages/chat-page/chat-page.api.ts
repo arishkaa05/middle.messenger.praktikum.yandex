@@ -24,6 +24,10 @@ export default class ChatAPI {
   // Request token to connect to messages server
   getChatToken = (chatId: number) => this.httpTransport.post(`/chats/token/${chatId}`, {});
 
-  //deleete user from chat
+  //delete user from chat
   deleteUserFromChat = (body: { users: number[]; chatId: number }) => this.httpTransport.delete("/chats/users", body);
+
+  // change user profile avatar
+  changeChatAvatar = (body: FormData) => this.httpTransport.put('/chats/avatar', body);
+
 }

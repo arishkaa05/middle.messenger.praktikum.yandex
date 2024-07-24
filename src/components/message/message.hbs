@@ -1,5 +1,9 @@
 <div class="chat-page__list-item">
-  <div class="user__img"></div>
+  {{#if avatar}}
+    <img class="avatar__img user__img" src="https://ya-praktikum.tech/api/v2/resources{{avatar}}">
+    {{else}}
+       <div class="user__img"></div>
+    {{/if}}  
   <div style="width: 100%">
     <div class="chat-page__user-sent">
       <p class="user__name">{{title}}</p>

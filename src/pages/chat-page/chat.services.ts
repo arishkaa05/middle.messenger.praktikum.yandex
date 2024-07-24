@@ -59,7 +59,7 @@ export async function deleteUserFromChat(chatId: number, userId: number) {
         title: "Заголовок",
         id: 0,
       },
-    }); 
+    });
     await getChatList();
   } catch (error) {
     store.dispatch({ type: "SET_ERROR", error });
@@ -115,6 +115,23 @@ export async function getChatToken(chatId: number) {
   try {
     const response: any = await chatApi.getChatToken(chatId);
     return response;
+  } catch (error) {
+    store.dispatch({ type: "SET_ERROR", error });
+    throw error;
+  }
+}
+
+export async function changeChatAvatar(formData: FormData) {
+  try {
+    await chatApi.changeChatAvatar(formData);
+    store.dispatch({
+      type: "SET_ACTIVE_CHAT",
+      activeChat: {
+        title: "Заголовок",
+        id: 0,
+      },
+    });
+    getChatList();
   } catch (error) {
     store.dispatch({ type: "SET_ERROR", error });
     throw error;

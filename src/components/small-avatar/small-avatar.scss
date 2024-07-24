@@ -1,0 +1,29 @@
+.small-avatar {
+  &__relative {
+
+    position: relative;
+    flex-direction: column;
+    align-content: center;
+    width: 100%;
+  margin-right: 15px; 
+  }
+  cursor: pointer;
+  &__size {
+    width: 36px;
+    height: 36px;
+  }
+  &__hover {
+    opacity: 0;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    background: rgba(64, 64, 64, 0.8901960784);
+    color: #FFF;
+    transition: 0.3s;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+    }
+  }  
+}

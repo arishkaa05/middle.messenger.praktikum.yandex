@@ -1,6 +1,6 @@
 import { chatTitleInput, teatarea } from "./module";
 import { checkInput, setErrors } from "../../modules/validation";
-import { createChat, deleteChatRequest, deleteUserFromChat } from "./chat.services";
+import { changeChatAvatar, createChat, deleteChatRequest, deleteUserFromChat } from "./chat.services";
 import { hostWS } from "../../servises/BaseAPI";
 import store from "../../modules/Store";
 import { formatDate } from "../../helpers/formatDate";
@@ -75,4 +75,17 @@ export const onDeleteUser = (chatId: number) => {
   const userId = findNextId(store.getState().userData.id);
   if (userId !== -1) deleteUserFromChat(chatId, userId);
   else store.dispatch({ type: "SET_ERROR", error: "Пользователь не найден" });
+};
+
+export const validateAvatar = (e: Event) => {
+  e.preventDefault;
+  const fileInput = e.target as HTMLInputElement;
+  const file = fileInput.files && fileInput.files[0];
+
+  if (file) {
+    const formData = new FormData();
+    formData.append("avatar", file);
+    formData.append("chatId", store.getState().activeChat.id);
+    changeChatAvatar(formData);
+  }
 };

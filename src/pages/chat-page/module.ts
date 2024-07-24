@@ -5,7 +5,7 @@ import Block from "../../modules/Block";
 import ChatPage from "./chat-page.hbs?raw";
 import { MessageContainerModule } from "../../blocks/message-container/module";
 import { IProps } from "../../modules/types";
-import { validateMessage, submitForm, validateChatTitle, onDeleteChat, onDeleteUser } from "./validate";
+import { validateMessage, submitForm, validateChatTitle, onDeleteChat, onDeleteUser, validateAvatar } from "./validate";
 import { TextareaModule } from "../../components/textarea/module";
 import { CircleButtonModule } from "../../components/circle-button/module";
 import store, { openChat } from "../../modules/Store";
@@ -19,6 +19,8 @@ import { router } from "../../modules/Router";
 import { UserMessageModule } from "../../components/user-message/module";
 import { getChatList } from "./chat.services";
 import { ErrorModule } from "../../components/error-request/module";
+import { SenderModule } from "../../blocks/sender/module";
+import { SmallAvatarModule } from "../../components/small-avatar/module";
 
 export class ChatPageModule extends Block {
   constructor(props: IProps) { 
@@ -32,7 +34,7 @@ export class ChatPageModule extends Block {
 
   componentDidUpdate(oldProps: any, newProps: any): boolean {
     if (oldProps.userData !== newProps.userData) {
-      userMain.setProps({ avatar: `https://ya-praktikum.tech/api/v2/resources/${newProps.userData.avatar}` });
+      userMain.setProps({ avatar: `https://ya-praktikum.tech/api/v2/resources${newProps.userData.avatar}` });
 
       userMain.setProps({ name: newProps.userData.first_name, info: newProps.userData.login });
     }
@@ -44,6 +46,7 @@ export class ChatPageModule extends Block {
     }
     if (oldProps.activeChat !== newProps.activeChat) {  
       sender.setProps({ name: newProps.activeChat.title });
+      avatar.setProps({ avatar: newProps.activeChat.avatar });
       sender.setProps({ countUser: newProps.activeChat.users ? newProps.activeChat.users.length - 1 : 0 });
       createMessagesContainer.setProps({ active: newProps.activeChat.id });
     }
@@ -101,10 +104,18 @@ export const userMain = new UserSmallModule({
   },
 });
 
-export const sender = new UserSmallModule({
+export const avatar = new SmallAvatarModule({
+  avatar: store.getState().userData.avatar,
+  events: {
+      input: (e: Event) => validateAvatar(e),
+  },
+});
+
+export const sender = new SenderModule({
   name: store.getState().activeChat.title,
   info: "online",
   countUser:  store.getState().activeChat.users ? store.getState().activeChat.users.length - 1 : 0,
+  avatar,
   deleteChatButton,
   deleteUserButton,
   addUserContent,
