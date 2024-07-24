@@ -9,13 +9,14 @@ import Block from '../../modules/Block';
 import { connect } from '../../modules/Hoc';
 import { router } from '../../modules/Router';
 import store from '../../modules/Store';
+import { ISigninProps, State } from '../../modules/types';
 import SigninPage from './signin-page.hbs?raw';
 import {
     submitForm, validateEmail, validateLasname, validateLogin, validateName, validatePassword, validatePhone,
 } from './validate';
 
 export class SigninPageModule extends Block {
-    constructor(props: any) {
+    constructor(props: ISigninProps) {
         super(props);
     }
 
@@ -23,7 +24,7 @@ export class SigninPageModule extends Block {
         return this.makeFragment(SigninPage, this.props);
     }
 
-    componentDidUpdate(oldProps: any, newProps: any): boolean {
+    componentDidUpdate(oldProps: State, newProps: State): boolean {
         if (oldProps.error !== newProps.error) {
             errorSingninRequest.setProps({ error: newProps.error });
         }

@@ -9,13 +9,14 @@ import Block from '../../modules/Block';
 import { connect } from '../../modules/Hoc';
 import { router } from '../../modules/Router';
 import store from '../../modules/Store';
+import { IPasswordrops, State } from '../../modules/types';
 import PasswordPage from './password-page.hbs?raw';
 import {
     submitForm, validateNewPassword, validateOldPassword, validateRepeatePassword,
 } from './validate';
 
 export class PasswordPageModule extends Block {
-    constructor(props: any) {
+    constructor(props: IPasswordrops) {
         userAuthCheck();
         super(props);
     }
@@ -24,7 +25,7 @@ export class PasswordPageModule extends Block {
         return this.makeFragment(PasswordPage, this.props);
     }
 
-    componentDidUpdate(oldProps: any, newProps: any): boolean {
+    componentDidUpdate(oldProps: State, newProps: State): boolean {
         if (oldProps.error !== newProps.error) {
             errorPasswordRequest.setProps({ error: newProps.error });
         }

@@ -4,7 +4,9 @@ import { NewMessageModule } from '../../components/new-message/module';
 import Block from '../../modules/Block';
 import ChatPage from './chat-page.hbs?raw';
 import { MessageContainerModule } from '../../blocks/message-container/module';
-import { IProps } from '../../modules/types';
+import {
+    IMessage, IMessageData, IProps, State,
+} from '../../modules/types';
 import {
     validateMessage, submitForm, validateChatTitle, onDeleteChat, onDeleteUser, validateAvatar,
 } from './validate';
@@ -34,14 +36,16 @@ export class ChatPageModule extends Block {
         return this.makeFragment(ChatPage, this.props);
     }
 
-    componentDidUpdate(oldProps: any, newProps: any): boolean {
+    componentDidUpdate(oldProps: State, newProps: State): boolean {
         if (oldProps.userData !== newProps.userData) {
             userMain.setProps({ avatar: `https://ya-praktikum.tech/api/v2/resources${newProps.userData.avatar}` });
 
             userMain.setProps({ name: newProps.userData.first_name, info: newProps.userData.login });
         }
         if (oldProps.userMessagesList !== newProps.userMessagesList) {
-            userMessagesList.setProps({ messages: newProps.userMessagesList.map((message: any) => new UserMessageModule(message)) });
+            userMessagesList.setProps({
+                messages: newProps.userMessagesList.map((message: IMessageData) => new UserMessageModule(message)),
+            });
         }
         if (oldProps.error !== newProps.error) {
             errorChatRequest.setProps({ error: newProps.error });
@@ -54,7 +58,7 @@ export class ChatPageModule extends Block {
         }
         if (oldProps.chatList !== newProps.chatList) {
             chatList.setProps({
-                messages: newProps.chatList.map((chat: any) => {
+                messages: newProps.chatList.map((chat: IMessage) => {
                     const chatModule = new MessageModule(chat);
                     chatModule.props.events = {
                         click: () => openChat(chat),
@@ -68,7 +72,7 @@ export class ChatPageModule extends Block {
 }
 
 export const chatList = new MessageListModule({
-    messages: store.getState().chatList.map((chat: any) => {
+    messages: store.getState().chatList.map((chat: IMessage) => {
         const chatModule = new MessageModule(chat);
         chatModule.props.events = {
             click: () => openChat(chat),
@@ -78,7 +82,7 @@ export const chatList = new MessageListModule({
 });
 
 export const userMessagesList = new MessageListModule({
-    messages: store.getState().userMessagesList.map((message: any) => new UserMessageModule(message)),
+    messages: store.getState().userMessagesList.map((message: IMessageData) => new UserMessageModule(message)),
 });
 
 export const deleteUserButton = new DeleteButtonModule({
@@ -167,7 +171,7 @@ export const chatTitleInput = new InputFieldModule({
 const ConnectedChatPage = connect(ChatPageModule, (state) => ({
     userData: state.userData,
     error: state.error,
-    chatList: state.chatList.map((chat: any) => {
+    chatList: state.chatList.map((chat: IMessage) => {
         const chatModule = new MessageModule(chat);
         chatModule.props.events = {
             click: () => openChat(chat),
@@ -175,12 +179,12 @@ const ConnectedChatPage = connect(ChatPageModule, (state) => ({
         return chatModule;
     }),
     activeChat: state.activeChat,
-    userMessagesList: state.userMessagesList.map((message: any) => new UserMessageModule(message)),
+    userMessagesList: state.userMessagesList.map((message: IMessageData) => new UserMessageModule(message)),
 }));
 
 const ConnectedCreateMessagesContainer = connect(MessageContainerModule, (state) => ({
     userData: state.userData,
-    chatList: state.chatList.map((chat: any) => {
+    chatList: state.chatList.map((chat: IMessage) => {
         const chatModule = new MessageModule(chat);
         chatModule.props.events = {
             click: () => openChat(chat),
@@ -188,7 +192,7 @@ const ConnectedCreateMessagesContainer = connect(MessageContainerModule, (state)
         return chatModule;
     }),
     activeChat: state.activeChat,
-    userMessagesList: state.userMessagesList.map((message: any) => new UserMessageModule(message)),
+    userMessagesList: state.userMessagesList.map((message: IMessageData) => new UserMessageModule(message)),
 }));
 
 export const createMessagesContainer = new ConnectedCreateMessagesContainer({

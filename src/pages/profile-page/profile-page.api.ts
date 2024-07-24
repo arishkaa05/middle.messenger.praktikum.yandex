@@ -1,3 +1,4 @@
+import { IUser } from '../../modules/types';
 import HTTPTransport from '../../servises/HTTPTransort';
 
 export default class ProfileAPI {
@@ -7,13 +8,16 @@ export default class ProfileAPI {
     logoutRequest = () => this.httpTransport.post('/auth/logout', {});
 
     // change user profile
-    changeUserProfile = (userData: any) => this.httpTransport.put('/user/profile', userData);
+    changeUserProfile = (userData: IUser) => this.httpTransport.put('/user/profile', userData);
 
     // change user profile avatar
-    changeUserProfileAvatar = (formData: any) => this.httpTransport.put('/user/profile/avatar', formData);
+    changeUserProfileAvatar = (formData: FormData) => this.httpTransport.put('/user/profile/avatar', formData);
 
     // change user password
-    changeUserPassword = (password: any) => {
+    changeUserPassword = (password: {
+        "oldPassword": "string",
+        "newPassword": "string"
+      }) => {
         this.httpTransport.put('/user/password', password);
     };
 }

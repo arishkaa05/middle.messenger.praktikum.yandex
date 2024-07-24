@@ -1,8 +1,6 @@
-import { PlainObject } from '../modules/types';
+import { IStringIndexed, PlainObject } from '../modules/types';
 
-type StringIndexed = Record<string, any>;
-
-const obj: StringIndexed = {
+const obj: IStringIndexed = {
     key: 1,
     key2: 'test',
     key3: false,

@@ -1,5 +1,5 @@
 import queryStringify from '../helpers/queryStringify';
-import { HTTPMethod } from '../modules/types';
+import { HTTPMethod, IRequestBody, IRequestOptions } from '../modules/types';
 import { host } from './BaseAPI';
 
 const METHODS = {
@@ -10,15 +10,15 @@ const METHODS = {
 };
 
 export default class HTTPTransport {
-    get: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+    get: HTTPMethod = (url, options: IRequestOptions = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
 
-    delete: HTTPMethod = (url, body: any, options: any = {}) => this.request(url, { ...options, method: METHODS.DELETE, data: body }, options.timeout);
+    delete: HTTPMethod = (url, body: IRequestBody | undefined, options: IRequestOptions = {}) => this.request(url, { ...options, method: METHODS.DELETE, data: body }, options.timeout);
 
-    post: HTTPMethod = (url, body: any, options: any = {}) => this.request(url, { ...options, method: METHODS.POST, data: body }, options.timeout);
+    post: HTTPMethod = (url, body: IRequestBody | undefined, options: IRequestOptions = {}) => this.request(url, { ...options, method: METHODS.POST, data: body }, options.timeout);
 
-    put: HTTPMethod = (url, body: any, options: any = {}) => this.request(url, { ...options, method: METHODS.PUT, data: body }, options.timeout);
+    put: HTTPMethod = (url, body: IRequestBody | undefined, options: IRequestOptions = {}) => this.request(url, { ...options, method: METHODS.PUT, data: body }, options.timeout);
 
-    request(url: string, options: any = { method: METHODS.GET }, timeout = 5000): Promise<XMLHttpRequest> {
+    request(url: string, options: IRequestOptions | undefined = { method: METHODS.GET }, timeout = 5000): Promise<XMLHttpRequest> {
         const {
             data, headers = {}, withCredentials = true, responseType = 'json', method,
         } = options;

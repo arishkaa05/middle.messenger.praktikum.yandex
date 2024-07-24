@@ -2,10 +2,11 @@ import { ErrorModule } from '../../components/error/module';
 import { LinkModule } from '../../components/link/module';
 import { PageTitleModule } from '../../components/page-title/module';
 import Block from '../../modules/Block';
+import { IError } from '../../modules/types';
 import NotFoundPage from './not-found-page.hbs?raw';
 
 export class NotFoundPageModule extends Block {
-    constructor(props: any) {
+    constructor(props: IError) {
         super(props);
     }
 

@@ -9,11 +9,12 @@ import Block from '../../modules/Block';
 import { connect } from '../../modules/Hoc';
 import { router } from '../../modules/Router';
 import store from '../../modules/Store';
+import { ILoginPage, State } from '../../modules/types';
 import LoginPage from './login-page.hbs?raw';
 import { submitForm, validateLogin, validatePassword } from './validate';
 
 export class LoginPageModule extends Block {
-    constructor(props: any) {
+    constructor(props: ILoginPage) {
         super(props);
     }
 
@@ -21,7 +22,7 @@ export class LoginPageModule extends Block {
         return this.makeFragment(LoginPage, this.props);
     }
 
-    componentDidUpdate(oldProps: any, newProps: any): boolean {
+    componentDidUpdate(oldProps: State, newProps: State): boolean {
         if (oldProps.error !== newProps.error) {
             errorLoginRequest.setProps({ error: newProps.error });
         }

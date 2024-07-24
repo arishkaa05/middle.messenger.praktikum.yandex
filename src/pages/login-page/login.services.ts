@@ -5,7 +5,10 @@ import LoginAPI from './login-page.api';
 
 const signinApi = new LoginAPI();
 
-export async function handleSignIn(inputValues: any) {
+export async function handleSignIn(inputValues: {
+    'login': 'string',
+    'password': 'string'
+  }) {
     try {
         await signinApi.signInRequest(inputValues);
         await getAuthUser();

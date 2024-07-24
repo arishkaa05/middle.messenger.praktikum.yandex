@@ -10,6 +10,7 @@ import Block from '../../modules/Block';
 import { connect } from '../../modules/Hoc';
 import { router } from '../../modules/Router';
 import store from '../../modules/Store';
+import { IProfileProps, State } from '../../modules/types';
 import ProfilePage from './profile-page.hbs?raw';
 import { handleLogout } from './profile.services';
 import {
@@ -17,7 +18,7 @@ import {
 } from './validate';
 
 export class ProfilePageModule extends Block {
-    constructor(props: any) {
+    constructor(props: IProfileProps) {
         userAuthCheck();
         super(props);
     }
@@ -26,7 +27,7 @@ export class ProfilePageModule extends Block {
         return this.makeFragment(ProfilePage, this.props);
     }
 
-    componentDidUpdate(oldProps: any, newProps: any): boolean {
+    componentDidUpdate(oldProps: State, newProps: State): boolean {
         if (oldProps.userData !== newProps.userData) {
             inputPhone.setProps({ value: newProps.userData.phone });
             inputName.setProps({ value: newProps.userData.first_name });

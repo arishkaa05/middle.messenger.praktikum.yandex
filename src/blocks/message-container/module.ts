@@ -43,7 +43,16 @@ export const openMessageContainer = async () => {
         try {
             const messageData = JSON.parse(event.data);
             if (messageData instanceof Array) {
-                const newMessages = messageData.map((message: any) => ({
+                const newMessages = messageData.map((message: {
+                    chat_id: number;
+                    content: string;
+                    file: null;
+                    id: number;
+                    is_read: boolean;
+                    time: string;
+                    type: string;
+                    user_id: number;
+                  }) => ({
                     id: message.id,
                     isOwn: store.getState().userData.id === message.user_id,
                     message: message.content,

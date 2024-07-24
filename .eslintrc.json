@@ -89,6 +89,12 @@
       }
     },
     { 
+      "files": ["src/modules/types.ts"],
+      "rules": { 
+        "no-undef": "off"
+      }
+    },
+    { 
       "files": ["src/modules/Router.ts"],
       "rules": { 
         "no-constructor-return": "off"

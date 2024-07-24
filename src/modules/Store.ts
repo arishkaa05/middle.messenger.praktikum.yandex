@@ -2,7 +2,7 @@ import { openMessageContainer } from "../blocks/message-container/module";
 import cloneDeep from "../helpers/cloneDeep";
 import { userAuthCheck } from "../helpers/userAuthCheck";
 import { getChatUsers } from "../pages/chat-page/chat.services";
-import { IMessage } from "./types";
+import { IMessage, State } from "./types";
 
 const SET_USER = "SET_USER";
 const SET_CHAT_LIST = "SET_CHAT_LIST";
@@ -14,9 +14,7 @@ const SET_TOKEN = "SET_TOKEN";
 type Action = { type: string; [key: string]: any };
 type Reducer = (state: State, action: Action) => State;
 
-type State = {
-  [key: string]: any;
-};
+
 const initialState: State = {
   userData: {},
   chatList: [],
