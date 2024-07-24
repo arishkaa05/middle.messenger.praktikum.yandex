@@ -57,7 +57,6 @@ export const submitForm = (e: Event) => {
 };
 
 export const onDeleteChat = (chatId: number) => {
-  console.log(chatId);
   if (chatId) deleteChatRequest(chatId);
 };
 
@@ -70,8 +69,7 @@ const findNextId = (id: number): number => {
   }
 };
 
-export const onDeleteUser = (chatId: number) => {
-  console.log(chatId, findNextId(store.getState().userData.id));
+export const onDeleteUser = (chatId: number) => { 
   const userId = findNextId(store.getState().userData.id);
   if (userId !== -1) deleteUserFromChat(chatId, userId);
   else store.dispatch({ type: "SET_ERROR", error: "Пользователь не найден" });

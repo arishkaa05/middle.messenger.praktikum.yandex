@@ -9,6 +9,7 @@ const SET_CHAT_LIST = "SET_CHAT_LIST";
 const SET_ACTIVE_CHAT = "SET_ACTIVE_CHAT";
 const SET_NEW_MSG = "SET_NEW_MSG";
 const SET_ERROR = "SET_ERROR";
+const SET_TOKEN = "SET_TOKEN";
 
 type Action = { type: string; [key: string]: any };
 type Reducer = (state: State, action: Action) => State;
@@ -23,6 +24,7 @@ const initialState: State = {
     id: 0,
   },
   error: "",
+  token: "",
   userMessagesList: [],
 };
 
@@ -48,6 +50,11 @@ const reducer: Reducer = (state, action) => {
       return {
         ...cloneDeep(state),
         userMessagesList: action.userMessagesList,
+      };
+    case SET_TOKEN:
+      return {
+        ...cloneDeep(state),
+        token: action.token,
       };
     case SET_ERROR:
       return {
@@ -83,7 +90,7 @@ export const openChat = async (chat: IMessage) => {
   store.dispatch({ type: "SET_NEW_MSG", userMessagesList: [] });
   let responce = await getChatUsers(chat.id);
   let newChatData = chat;
-  newChatData.users = responce; 
+  newChatData.users = responce;
   store.dispatch({ type: "SET_ACTIVE_CHAT", activeChat: newChatData });
   openMessageContainer();
 };

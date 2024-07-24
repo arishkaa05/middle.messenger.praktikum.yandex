@@ -21,28 +21,39 @@ export const openMessageContainer = async () => {
   const chatId = store.getState().activeChat.id;
   const userId = store.getState().userData.id;
   const token = await getChatToken(chatId);
+  store.dispatch({ type: "SET_TOKEN", token: token.token });
 
   const socket = new WebSocket(`${hostWS}/${userId}/${chatId}/${token.token}`);
   socket.addEventListener("open", () => {
     socket.send(
       JSON.stringify({
-        content: "Моё первое сообщение миру!",
-        type: "message",
+        content: "20",
+        type: "get old",
       })
-    );
+    ); 
   });
 
   socket.addEventListener("close", (event) => {
     if (!event.wasClean) {
       store.dispatch({ type: "SET_ERROR", error: "Обрыв соединения" });
     }
-
-    console.log(`Код: ${event.code} | Причина: ${event.reason}`);
   });
 
   socket.addEventListener("message", (event) => {
     try {
-      const messageData = JSON.parse(event.data);
+      const messageData = JSON.parse(event.data); 
+      if (messageData instanceof Array) { 
+        const newMessages = messageData.map((message: any) => ({
+          id: message.id,
+          isOwn: store.getState().userData.id === message.user_id,  
+          message: message.content,
+          time: formatDate(message.time),
+        })); 
+        store.dispatch({
+          type: "SET_NEW_MSG",
+          userMessagesList: newMessages,
+        });
+      }
       const newMessage = {
         id: messageData.id,
         isOwn: false,

@@ -23,7 +23,7 @@ import { SenderModule } from "../../blocks/sender/module";
 import { SmallAvatarModule } from "../../components/small-avatar/module";
 
 export class ChatPageModule extends Block {
-  constructor(props: IProps) { 
+  constructor(props: IProps) {
     getChatList();
     super(props);
   }
@@ -44,7 +44,7 @@ export class ChatPageModule extends Block {
     if (oldProps.error !== newProps.error) {
       errorChatRequest.setProps({ error: newProps.error });
     }
-    if (oldProps.activeChat !== newProps.activeChat) {  
+    if (oldProps.activeChat !== newProps.activeChat) {
       sender.setProps({ name: newProps.activeChat.title });
       avatar.setProps({ avatar: newProps.activeChat.avatar });
       sender.setProps({ countUser: newProps.activeChat.users ? newProps.activeChat.users.length - 1 : 0 });
@@ -89,7 +89,7 @@ export const deleteUserButton = new DeleteButtonModule({
 
 export const deleteChatButton = new DeleteButtonModule({
   type: "submit",
-  text: "Удалить чат", 
+  text: "Удалить чат",
   events: {
     click: () => onDeleteChat(store.getState().activeChat.id),
   },
@@ -107,14 +107,14 @@ export const userMain = new UserSmallModule({
 export const avatar = new SmallAvatarModule({
   avatar: store.getState().userData.avatar,
   events: {
-      input: (e: Event) => validateAvatar(e),
+    input: (e: Event) => validateAvatar(e),
   },
 });
 
 export const sender = new SenderModule({
   name: store.getState().activeChat.title,
   info: "online",
-  countUser:  store.getState().activeChat.users ? store.getState().activeChat.users.length - 1 : 0,
+  countUser: store.getState().activeChat.users ? store.getState().activeChat.users.length - 1 : 0,
   avatar,
   deleteChatButton,
   deleteUserButton,
