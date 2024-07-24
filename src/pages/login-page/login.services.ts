@@ -22,7 +22,7 @@ export async function handleSignIn(inputValues: any) {
 
 export async function getAuthUser() {
     try {
-        const response = await signinApi.getAuthUser();
+        const response = await signinApi.getAuthUser(); 
         sessionStorage.setItem('userData', JSON.stringify(response));
         store.dispatch({ type: 'SET_USER', userData: response });
         router.go('/messenger');
