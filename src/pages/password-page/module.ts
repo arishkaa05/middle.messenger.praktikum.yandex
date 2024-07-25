@@ -9,14 +9,14 @@ import Block from '../../modules/Block';
 import { connect } from '../../modules/Hoc';
 import { router } from '../../modules/Router';
 import store from '../../modules/Store';
-import { IPasswordrops, State } from '../../modules/types';
+import { IPasswordProps, State } from '../../modules/types';
 import PasswordPage from './password-page.hbs?raw';
 import {
     submitForm, validateNewPassword, validateOldPassword, validateRepeatePassword,
 } from './validate';
 
 export class PasswordPageModule extends Block {
-    constructor(props: IPasswordrops) {
+    constructor(props: IPasswordProps) {
         userAuthCheck();
         super(props);
     }

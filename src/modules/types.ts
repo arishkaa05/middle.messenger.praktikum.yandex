@@ -178,12 +178,11 @@ export interface IProfileProps {
 
 }
 
-export interface IPasswordrops {
-  error: string,
+export interface IPasswordProps {
+  error?: string,
+  passwordPageContent: PasswordPageContentModule,
   errorPasswordRequest: ErrorModule,
   linkChat: LinkModule,
-  lpasswordPageContent: PasswordPageContentModule
-
 }
 export interface ISearch extends IProps {
   name?: string;

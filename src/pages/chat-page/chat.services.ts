@@ -15,7 +15,7 @@ export async function getChatList() {
 
 export async function createChat(title: string) {
     try {
-        const body = {
+        const body: { title: string } = {
             title,
         };
         await chatApi.createChatRequest(body);
@@ -80,7 +80,7 @@ export async function searcUserForChat(login: string) {
     }
 }
 
-export async function addUserToChat(userId: number, chatid: string) {
+export async function addUserToChat(userId: number, chatid: number) {
     try {
         const body = {
             users: [userId],

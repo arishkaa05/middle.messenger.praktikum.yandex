@@ -7,7 +7,7 @@ export default class ChatAPI {
     getChats = () => this.httpTransport.get('/chats');
 
     // create chat request
-    createChatRequest = (body: { title: 'string' }) => this.httpTransport.post('/chats', body);
+    createChatRequest = (body: { title: string }) => this.httpTransport.post('/chats', body);
 
     // delete user chat
     deleteChatRequest = (body: { chatId: number }) => this.httpTransport.delete('/chats', body);

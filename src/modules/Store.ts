@@ -14,7 +14,6 @@ const SET_TOKEN = "SET_TOKEN";
 type Action = { type: string; [key: string]: any };
 type Reducer = (state: State, action: Action) => State;
 
-
 const initialState: State = {
   userData: {},
   chatList: [],
@@ -86,10 +85,12 @@ const store = Object.freeze(createStore(reducer, initialState));
 export const openChat = async (chat: IMessage) => {
   userAuthCheck();
   store.dispatch({ type: "SET_NEW_MSG", userMessagesList: [] });
-  let responce = await getChatUsers(chat.id);
-  let newChatData = chat;
-  newChatData.users = responce;
-  store.dispatch({ type: "SET_ACTIVE_CHAT", activeChat: newChatData });
-  openMessageContainer();
+  if (chat.id) {
+    let responce = await getChatUsers(chat.id);
+    let newChatData = chat;
+    newChatData.users = responce;
+    store.dispatch({ type: "SET_ACTIVE_CHAT", activeChat: newChatData });
+    openMessageContainer();
+  }
 };
 export default store;
