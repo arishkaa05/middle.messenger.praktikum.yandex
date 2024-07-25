@@ -72,6 +72,7 @@ export async function searcUserForChat(login: string) {
         return response;
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
+        throw error
     }
 }
 
@@ -92,6 +93,7 @@ export async function addUserToChat(userId: number, chatid: number) {
         return response;
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
+        throw error
     }
 }
 
