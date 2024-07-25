@@ -18,7 +18,6 @@ export async function handleSignIn(inputValues: {
             if (errorStr.includes('Ошибка: 400 User already in system')) getAuthUser();
             else {
                 store.dispatch({ type: 'SET_ERROR', error });
-                throw error;
             }
         }
     }
@@ -33,6 +32,5 @@ export async function getAuthUser() {
         router.go('/messenger');
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
-        throw error;
     }
 }

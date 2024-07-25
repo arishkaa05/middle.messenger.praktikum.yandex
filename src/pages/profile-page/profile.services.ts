@@ -12,7 +12,6 @@ export async function handleLogout() {
         router.go('/');
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
-        throw error;
     }
 }
 
@@ -25,7 +24,6 @@ export async function changeUserProfile(userData: IUser) {
         router.go('/messenger');
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
-        throw error;
     }
 }
 
@@ -37,7 +35,6 @@ export async function changeUserProfileAvatar(formData: FormData) {
         router.go('/messenger');
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
-        throw error;
     }
 }
 
@@ -50,6 +47,5 @@ export async function changeUserPassword(userData: {
         router.go('/messenger');
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
-        throw error;
     }
 }

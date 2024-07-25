@@ -10,7 +10,6 @@ async function handleSignUp(inputValues: any) {
         await getAuthUser();
     } catch (error) {
         store.dispatch({ type: 'SET_ERROR', error });
-        throw error;
     }
 }
 

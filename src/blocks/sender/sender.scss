@@ -1,6 +1,6 @@
 @import '../../../static/variables';
  
-.user { 
+.sender { 
   &__block {
     display: flex;
     justify-content: space-between;
@@ -27,12 +27,6 @@
   &__name {
     margin: 3px 0 6px; 
     font-size:14px;
-    color: $chat-message-color;
-    cursor: pointer;
-
-    &:hover { 
-      color: $text-color;
-      text-decoration: none;
-    }
+    color: $chat-message-color; 
   } 
 }
