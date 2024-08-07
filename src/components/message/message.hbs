@@ -1,22 +1,27 @@
 <div class="chat-page__list-item">
-  <div class="user__img"></div>
+  {{#if avatar}}
+    <img class="avatar__img user__img" src="https://ya-praktikum.tech/api/v2/resources{{avatar}}">
+    {{else}}
+       <div class="user__img"></div>
+    {{/if}}  
   <div style="width: 100%">
     <div class="chat-page__user-sent">
-      <p class="user__name">{{name}}</p>
+      <p class="user__name">{{title}}</p>
       <p class="chat-page__user-time">{{time}}</p>
     </div>
-    {{#if isOwn}}
+    {{#if unread_count}}
+      
+      <div class="chat-page__user-msg">
+        <div class="chat-page__message"> {{last_message.content}}</div>
+        <div class="chat-page__count">{{unread_count}}</div>
+      </div>
+    {{/if}}
+    {{#unless unread_count}}
       <div class="chat-page__user-msg">
         <div class="chat-page__message">
           <span>Вы:</span>
-          {{message}}
+          {{last_message.content}}
         </div>
-      </div>
-    {{/if}}
-    {{#unless isOwn}}
-      <div class="chat-page__user-msg">
-        <div class="chat-page__message">{{message}}</div>
-        <div class="chat-page__count">{{count}}</div>
       </div>
     {{/unless}}
   </div>

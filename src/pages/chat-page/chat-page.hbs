@@ -1,10 +1,12 @@
 <main class="page">
+    {{{errorChatRequest}}}
   <div class="chat-page"> 
     <div class="chat-page__main"> 
       {{{userMain}}} 
-      <p>{{{searchInput}}}</p>
+      {{{newChat}}} 
     </div>
-     <div class="chat-page__list">{{{chatList}}}</div>
-  </div>
+    <div class="chat-page__list">{{{chatList}}}</div>  
+    <div class="chat-page__new-chat"> {{{chatTitleInput}}} {{{createChatBtn}}} </div>
+  </div> 
   {{{createMessagesContainer}}} 
 </main>

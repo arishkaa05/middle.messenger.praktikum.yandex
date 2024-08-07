@@ -1,8 +1,6 @@
-type HTTPMethod = (
-  url: string,
-  options?: { method?: string; data?: {}; headers?: { [key: string]: string }; timeout?: number },
-  timeout?: number
-) => Promise<unknown>;
+import queryStringify from '../helpers/queryStringify';
+import { HTTPMethod, IRequestBody, IRequestOptions } from '../modules/types';
+import { host } from './BaseAPI';
 
 const METHODS = {
     GET: 'GET',
@@ -11,58 +9,60 @@ const METHODS = {
     DELETE: 'DELETE',
 };
 
-function queryStringify(data: { [x: string]: string | number | boolean }) {
-    if (typeof data !== 'object') {
-        throw new Error('Data must be object');
-    }
+export default class HTTPTransport {
+    get: HTTPMethod = (url, options: IRequestOptions = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
 
-    const keys = Object.keys(data);
-    return keys.reduce((result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`, '?');
-}
+    delete: HTTPMethod = (url, body: IRequestBody | undefined, options: IRequestOptions = {}) => this.request(url, { ...options, method: METHODS.DELETE, data: body }, options.timeout);
 
-class HTTPTransport {
-    get: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+    post: HTTPMethod = (url, body: IRequestBody | undefined, options: IRequestOptions = {}) => this.request(url, { ...options, method: METHODS.POST, data: body }, options.timeout);
 
-    delete: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+    put: HTTPMethod = (url, body: IRequestBody | undefined, options: IRequestOptions = {}) => this.request(url, { ...options, method: METHODS.PUT, data: body }, options.timeout);
 
-    post: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.POST }, options.timeout);
-
-    put: HTTPMethod = (url, options = {}) => this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
-
-    request: HTTPMethod = (url, options = {}, timeout = 5000) => {
-        const { method, data, headers = {} } = options;
+    request(url: string, options: IRequestOptions | undefined = { method: METHODS.GET }, timeout = 5000): Promise<XMLHttpRequest> {
+        const {
+            data, headers = {}, withCredentials = true, responseType = 'json', method,
+        } = options;
 
         return new Promise((resolve, reject) => {
-            if (!method) {
-                reject(new Error('No method'));
-                return;
-            }
-
+            url = host + url;
             const xhr = new XMLHttpRequest();
+            xhr.open(method as unknown as string, url);
 
-            xhr.open(method, method === METHODS.GET && !!data ? `${url}${queryStringify(data)}` : url);
-
-            for (const [key, value] of Object.entries(headers)) {
-                xhr.setRequestHeader(key, value);
-            }
-
-            function handleXhrLoad(xhr: unknown) {
-                resolve(xhr);
-            }
-
-            xhr.onload = handleXhrLoad;
+            xhr.onload = () => {
+                const status = xhr.status || 0;
+                if (status >= 200 && status < 300) {
+                    resolve(xhr.response);
+                } else {
+                    reject(new Error(`Ошибка: ${xhr.status} ${xhr.response.reason}`));
+                }
+            };
 
             xhr.onabort = reject;
             xhr.onerror = reject;
+            xhr.ontimeout = reject;
+
+            Object.keys(headers).forEach((key) => {
+                xhr.setRequestHeader(key, headers[key]);
+            });
+
+            if (method === METHODS.GET && data) {
+                url += queryStringify(data);
+            }
 
             xhr.timeout = timeout;
-            xhr.ontimeout = reject;
+            xhr.responseType = responseType;
+            xhr.withCredentials = withCredentials;
 
             if (method === METHODS.GET || !data) {
                 xhr.send();
+            } else if (data instanceof FormData) {
+                xhr.send(data);
             } else {
-                xhr.send(data as XMLHttpRequestBodyInit);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+                xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type');
+                xhr.send(JSON.stringify(data));
             }
         });
-    };
+    }
 }

@@ -1,22 +1,34 @@
 import { SigninPageContentModule } from '../../blocks/signin-page-content/signin-page-content';
 import { ButtonModule } from '../../components/button/module';
+import { ErrorModule } from '../../components/error-request/module';
 import { InputFieldModule } from '../../components/input-field/module';
 import { InputModule } from '../../components/input/module';
 import { LinkModule } from '../../components/link/module';
 import { PageTitleModule } from '../../components/page-title/module';
 import Block from '../../modules/Block';
+import { connect } from '../../modules/Hoc';
+import { router } from '../../modules/Router';
+import store from '../../modules/Store';
+import { ISigninProps, State } from '../../modules/types';
 import SigninPage from './signin-page.hbs?raw';
 import {
     submitForm, validateEmail, validateLasname, validateLogin, validateName, validatePassword, validatePhone,
 } from './validate';
 
 export class SigninPageModule extends Block {
-    constructor(props: any) {
+    constructor(props: ISigninProps) {
         super(props);
     }
 
     render() {
         return this.makeFragment(SigninPage, this.props);
+    }
+
+    componentDidUpdate(oldProps: State, newProps: State): boolean {
+        if (oldProps.error !== newProps.error) {
+            errorSingninRequest.setProps({ error: newProps.error });
+        }
+        return true;
     }
 }
 
@@ -113,12 +125,10 @@ export const submitBtn = new ButtonModule({
 });
 
 export const linkSignUp = new LinkModule({
-    page: 'login',
     text: 'Войти',
-});
-export const linkChat = new LinkModule({
-    page: 'chat',
-    text: 'На страницу чатов',
+    events: {
+        click: () => router.go('/'),
+    },
 });
 
 export const singinPageContent = new SigninPageContentModule({
@@ -134,9 +144,21 @@ export const singinPageContent = new SigninPageContentModule({
     },
 });
 
-export const createSigninPage = new SigninPageModule({
+const ConnectedSigninPage = connect(SigninPageModule, (state) => ({
+    error: state.error,
+}));
+
+export const errorSingninRequest = new ErrorModule({
+    title: '',
+    error: store.getState().error,
+    events: {
+        mouseover: () => store.dispatch({ type: 'SET_ERROR', error: '' }),
+    },
+});
+
+export const createSigninPage = new ConnectedSigninPage({
     title,
+    errorSingninRequest,
     singinPageContent,
     linkSignUp,
-    linkChat,
 });

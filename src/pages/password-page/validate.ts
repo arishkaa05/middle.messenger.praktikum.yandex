@@ -2,6 +2,7 @@ import {
     newPasswordInput, oldPasswordInput, passwordPageContent, passwordRepeateInput,
 } from './module';
 import { checkInput, setErrors } from '../../modules/validation';
+import { changeUserPassword } from '../profile-page/profile.services';
 
 export const validateOldPassword = (e: Event) => {
     e.preventDefault();
@@ -49,5 +50,6 @@ export const submitForm = (e: Event) => {
             return result;
         }, {});
         console.log(inputValues);
+        changeUserPassword(inputValues);
     }
 };

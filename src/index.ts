@@ -1,17 +1,12 @@
-import navigate from './modules/navigate';
+import { router } from './modules/Router';
+import * as Pages from './pages/index';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const url = new URL(window.location.href);
-    const path = url.pathname.slice(1) || 'login';
-    navigate(path);
-});
-
-document.addEventListener('click', (e) => {
-    const page = (e.target as HTMLElement).getAttribute('page');
-    if (page) {
-        navigate(page);
-
-        e.preventDefault();
-        e.stopImmediatePropagation();
-    }
-});
+router
+    .use('/', Pages.createLoginPage)
+    .use('/sign-up', Pages.createSigninPage)
+    .use('/messenger', Pages.createChatList)
+    .use('/settings', Pages.createProfilePage)
+    .use('/password', Pages.createPasswordPage)
+    .use('/error', Pages.createNotFoundPage)
+    .use('/fix', Pages.createFixPage)
+    .start();

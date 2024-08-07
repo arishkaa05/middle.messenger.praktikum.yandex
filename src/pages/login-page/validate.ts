@@ -1,5 +1,6 @@
 import { loginInput, passwordInput, loginPageContent } from './module';
 import { checkInput, setErrors } from '../../modules/validation';
+import { handleSignIn } from './login.services';
 
 export const validatePassword = (e: Event) => {
     e.preventDefault();
@@ -31,6 +32,6 @@ export const submitForm = (e: Event) => {
             }
             return result;
         }, {});
-        console.log(inputValues);
+        handleSignIn(inputValues);
     }
 };

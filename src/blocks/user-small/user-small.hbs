@@ -1,9 +1,19 @@
 <div class="user__block"> 
-  <div class="user__img"></div>
-  <div> 
-    <div class="user__name">
-      <a href="profile" page="profile">{{ name }}</a>
+  <div class="user__flex"> 
+    {{#if avatar}}
+    <img class="avatar__img user__img" src="{{avatar}}">
+    {{else}}
+       <div class="user__img"></div>
+    {{/if}} 
+    <div> 
+      <div class="user__name"> {{ name }}</div>
+      <div class="user__info">{{ info }}</div>
+   
+     {{#if countUser}}{{{deleteUserButton}}}{{else}}{{/if}}
     </div>
-    <div>{{ info }}</div>
+  </div>
+  <div style="display:flex">
+     {{#if countUser}}{{else}}{{{addUserContent}}}{{/if}}
+    {{{deleteChatButton}}}
   </div>
 </div>

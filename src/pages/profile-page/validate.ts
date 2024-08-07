@@ -2,6 +2,19 @@ import {
     emailInput, lastNameInput, loginInput, nameInput, phoneInput, profilePageContent, userNameInput,
 } from './module';
 import { checkInput, setErrors } from '../../modules/validation';
+import { changeUserProfile, changeUserProfileAvatar } from './profile.services';
+
+export const validateAvatar = (e: Event) => {
+    e.preventDefault;
+    const fileInput = e.target as HTMLInputElement;
+    const file = fileInput.files && fileInput.files[0];
+
+    if (file) {
+        const formData = new FormData();
+        formData.append('avatar', file);
+        changeUserProfileAvatar(formData);
+    }
+};
 
 export const validateEmail = (e: Event) => {
     e.preventDefault();
@@ -65,6 +78,6 @@ export const submitForm = (e: Event) => {
             }
             return result;
         }, {});
-        console.log(inputValues);
+        changeUserProfile(inputValues);
     }
 };

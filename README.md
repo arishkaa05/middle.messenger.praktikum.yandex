@@ -10,11 +10,11 @@
 - Stylelint
 
 ## Страницы
-- [Авторизация](https://astonishing-gumdrop-be61c3.netlify.app/login),
-- [Регистрация](https://astonishing-gumdrop-be61c3.netlify.app/signin),
-- [Список чатов](https://astonishing-gumdrop-be61c3.netlify.app/chat),
+- [Авторизация](https://astonishing-gumdrop-be61c3.netlify.app/),
+- [Регистрация](https://astonishing-gumdrop-be61c3.netlify.app/sign-up),
+- [Список чатов](https://astonishing-gumdrop-be61c3.netlify.app/messenger),
 - [Смена пароля](https://astonishing-gumdrop-be61c3.netlify.app/password),
-- [Настройки пользователя](https://astonishing-gumdrop-be61c3.netlify.app/profile),
+- [Настройки пользователя](https://astonishing-gumdrop-be61c3.netlify.app/settings),
 - [Страница 404](https://astonishing-gumdrop-be61c3.netlify.app/notFound),
 - [Страница 5**](https://astonishing-gumdrop-be61c3.netlify.app/fix).
 

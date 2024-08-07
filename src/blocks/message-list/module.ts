@@ -8,6 +8,6 @@ export class MessageListModule extends Block {
     }
 
     render() {
-        return this.makeFragment("<div class='message-page__list'>{{{ messages }}}</div>", this.props);
+        return this.makeFragment('<div>{{ messages }}</div>', this.props);
     }
 }

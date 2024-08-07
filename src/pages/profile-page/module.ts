@@ -1,106 +1,146 @@
 import { ProfilePageContentModule } from '../../blocks/profile-page-content/profile-page-content';
+import { AvatarModule } from '../../components/avatar/module';
 import { ButtonModule } from '../../components/button/module';
+import { ErrorModule } from '../../components/error-request/module';
 import { InputFieldModule } from '../../components/input-field/module';
 import { InputModule } from '../../components/input/module';
 import { LinkModule } from '../../components/link/module';
+import { userAuthCheck } from '../../helpers/userAuthCheck';
 import Block from '../../modules/Block';
+import { connect } from '../../modules/Hoc';
+import { router } from '../../modules/Router';
+import store from '../../modules/Store';
+import { IProfileProps, State } from '../../modules/types';
 import ProfilePage from './profile-page.hbs?raw';
+import { handleLogout } from './profile.services';
 import {
-    submitForm, validateEmail, validateLasname, validateLogin, validateName, validatePhone, validateUserName,
+    submitForm, validateAvatar, validateEmail, validateLasname, validateLogin, validateName, validatePhone, validateUserName,
 } from './validate';
 
 export class ProfilePageModule extends Block {
-    constructor(props: any) {
+    constructor(props: IProfileProps) {
+        userAuthCheck();
         super(props);
     }
 
     render() {
         return this.makeFragment(ProfilePage, this.props);
     }
+
+    componentDidUpdate(oldProps: State, newProps: State): boolean {
+        if (oldProps.userData !== newProps.userData) {
+            inputPhone.setProps({ value: newProps.userData.phone });
+            inputName.setProps({ value: newProps.userData.first_name });
+            inputUserName.setProps({ value: newProps.userData.display_name });
+            inputLastName.setProps({ value: newProps.userData.second_name });
+            logInput.setProps({ value: newProps.userData.login });
+            mailInput.setProps({ value: newProps.userData.email });
+            avatar.setProps({ avatar: `https://ya-praktikum.tech/api/v2/resources/${newProps.userData.avatar}` });
+        }
+        if (oldProps.error !== newProps.error) {
+            errorProfileRequest.setProps({ error: newProps.error });
+        }
+        return true;
+    }
 }
+
+export const avatar = new AvatarModule({
+    avatar: store.getState().userData.avatar,
+    events: {
+        input: (e: Event) => validateAvatar(e),
+    },
+});
+
+const mailInput = new InputModule({
+    type: 'text',
+    name: 'email',
+    title: 'Почта',
+    value: store.getState().email,
+    events: {
+        blur: (e: Event) => validateEmail(e),
+    },
+});
 
 export const emailInput = new InputFieldModule({
     className: 'input__element--align-right',
     title: 'Почта',
-    input: new InputModule({
-        type: 'text',
-        name: 'email',
-        title: 'Почта',
-        value: 'pochta@yandex.ru',
-        events: {
-            blur: (e: Event) => validateEmail(e),
-        },
-    }),
+    input: mailInput,
+});
+
+const logInput = new InputModule({
+    type: 'text',
+    name: 'login',
+    title: 'Логин',
+    value: store.getState().login,
+    events: {
+        blur: (e: Event) => validateLogin(e),
+    },
 });
 
 export const loginInput = new InputFieldModule({
     className: 'input__element--align-right',
     title: 'Логин',
-    input: new InputModule({
-        type: 'text',
-        name: 'login',
-        title: 'Логин',
-        value: 'ivanivanov',
-        events: {
-            blur: (e: Event) => validateLogin(e),
-        },
-    }),
+    input: logInput,
 });
 
+const inputName = new InputModule({
+    type: 'text',
+    name: 'first_name',
+    title: 'Имя',
+    value: store.getState().userData.first_name,
+    events: {
+        blur: (e: Event) => validateName(e),
+    },
+});
 export const nameInput = new InputFieldModule({
     className: 'input__element--align-right',
     title: 'Имя',
-    input: new InputModule({
-        type: 'text',
-        name: 'first_name',
-        title: 'Имя',
-        value: 'Иван',
-        events: {
-            blur: (e: Event) => validateName(e),
-        },
-    }),
+    input: inputName,
 });
 
+const inputUserName = new InputModule({
+    type: 'text',
+    name: 'display_name',
+    title: 'Имя в чате',
+    value: store.getState().userData.display_name,
+    events: {
+        blur: (e: Event) => validateUserName(e),
+    },
+});
 export const userNameInput = new InputFieldModule({
     className: 'input__element--align-right',
     title: 'Имя в чате',
-    input: new InputModule({
-        type: 'text',
-        name: 'display_name',
-        title: 'Имя в чате',
-        value: 'Иван',
-        events: {
-            blur: (e: Event) => validateUserName(e),
-        },
-    }),
+    input: inputUserName,
+});
+const inputLastName = new InputModule({
+    type: 'text',
+    name: 'second_name',
+    title: 'Фамилия',
+    value: store.getState().userData.second_name,
+    events: {
+        blur: (e: Event) => validateLasname(e),
+    },
 });
 
 export const lastNameInput = new InputFieldModule({
     className: 'input__element--align-right',
     title: 'Фамилия',
-    input: new InputModule({
-        type: 'text',
-        name: 'second_name',
-        title: 'Фамилия',
-        value: '',
-        events: {
-            blur: (e: Event) => validateLasname(e),
-        },
-    }),
+    input: inputLastName,
+});
+const inputPhone = new InputModule({
+    type: 'text',
+    name: 'phone',
+    title: 'Телефон',
+    value: store.getState().userData.phone,
+    events: {
+        blur: (e: Event) => validatePhone(e),
+    },
 });
 
 export const phoneInput = new InputFieldModule({
     className: 'input__element--align-right',
     title: 'Телефон',
-    input: new InputModule({
-        type: 'text',
-        name: 'phone',
-        title: 'Телефон',
-        value: '+7 (909) 967 30 30',
-        events: {
-            blur: (e: Event) => validatePhone(e),
-        },
-    }),
+    input: inputPhone,
 });
 
 export const submitBtn = new ButtonModule({
@@ -110,22 +150,40 @@ export const submitBtn = new ButtonModule({
 
 export const linkLogout = new LinkModule({
     className: 'text-red',
-    page: 'login',
     text: 'Выйти',
+    events: {
+        click: () => handleLogout(),
+    },
+});
+
+export const linkChat = new LinkModule({
+    text: 'На страницу чатов',
+    events: {
+        click: () => router.go('/messenger'),
+    },
 });
 
 export const linkPassword = new LinkModule({
     className: 'text-blue',
     page: 'password',
     text: 'Изменить пароль',
+    events: {
+        click: () => router.go('/password'),
+    },
 });
-export const linkChat = new LinkModule({
-    page: 'chat',
-    text: 'На страницу чатов',
+
+export const errorProfileRequest = new ErrorModule({
+    title: '',
+    error: store.getState().error,
+    events: {
+        mouseover: () => store.dispatch({ type: 'SET_ERROR', error: '' }),
+    },
 });
 
 export const profilePageContent = new ProfilePageContentModule({
     emailInput,
+    avatar,
+    errorProfileRequest,
     loginInput,
     nameInput,
     lastNameInput,
@@ -137,8 +195,14 @@ export const profilePageContent = new ProfilePageContentModule({
     },
 });
 
-export const createProfilePage = new ProfilePageModule({
+const ConnectedProfilePage = connect(ProfilePageModule, (state) => ({
+    userData: state.userData,
+    error: state.error,
+}));
+
+export const createProfilePage = new ConnectedProfilePage({
     profilePageContent,
+    errorProfileRequest,
     linkLogout,
     linkPassword,
     linkChat,

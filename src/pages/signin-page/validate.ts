@@ -2,6 +2,7 @@ import {
     emailInput, lastNameInput, loginInput, nameInput, passwordInput, phoneInput, singinPageContent,
 } from './module';
 import { checkInput, setErrors } from '../../modules/validation';
+import handleSignUp from './signin.services';
 
 export const validateEmail = (e: Event) => {
     e.preventDefault();
@@ -66,5 +67,6 @@ export const submitForm = (e: Event) => {
             return result;
         }, {});
         console.log(inputValues);
+        handleSignUp(inputValues);
     }
 };

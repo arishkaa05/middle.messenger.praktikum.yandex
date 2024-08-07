@@ -1,0 +1,15 @@
+@import '../../../static/variables';
+
+.new-chat { 
+  position: relative; 
+
+  &__element {
+    width: 230px;
+    background: $gray-light-color;
+    border-radius: 6px;  
+    padding: 2px 13px;
+    margin-right: 12px;
+    height: 26px; 
+    border: 0; 
+  }
+}

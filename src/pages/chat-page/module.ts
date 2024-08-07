@@ -1,132 +1,130 @@
 import { UserSmallModule } from '../../blocks/user-small/module';
 import { MessageListModule } from '../../blocks/message-list/module';
-import { MessageModule } from '../../components/message/module';
 import { NewMessageModule } from '../../components/new-message/module';
-import { SearchModule } from '../../components/search/module';
 import Block from '../../modules/Block';
 import ChatPage from './chat-page.hbs?raw';
-import { UserMessageListModule } from '../../blocks/user-message-list/module';
-import { UserMessageModule } from '../../components/user-message/module';
 import { MessageContainerModule } from '../../blocks/message-container/module';
-import { IProps } from '../../modules/types';
-import { validateMessage, submitForm } from './validate';
+import {
+    IMessage, IMessageData, IProps, State,
+} from '../../modules/types';
+import {
+    validateMessage, submitForm, validateChatTitle, onDeleteChat, onDeleteUser, validateAvatar,
+} from './validate';
 import { TextareaModule } from '../../components/textarea/module';
 import { CircleButtonModule } from '../../components/circle-button/module';
+import store, { openChat } from '../../modules/Store';
+import { connect } from '../../modules/Hoc';
+import { InputFieldModule } from '../../components/input-field/module';
+import { InputModule } from '../../components/input/module';
+import { MessageModule } from '../../components/message/module';
+import { DeleteButtonModule } from '../../components/delete-button/module';
+import { addUserContent } from '../../blocks/add-user-modal/module';
+import { router } from '../../modules/Router';
+import { UserMessageModule } from '../../components/user-message/module';
+import { getChatList } from './chat.services';
+import { ErrorModule } from '../../components/error-request/module';
+import { SenderModule } from '../../blocks/sender/module';
+import { SmallAvatarModule } from '../../components/small-avatar/module';
 
 export class ChatPageModule extends Block {
     constructor(props: IProps) {
+        getChatList();
         super(props);
     }
 
     render() {
         return this.makeFragment(ChatPage, this.props);
     }
+
+    componentDidUpdate(oldProps: State, newProps: State): boolean {
+        if (oldProps.userData !== newProps.userData) {
+            userMain.setProps({ avatar: `https://ya-praktikum.tech/api/v2/resources${newProps.userData.avatar}` });
+
+            userMain.setProps({ name: newProps.userData.first_name, info: newProps.userData.login });
+        }
+        if (oldProps.userMessagesList !== newProps.userMessagesList) {
+            userMessagesList.setProps({
+                messages: newProps.userMessagesList.map((message: IMessageData) => new UserMessageModule(message)),
+            });
+        }
+        if (oldProps.error !== newProps.error) {
+            errorChatRequest.setProps({ error: newProps.error });
+        }
+        if (oldProps.activeChat !== newProps.activeChat) {
+            sender.setProps({ name: newProps.activeChat.title });
+            avatar.setProps({ avatar: newProps.activeChat.avatar });
+            sender.setProps({ countUser: newProps.activeChat.users ? newProps.activeChat.users.length - 1 : 0 });
+            createMessagesContainer.setProps({ active: newProps.activeChat.id });
+        }
+        if (oldProps.chatList !== newProps.chatList) {
+            chatList.setProps({
+                messages: newProps.chatList.map((chat: IMessage) => {
+                    const chatModule = new MessageModule(chat);
+                    chatModule.props.events = {
+                        click: () => openChat(chat),
+                    };
+                    return chatModule;
+                }),
+            });
+        }
+        return true;
+    }
 }
 
 export const chatList = new MessageListModule({
-    messages: [
-        new MessageModule({
-            isOwn: false,
-            message: 'Привет! Как дела?',
-            time: '10.43',
-            name: 'Андрей',
-            count: 2,
-        }),
-        new MessageModule({
-            isOwn: true,
-            message: 'Хорошо, я на связи',
-            time: '10.48',
-            name: 'Елена',
-        }),
-        new MessageModule({
-            isOwn: true,
-            message: 'Загружаю файл...',
-            time: '11.03',
-            name: 'Максим',
-        }),
-        new MessageModule({
-            isOwn: false,
-            message: 'Может, в кино сходим? Новый фильм про супергероев вышел.',
-            time: '11.23',
-            name: 'Ольга',
-            count: 1,
-        }),
-        new MessageModule({
-            isOwn: true,
-            message: 'Это важно. Давай обсудим',
-            time: '11.27',
-            name: 'Иван',
-        }),
-        new MessageModule({
-            isOwn: false,
-            message: 'Тогда в 19:00 у кинотеатра?',
-            time: '11.32',
-            name: 'Дмитрий',
-            count: 5,
-        }),
-        new MessageModule({
-            isOwn: true,
-            message: 'Как дела?',
-            time: '11.34',
-            name: 'Екатерина',
-        }),
-    ],
+    messages: store.getState().chatList.map((chat: IMessage) => {
+        const chatModule = new MessageModule(chat);
+        chatModule.props.events = {
+            click: () => openChat(chat),
+        };
+        return chatModule;
+    }),
 });
 
-export const searchInput = new SearchModule({
-    title: 'Поиск',
-    type: 'text',
-    name: 'search',
-    value: '',
+export const userMessagesList = new MessageListModule({
+    messages: store.getState().userMessagesList.map((message: IMessageData) => new UserMessageModule(message)),
+});
+
+export const deleteUserButton = new DeleteButtonModule({
+    type: 'submit',
+    text: 'Удалить пользователя',
+    events: {
+        click: () => onDeleteUser(store.getState().activeChat.id),
+    },
+});
+
+export const deleteChatButton = new DeleteButtonModule({
+    type: 'submit',
+    text: 'Удалить чат',
+    events: {
+        click: () => onDeleteChat(store.getState().activeChat.id),
+    },
 });
 
 export const userMain = new UserSmallModule({
-    name: 'User',
-    info: 'info@info.ru',
+    name: store.getState().userData.first_name,
+    avatar: store.getState().userData.avatar,
+    info: store.getState().userData.login,
+    events: {
+        click: () => router.go('/settings'),
+    },
 });
 
-export const sender = new UserSmallModule({
-    name: 'Андрей',
+export const avatar = new SmallAvatarModule({
+    avatar: store.getState().userData.avatar,
+    events: {
+        input: (e: Event) => validateAvatar(e),
+    },
+});
+
+export const sender = new SenderModule({
+    name: store.getState().activeChat.title,
     info: 'online',
-});
-
-export const userMessagesList = new UserMessageListModule({
-    messages: [
-        new UserMessageModule({
-            isOwn: false,
-            message: 'Привет! Как дела?',
-            time: '10:43',
-            count: 2,
-        }),
-        new UserMessageModule({ isOwn: true, message: 'Привет, Андрей! У меня все хорошо, спасибо.', time: '10:45' }),
-        new UserMessageModule({ isOwn: true, message: 'А как у тебя дела?', time: '10:46' }),
-        new UserMessageModule({
-            isOwn: false,
-            message: 'Все отлично! Слушай, я тут подумал, может, в кино сходим? Вышел новый фильм про супергероев.',
-            time: '10:50',
-            name: 'Андрей',
-        }),
-        new UserMessageModule({ isOwn: true, message: 'Звучит интересно! Когда ты предлагаешь сходить?', time: '10:52' }),
-        new UserMessageModule({
-            isOwn: false,
-            message: 'Как насчет сегодня в 19:00 у кинотеатра?',
-            time: '10:54',
-        }),
-        new UserMessageModule({ isOwn: true, message: 'Отлично, договорились! Я приду.', time: '10:56' }),
-        new UserMessageModule({ isOwn: true, message: 'Кстати, как у тебя дела на работе?', time: '10:58' }),
-        new UserMessageModule({
-            isOwn: false,
-            message: 'Да все нормально, разбираюсь понемногу. А у тебя как?',
-            time: '11:00',
-        }),
-        new UserMessageModule({ isOwn: true, message: 'У меня тоже все хорошо, работы много, но я справляюсь.', time: '11:02' }),
-        new UserMessageModule({ isOwn: true, message: 'Ладно, увидимся позже в кино, пока!', time: '11:04' }),
-        new UserMessageModule({
-            isOwn: false,
-            message: 'Отлично, до встречи!',
-            time: '11:05',
-        }),
-    ],
+    countUser: store.getState().activeChat.users ? store.getState().activeChat.users.length - 1 : 0,
+    avatar,
+    deleteChatButton,
+    deleteUserButton,
+    addUserContent,
 });
 
 export const teatarea = new TextareaModule({
@@ -152,15 +150,72 @@ export const newMessage = new NewMessageModule({
     circleButton,
 });
 
-export const createMessagesContainer = new MessageContainerModule({
+export const createChatBtn = new CircleButtonModule({
+    type: 'submit',
+    text: '',
+    events: {
+        click: (e: Event) => validateChatTitle(e),
+    },
+});
+
+export const chatTitleInput = new InputFieldModule({
+    title: 'Новый чат',
+    input: new InputModule({
+        type: 'text',
+        name: 'message',
+        title: 'Новый чат',
+        value: '',
+    }),
+});
+
+const ConnectedChatPage = connect(ChatPageModule, (state) => ({
+    userData: state.userData,
+    error: state.error,
+    chatList: state.chatList.map((chat: IMessage) => {
+        const chatModule = new MessageModule(chat);
+        chatModule.props.events = {
+            click: () => openChat(chat),
+        };
+        return chatModule;
+    }),
+    activeChat: state.activeChat,
+    userMessagesList: state.userMessagesList.map((message: IMessageData) => new UserMessageModule(message)),
+}));
+
+const ConnectedCreateMessagesContainer = connect(MessageContainerModule, (state) => ({
+    userData: state.userData,
+    chatList: state.chatList.map((chat: IMessage) => {
+        const chatModule = new MessageModule(chat);
+        chatModule.props.events = {
+            click: () => openChat(chat),
+        };
+        return chatModule;
+    }),
+    activeChat: state.activeChat,
+    userMessagesList: state.userMessagesList.map((message: IMessageData) => new UserMessageModule(message)),
+}));
+
+export const createMessagesContainer = new ConnectedCreateMessagesContainer({
     sender,
     userMessagesList,
     newMessage,
+    active: store.getState().activeChat.id,
 });
 
-export const createChatList = new ChatPageModule({
+export const errorChatRequest = new ErrorModule({
+    title: '',
+    error: store.getState().error,
+    events: {
+        mouseover: () => store.dispatch({ type: 'SET_ERROR', error: '' }),
+    },
+});
+
+export const createChatList = new ConnectedChatPage({
     chatList,
-    searchInput,
+    newMessage,
+    errorChatRequest,
+    chatTitleInput,
+    createChatBtn,
     userMain,
     createMessagesContainer,
 });

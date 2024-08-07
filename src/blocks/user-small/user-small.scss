@@ -3,7 +3,16 @@
 .user { 
   &__block {
     display: flex;
+    justify-content: space-between;
     margin: 15px 0;
+  }
+
+  &__flex {
+    display: flex;
+  }
+
+  &__info {
+    margin-bottom: 5px;
   }
 
   &__img {
@@ -19,5 +28,11 @@
     margin: 3px 0 6px; 
     font-size:14px;
     color: $chat-message-color;
+    cursor: pointer;
+
+    &:hover { 
+      color: $text-color;
+      text-decoration: none;
+    }
   } 
 }

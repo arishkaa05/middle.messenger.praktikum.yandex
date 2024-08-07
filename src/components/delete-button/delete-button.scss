@@ -1,0 +1,14 @@
+@import '../../../static/variables';
+
+.delete-button { 
+  border-radius: 5px;
+  background-color: $gray-color;
+  color: #fff;
+  border: 0; 
+  cursor: pointer;
+  padding: 6px 20px;
+
+  &:hover {
+    background: $red;
+  }
+}
